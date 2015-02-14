@@ -8,6 +8,7 @@ interface Inverter {
     |--------------------------------------------------------------------------
     |
     | This contract specifies which methods an inverter adapter must implement.
+    | If no data is available, let the methods return null.
     |
     */
 

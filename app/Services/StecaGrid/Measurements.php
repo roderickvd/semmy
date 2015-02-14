@@ -14,7 +14,7 @@ class Measurements {
     | properly memoized.
     |
     */
-    
+
     const COLUMN_MAPPING = [
         'dc_power'     =>  2,
         'dc_voltage'   =>  5,
@@ -24,18 +24,36 @@ class Measurements {
         'ac_frequency' => 17,
         'ac_power'     => 20
     ];
-    
+
     const UPDATE_INTERVAL = 2;  // seconds
-    
+
     protected $measurements    = [];
     protected $last_updated_at = 0;
-    
+
     /**
-     * Get and parse the inverter measurements.
+     * Parse an inverter measurement.
+     *
+     * @param  string  $key
+     * @param  string  $value
+     * @return void
+     */
+    protected function parse_measurement($key, $value)
+    {
+        // Check if the inverter measurements are empty.
+        $measurement = null;
+        if (trim($value) != '---') {
+            $measurement = floatval($value);
+        }
+
+        $this->measurements[$key] = $measurement;
+    }
+
+    /**
+     * Get the inverter measurements.
      *
      * @return void
      */
-    protected function parse_measurements()
+    protected function get_measurements()
     {
         $ip_address = env('INV_IP_ADDRESS', '127.0.0.1');
         $response = file_get_contents("http://{$ip_address}/gen.measurements.table.js");
@@ -46,10 +64,10 @@ class Measurements {
         $dom = new DOMDocument();
         $dom->loadHTML($response);
         $elements = $dom->getElementsByTagName('td');
-        
+
         foreach (self::COLUMN_MAPPING as $key => $index)
         {
-            $this->measurements[$key] = floatval($elements[$index]->nodeValue);
+            $this->parse_measurement($key, $elements[$index]->nodeValue);
         }
     }
 
@@ -63,14 +81,14 @@ class Measurements {
         $ac_power = $this->measurements['ac_power'];
         $dc_power = $this->measurements['dc_power'];
 
-        $efficiency = 0;
+        $efficiency = null;
         if ($dc_power > 0) {
             $efficiency = ($ac_power / $dc_power) * 100;
         }
         
         $this->measurements['efficiency'] = $efficiency;
     }
-    
+
     /**
      * Update the inverter measurements.
      *
@@ -78,7 +96,7 @@ class Measurements {
      */
     protected function update_measurements()
     {
-        $this->parse_measurements();
+        $this->get_measurements();
         $this->calculate_efficiency();
     }
 
@@ -95,7 +113,7 @@ class Measurements {
             $this->update_measurements();
             $this->last_updated_at = $timestamp;
         }
-            
+
         return $this->measurements[$key];
     }
 }

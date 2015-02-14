@@ -66,6 +66,7 @@
   <script src="js/highcharts/highcharts.js"></script>
   <script src="js/highcharts/highcharts-more.js"></script>
   <script src="js/highcharts/modules/solid-gauge.js"></script>
+  <script src="js/highcharts/modules/no-data-to-display.js"></script>
 
   <script>
     $(document).foundation();
