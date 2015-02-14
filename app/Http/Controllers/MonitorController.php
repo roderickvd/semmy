@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
+use App\Contracts\Inverter;
+
 class MonitorController extends Controller {
     
     /*
@@ -16,6 +18,18 @@ class MonitorController extends Controller {
     |
     */
     
+    protected $inverter;
+    
+	/**
+	 * Create a new monitor controller instance.
+	 *
+	 * @param  \App\Contracts\Inverter  $inverter
+	 * @return void
+	 */
+    public function __construct(Inverter $inverter)
+    {
+        $this->inverter = $inverter;
+    }
 
 	/**
      * Show the application dashboard to the user.
@@ -24,6 +38,10 @@ class MonitorController extends Controller {
      */
     public function index()
     {
+        // Load configuration
+        $pv_name  = env('PV_NAME', 'My Solar Power Plant');
+        $pv_power = env('PV_POWER', 6700);
+
         $max_ac_power = env('MAX_AC_POWER', 5500);
         $max_dc_power = env('MAX_DC_POWER', 5620);
 
@@ -45,25 +63,24 @@ class MonitorController extends Controller {
         $max_dc_current = env('MAX_DC_CURRENT', 11);
         $max_ac_current = env('MAX_AC_CURRENT', 18.5);
         
-        $pv_name = env('PV_NAME', 'My Solar Power Plant');
-        $pv_power = env('PV_POWER', 6700);
-        
-        $ac_power = 0;
-        $dc_power = 0;
-        $efficiency = 0;
-        $ac_voltage = $nom_ac_voltage;
-        $dc_voltage = 0;
-        $ac_current = 0;
-        $dc_current = 0;
-        $ac_frequency = $nom_ac_frequency;
-
-        $dc_voltage_min_stop = $min_dc_voltage / $max_dc_voltage;
+        // Calculate stops for the graph color gradients
+        $dc_voltage_min_stop     = $min_dc_voltage / $max_dc_voltage;
         $dc_voltage_min_mpp_stop = $min_mpp_voltage / $max_dc_voltage;
         $dc_voltage_nom_mpp_stop = $nom_mpp_voltage / $max_dc_voltage;
         $dc_voltage_max_mpp_stop = $max_mpp_voltage / $max_dc_voltage;
         
         $ac_voltage_nom_stop   = ($nom_ac_voltage - $min_ac_voltage) / ($max_ac_voltage - $min_ac_voltage);
         $ac_frequency_nom_stop = ($nom_ac_frequency - $min_ac_frequency) / ($max_ac_frequency - $min_ac_frequency);
+        
+        // Get the inverter measurements
+        $ac_power     = $this->inverter->ac_power();
+        $dc_power     = $this->inverter->dc_power();
+        $efficiency   = $this->inverter->efficiency();
+        $ac_voltage   = $this->inverter->ac_voltage();
+        $dc_voltage   = $this->inverter->dc_voltage();
+        $ac_current   = $this->inverter->ac_current();
+        $dc_current   = $this->inverter->dc_current();
+        $ac_frequency = $this->inverter->ac_frequency();
         
         return view('monitor', compact(
             'pv_name',

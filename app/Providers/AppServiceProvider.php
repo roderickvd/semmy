@@ -21,7 +21,13 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-        //
+        switch (env('INV_DRIVER')) {
+            case 'stecagrid':
+                $driver = 'App\Services\StecaGrid';
+                break;
+        }
+
+		$this->app->singleton('App\Contracts\Inverter', $driver);
 	}
 
 }
