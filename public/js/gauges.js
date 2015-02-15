@@ -72,11 +72,14 @@ $(function () {
         
                 for (var index in dials) {
                     chart = $('#' + dials[index]).highcharts();
+
                     if (chart) {
                         series = chart.series[0];
                         points = series.points;
                         value = data.measurements[dials[index].replace('-','_')];
-                        if (value) {
+
+                        // Explicitly check for null, because 0 evaluates as false
+                        if (value != null) {
                             if (points[0]) {
                                 points[0].update(value);
                             } else {
