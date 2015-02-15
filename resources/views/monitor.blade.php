@@ -356,7 +356,7 @@
                 data: [{{ $ac_frequency }}],
                 dataLabels: {
                     format: '<div class="text-center"><span style="font-size:25px;color:black">{y:.2f}</span><br/>' +
-                           '<span style="font-size:12px;color:silver">Hz</span></div>'
+                           '<span style="font-size:12px;color:silver">Hertz</span></div>'
                 },
                 tooltip: {
                     valueSuffix: ' Hz'
