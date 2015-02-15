@@ -10,6 +10,7 @@
 
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/foundation.min.css">
+  <link rel="stylesheet" href="css/app.css">
 
   <script src="js/foundation/vendor/modernizr.js"></script>
 
@@ -56,7 +57,7 @@
       <p>Semmy by <a href="https://www.vandomburg.net/">Roderick van Domburg</a> is licensed under the terms of the MIT License. <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Beautiful charts</span> are powered by <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.highcharts.com/" property="cc:attributionName" rel="cc:attributionURL">Highcharts</a>, which is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.</p>
     </div>
     <div class="small-2 columns">
-      <p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></p>
+      <p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></p>
     </div>
   </footer>
 
@@ -68,63 +69,12 @@
   <script src="js/highcharts/modules/solid-gauge.js"></script>
   <script src="js/highcharts/modules/no-data-to-display.js"></script>
 
+  <script src="js/gauges.js"></script>
+
   <script>
     $(document).foundation();
 
     $(function () {
-
-        var gaugeOptions = {
-
-            chart: {
-                type: 'solidgauge'
-            },
-
-            title: null,
-
-            pane: {
-                center: ['50%', '50%'],
-                size: '100%',
-                startAngle: -90,
-                endAngle: 90,
-                background: {
-                    backgroundColor: '#EEE',
-                    innerRadius: '60%',
-                    outerRadius: '100%',
-                    shape: 'arc'
-                }
-            },
-
-            tooltip: {
-                enabled: false
-            },
-
-            // the value axis
-            yAxis: {
-                lineWidth: 0,
-                minorTickInterval: null,
-                tickWidth: 0,
-                title: {
-                    y: -90
-                },
-                labels: {
-                    y: 16
-                }
-            },
-
-            credits: {
-                enabled: false
-            },
-
-            plotOptions: {
-                solidgauge: {
-                    dataLabels: {
-                        y: -56,
-                        borderWidth: 0,
-                        useHTML: true
-                    }
-                }
-            }
-        };
 
         // The AC power gauge
         $('#ac-power').highcharts(Highcharts.merge(gaugeOptions, {
@@ -145,8 +95,8 @@
                 name: 'AC Power',
                 data: [{{ $measurements['ac_power'] }}],
                 dataLabels: {
-                    format: '<div class="text-center"><span style="font-size:25px;color:black">{y}</span><br/>' +
-                           '<span style="font-size:12px;color:silver">Watt</span></div>'
+                    format: '<div class="text-center"><span class="value">{y:.0f}</span><br/>' +
+                            '<span class="unit">Watt</span></div>'
                 },
                 tooltip: {
                     valueSuffix: ' Watt'
@@ -162,8 +112,8 @@
                 max: 100,
                 tickPositions: [0, 100],
                 stops: [
-                    [0.90, '#DF5353'],  // red
-                    [0.95, '#254117'],  // dark forest green
+                    [0.90, '#DF5353'], // red
+                    [0.95, '#254117'], // dark forest green
                     [0.98, '#52D017'], // yellow green
                 ],
                 title: {
@@ -175,8 +125,8 @@
                 name: 'Efficiency',
                 data: [{{ $measurements['efficiency'] }}],
                 dataLabels: {
-                    format: '<div class="text-center"><span style="font-size:25px;color:black">{y:.1f}</span><br/>' +
-                           '<span style="font-size:12px;color:silver">%</span></div>'
+                    format: '<div class="text-center"><span class="value">{y:.1f}</span><br/>' +
+                            '<span class="unit">%</span></div>'
                 },
                 tooltip: {
                     valueSuffix: ' %'
@@ -204,8 +154,8 @@
                 name: 'DC Power',
                 data: [{{ $measurements['dc_power'] }}],
                 dataLabels: {
-                    format: '<div class="text-center"><span style="font-size:25px;color:black">{y}</span><br/>' +
-                           '<span style="font-size:12px;color:silver">Watt</span></div>'
+                    format: '<div class="text-center"><span class="value">{y:.0f}</span><br/>' +
+                            '<span class="unit">Watt</span></div>'
                 },
                 tooltip: {
                     valueSuffix: ' Watt'
@@ -221,11 +171,11 @@
                 max: {{ $max_dc_voltage }},
                 tickPositions: [0, {{ $max_dc_voltage }}],
                 stops: [
-                    [{{ $dc_voltage_min_stop }}, '#DF5353'],     // red
+                    [{{ $dc_voltage_min_stop }},     '#DF5353'], // red
                     [{{ $dc_voltage_min_mpp_stop }}, '#254117'], // dark forest green
                     [{{ $dc_voltage_nom_mpp_stop }}, '#52D017'], // yellow green
                     [{{ $dc_voltage_max_mpp_stop }}, '#254117'], // dark forest green
-                    [0.9, '#DF5353'] // red
+                    [0.9,                            '#DF5353']  // red
                 ],
                 title: {
                     text: 'DC Voltage'
@@ -236,8 +186,8 @@
                 name: 'DC Voltage',
                 data: [{{ $measurements['dc_voltage'] }}],
                 dataLabels: {
-                    format: '<div class="text-center"><span style="font-size:25px;color:black">{y}</span><br/>' +
-                           '<span style="font-size:12px;color:silver">Volt</span></div>'
+                    format: '<div class="text-center"><span class="value">{y:.0f}</span><br/>' +
+                            '<span class="unit">Volt</span></div>'
                 },
                 tooltip: {
                     valueSuffix: ' Volt'
@@ -266,8 +216,8 @@
                 name: 'DC Current',
                 data: [{{ $measurements['dc_current'] }}],
                 dataLabels: {
-                    format: '<div class="text-center"><span style="font-size:25px;color:black">{y:.1f}</span><br/>' +
-                           '<span style="font-size:12px;color:silver">Ampere</span></div>'
+                    format: '<div class="text-center"><span class="value">{y:.1f}</span><br/>' +
+                            '<span class="unit">Ampere</span></div>'
                 },
                 tooltip: {
                     valueSuffix: ' Ampere'
@@ -283,9 +233,9 @@
                 max: {{ $max_ac_voltage }},
                 tickPositions: [{{ $min_ac_voltage }}, {{ $max_ac_voltage }}],
                 stops: [
-                    [0.1, '#DF5353'],                        // red
+                    [0.1,                        '#DF5353'], // red
                     [{{ $ac_voltage_nom_stop }}, '#52D017'], // yellow green
-                    [0.9, '#DF5353']                         // red
+                    [0.9,                        '#DF5353']  // red
                 ],
                 title: {
                     text: 'AC Voltage'
@@ -296,8 +246,8 @@
                 name: 'AC Voltage',
                 data: [{{ $measurements['ac_voltage'] }}],
                 dataLabels: {
-                    format: '<div class="text-center"><span style="font-size:25px;color:black">{y}</span><br/>' +
-                           '<span style="font-size:12px;color:silver">Volt</span></div>'
+                    format: '<div class="text-center"><span class="value">{y:.0f}</span><br/>' +
+                            '<span class="unit">Volt</span></div>'
                 },
                 tooltip: {
                     valueSuffix: ' Volt'
@@ -325,8 +275,8 @@
                 name: 'AC Current',
                 data: [{{ $measurements['ac_current'] }}],
                 dataLabels: {
-                    format: '<div class="text-center"><span style="font-size:25px;color:black">{y:.1f}</span><br/>' +
-                           '<span style="font-size:12px;color:silver">Ampere</span></div>'
+                    format: '<div class="text-center"><span class="value">{y:.1f}</span><br/>' +
+                            '<span class="unit">Ampere</span></div>'
                 },
                 tooltip: {
                     valueSuffix: ' Ampere'
@@ -342,9 +292,9 @@
                 max: {{ $max_ac_frequency }},
                 tickPositions: [{{ $min_ac_frequency }}, {{ $max_ac_frequency }}],
                 stops: [
-                    [0.1, '#DF5353'],                          // red
+                    [0.1,                          '#DF5353'], // red
                     [{{ $ac_frequency_nom_stop }}, '#52D017'], // yellow green
-                    [0.9, '#DF5353']                           // red
+                    [0.9,                          '#DF5353']  // red
                 ],
                 title: {
                     text: 'AC Frequency'
@@ -355,8 +305,8 @@
                 name: 'AC Frequency',
                 data: [{{ $measurements['ac_frequency'] }}],
                 dataLabels: {
-                    format: '<div class="text-center"><span style="font-size:25px;color:black">{y:.2f}</span><br/>' +
-                           '<span style="font-size:12px;color:silver">Hertz</span></div>'
+                    format: '<div class="text-center"><span class="value">{y:.2f}</span><br/>' +
+                            '<span class="unit">Hertz</span></div>'
                 },
                 tooltip: {
                     valueSuffix: ' Hz'
@@ -364,47 +314,6 @@
             }]
 
         }));
-
-        // Bring life to the dials
-        setInterval(function () {
-            $.getJSON('api/v1/measurements').done( function(data) {
-                var chart,
-                    series,
-                    dials = [
-                        'ac-power',
-                        'efficiency',
-                        'dc-power',
-                        'dc-voltage',
-                        'dc-current',
-                        'ac-voltage',
-                        'ac-current',
-                        'ac-frequency'
-                    ];
-                    
-                
-                    for (var index in dials) {
-                        chart = $('#' + dials[index]).highcharts();
-                        if (chart) {
-                            series = chart.series[0];
-                            points = series.points;
-                            value = data.measurements[dials[index].replace('-','_')];
-                            if (value) {
-                                if (points[0]) {
-                                    points[0].update(value);
-                                } else {
-                                    series.addPoint(value);
-                                }
-                            } else {
-                                if (points[0]) {
-                                    points[0].remove();
-                                }                                
-                            }
-                        }
-                    }
-
-            });
-
-        }, 2000);
 
     });
   </script>
