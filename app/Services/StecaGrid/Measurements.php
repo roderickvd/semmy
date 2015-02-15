@@ -27,7 +27,7 @@ class Measurements {
 
     const UPDATE_INTERVAL = 2;  // seconds
 
-    protected $measurements    = [];
+    protected $measurements = [];
     protected $last_updated_at = 0;
 
     /**
@@ -108,7 +108,7 @@ class Measurements {
     public function all()
     {
         $timestamp = time();
-        if ($this->last_updated_at - $timestamp < self::UPDATE_INTERVAL) {
+        if ($timestamp - $this->last_updated_at > self::UPDATE_INTERVAL) {
             $this->update_measurements();
             $this->last_updated_at = $timestamp;
         }
