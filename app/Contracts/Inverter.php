@@ -68,6 +68,13 @@ interface Inverter {
      */
     public function efficiency();
     
+    /**
+     * Get all values above as an associative array.
+     *
+     * @return array
+     */
+    public function measurements();
+
 }
 
 ?>

@@ -143,7 +143,7 @@
 
             series: [{
                 name: 'AC Power',
-                data: [{{ $ac_power }}],
+                data: [{{ $measurements['ac_power'] }}],
                 dataLabels: {
                     format: '<div class="text-center"><span style="font-size:25px;color:black">{y}</span><br/>' +
                            '<span style="font-size:12px;color:silver">Watt</span></div>'
@@ -173,7 +173,7 @@
 
             series: [{
                 name: 'Efficiency',
-                data: [{{ $efficiency }}],
+                data: [{{ $measurements['efficiency'] }}],
                 dataLabels: {
                     format: '<div class="text-center"><span style="font-size:25px;color:black">{y:.1f}</span><br/>' +
                            '<span style="font-size:12px;color:silver">%</span></div>'
@@ -202,7 +202,7 @@
 
             series: [{
                 name: 'DC Power',
-                data: [{{ $dc_power }}],
+                data: [{{ $measurements['dc_power'] }}],
                 dataLabels: {
                     format: '<div class="text-center"><span style="font-size:25px;color:black">{y}</span><br/>' +
                            '<span style="font-size:12px;color:silver">Watt</span></div>'
@@ -234,7 +234,7 @@
 
             series: [{
                 name: 'DC Voltage',
-                data: [{{ $dc_voltage }}],
+                data: [{{ $measurements['dc_voltage'] }}],
                 dataLabels: {
                     format: '<div class="text-center"><span style="font-size:25px;color:black">{y}</span><br/>' +
                            '<span style="font-size:12px;color:silver">Volt</span></div>'
@@ -264,7 +264,7 @@
 
             series: [{
                 name: 'DC Current',
-                data: [{{ $dc_current }}],
+                data: [{{ $measurements['dc_current'] }}],
                 dataLabels: {
                     format: '<div class="text-center"><span style="font-size:25px;color:black">{y:.1f}</span><br/>' +
                            '<span style="font-size:12px;color:silver">Ampere</span></div>'
@@ -294,7 +294,7 @@
 
             series: [{
                 name: 'AC Voltage',
-                data: [{{ $ac_voltage }}],
+                data: [{{ $measurements['ac_voltage'] }}],
                 dataLabels: {
                     format: '<div class="text-center"><span style="font-size:25px;color:black">{y}</span><br/>' +
                            '<span style="font-size:12px;color:silver">Volt</span></div>'
@@ -323,7 +323,7 @@
 
             series: [{
                 name: 'AC Current',
-                data: [{{ $ac_current }}],
+                data: [{{ $measurements['ac_current'] }}],
                 dataLabels: {
                     format: '<div class="text-center"><span style="font-size:25px;color:black">{y:.1f}</span><br/>' +
                            '<span style="font-size:12px;color:silver">Ampere</span></div>'
@@ -353,7 +353,7 @@
 
             series: [{
                 name: 'AC Frequency',
-                data: [{{ $ac_frequency }}],
+                data: [{{ $measurements['ac_frequency'] }}],
                 dataLabels: {
                     format: '<div class="text-center"><span style="font-size:25px;color:black">{y:.2f}</span><br/>' +
                            '<span style="font-size:12px;color:silver">Hertz</span></div>'
@@ -387,7 +387,7 @@
                         if (chart) {
                             series = chart.series[0];
                             points = series.points;
-                            value = data.measurements[dials[index]];
+                            value = data.measurements[dials[index].replace('-','_')];
                             if (value) {
                                 if (points[0]) {
                                     points[0].update(value);

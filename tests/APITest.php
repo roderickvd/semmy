@@ -29,14 +29,14 @@ class APITest extends TestCase {
         $this->assertEquals('Test Plant', $values->id->name);
 
         $this->assertEquals(2000, $values->id->power);
-        $this->assertEquals(1000.01, $values->measurements->{'ac-power'});
-        $this->assertEquals( 900.02, $values->measurements->{'dc-power'});
-        $this->assertEquals(  90.01, $values->measurements->{'efficiency'});
-        $this->assertEquals( 230.03, $values->measurements->{'ac-voltage'});
-        $this->assertEquals( 300.04, $values->measurements->{'dc-voltage'});
-        $this->assertEquals(   4.05, $values->measurements->{'ac-current'});
-        $this->assertEquals(   3.06, $values->measurements->{'dc-current'});
-        $this->assertEquals(  50.07, $values->measurements->{'ac-frequency'});
+        $this->assertEquals(1000.01, $values->measurements->ac_power);
+        $this->assertEquals( 900.02, $values->measurements->dc_power);
+        $this->assertEquals(  90.00, $values->measurements->efficiency, '', 0.01);
+        $this->assertEquals( 230.03, $values->measurements->ac_voltage);
+        $this->assertEquals( 300.04, $values->measurements->dc_voltage);
+        $this->assertEquals(   4.05, $values->measurements->ac_current);
+        $this->assertEquals(   3.06, $values->measurements->dc_current);
+        $this->assertEquals(  50.07, $values->measurements->ac_frequency);
 	}
 
 }

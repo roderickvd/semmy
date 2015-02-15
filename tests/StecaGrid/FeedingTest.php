@@ -97,4 +97,22 @@ class StecaGridFeedingTest extends TestCase {
         $this->assertEquals(49.99, $this->inverter->ac_frequency());
 	}
 
+	/**
+	 * Test that the StecaGrid service returns all measurements correctly.
+	 *
+	 * @return void
+	 */
+	public function testAllMeasurements()
+	{
+        $measurements = $this->inverter->measurements();
+        $this->assertArrayHasKey('ac_power', $measurements);
+        $this->assertArrayHasKey('dc_power', $measurements);
+        $this->assertArrayHasKey('ac_voltage', $measurements);
+        $this->assertArrayHasKey('dc_voltage', $measurements);
+        $this->assertArrayHasKey('ac_current', $measurements);
+        $this->assertArrayHasKey('dc_current', $measurements);
+        $this->assertArrayHasKey('ac_frequency', $measurements);
+        $this->assertArrayHasKey('efficiency', $measurements);
+	}
+
 }

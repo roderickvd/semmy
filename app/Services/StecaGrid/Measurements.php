@@ -3,7 +3,7 @@
 use DOMDocument;
 
 class Measurements {
- 
+
     /*
 	|--------------------------------------------------------------------------
     | StecaGrid Measurements
@@ -101,12 +101,11 @@ class Measurements {
     }
 
     /**
-     * Get and memoize the inverter measurements.
+     * Get and memoize all inverter measurements.
      *
-     * @param  string  $key
-     * @return number
+     * @return array
      */
-    public function get($key)
+    public function all()
     {
         $timestamp = time();
         if ($this->last_updated_at - $timestamp < self::UPDATE_INTERVAL) {
@@ -114,8 +113,20 @@ class Measurements {
             $this->last_updated_at = $timestamp;
         }
 
-        return $this->measurements[$key];
+        return $this->measurements;
     }
+
+    /**
+     * Get and memoize a particular inverter measurement.
+     *
+     * @param  string  $key
+     * @return number
+     */
+    public function get($key)
+    {
+        return $this->all()[$key];
+    }
+
 }
 
 ?>

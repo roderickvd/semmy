@@ -3,7 +3,7 @@
 use App\Contracts\Inverter as InverterContract;
 
 class StecaGrid implements InverterContract {
-    
+
     /*
 	|--------------------------------------------------------------------------
     | StecaGrid Inverter
@@ -18,9 +18,9 @@ class StecaGrid implements InverterContract {
     | Measurements class, so that the measurements may be memoized.
     |
     */
-    
+
     protected $measurements;
-      
+
 	public function __construct(StecaGrid\Measurements $measurements)
 	{
 		$this->measurements = $measurements;
@@ -35,7 +35,7 @@ class StecaGrid implements InverterContract {
     {
         return $this->measurements->get('ac_power');
     }
-    
+
     /**
      * Get the AC voltage from the inverter.
      *
@@ -45,7 +45,7 @@ class StecaGrid implements InverterContract {
     {
         return $this->measurements->get('ac_voltage');
     }
-    
+
     /**
      * Get the AC current from the inverter.
      *
@@ -55,7 +55,7 @@ class StecaGrid implements InverterContract {
     {
         return $this->measurements->get('ac_current');
     }
-    
+
     /**
      * Get the AC frequency from the inverter.
      *
@@ -65,7 +65,7 @@ class StecaGrid implements InverterContract {
     {
         return $this->measurements->get('ac_frequency');
     }
-    
+
     /**
      * Get the DC power from the inverter.
      *
@@ -75,7 +75,7 @@ class StecaGrid implements InverterContract {
     {
         return $this->measurements->get('dc_power');
     }
-    
+
     /**
      * Get the DC voltage from the inverter.
      *
@@ -85,7 +85,7 @@ class StecaGrid implements InverterContract {
     {
         return $this->measurements->get('dc_voltage');
     }
-    
+
     /**
      * Get the DC current from the inverter.
      *
@@ -95,7 +95,7 @@ class StecaGrid implements InverterContract {
     {
         return $this->measurements->get('dc_current');
     }
-    
+
     /**
      * Get the AC/DC conversion efficiency from the inverter.
      *
@@ -105,7 +105,17 @@ class StecaGrid implements InverterContract {
     {
         return $this->measurements->get('efficiency');
     }
-    
+
+    /**
+     * Get all values above as an associative array.
+     *
+     * @return array
+     */
+    public function measurements()
+    {
+        return $this->measurements->all();
+    }
+
 }
     
 ?>
