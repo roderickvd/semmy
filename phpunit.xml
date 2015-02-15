@@ -18,5 +18,7 @@
         <env name="APP_ENV" value="testing"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
+        <env name="PV_NAME" value="Test Plant"/>
+        <env name="PV_POWER" value="2000"/>
     </php>
 </phpunit>

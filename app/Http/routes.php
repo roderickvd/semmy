@@ -12,3 +12,4 @@
 */
 
 Route::get('/', 'MonitorController@index');
+Route::get('api/v1/measurements', 'APIController@measurements_v1');

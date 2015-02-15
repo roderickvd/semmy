@@ -88,7 +88,7 @@ class MonitorController extends Controller {
             'dc_voltage',
             'ac_current',
             'dc_current',
-            'ac_frequency',                
+            'ac_frequency',
             'max_dc_power',
             'max_dc_voltage',
             'dc_voltage_min_stop',

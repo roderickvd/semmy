@@ -365,6 +365,47 @@
 
         }));
 
+        // Bring life to the dials
+        setInterval(function () {
+            $.getJSON('api/v1/measurements').done( function(data) {
+                var chart,
+                    series,
+                    dials = [
+                        'ac-power',
+                        'efficiency',
+                        'dc-power',
+                        'dc-voltage',
+                        'dc-current',
+                        'ac-voltage',
+                        'ac-current',
+                        'ac-frequency'
+                    ];
+                    
+                
+                    for (var index in dials) {
+                        chart = $('#' + dials[index]).highcharts();
+                        if (chart) {
+                            series = chart.series[0];
+                            points = series.points;
+                            value = data.measurements[dials[index]];
+                            if (value) {
+                                if (points[0]) {
+                                    points[0].update(value);
+                                } else {
+                                    series.addPoint(value);
+                                }
+                            } else {
+                                if (points[0]) {
+                                    points[0].remove();
+                                }                                
+                            }
+                        }
+                    }
+
+            });
+
+        }, 2000);
+
     });
   </script>
 </body>
