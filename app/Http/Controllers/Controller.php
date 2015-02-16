@@ -8,7 +8,7 @@ abstract class Controller extends BaseController {
     protected $inverter;
     
 	/**
-	 * Create a new API controller instance.
+	 * Create a new controller instance.
 	 *
 	 * @param  \App\Contracts\Inverter  $inverter
 	 * @return void
