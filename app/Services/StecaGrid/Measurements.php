@@ -1,5 +1,6 @@
 <?php namespace App\Services\StecaGrid;
 
+use App\Facades\HTTP;
 use DOMDocument;
 
 class Measurements {
@@ -15,6 +16,7 @@ class Measurements {
     |
     */
 
+    const MEASUREMENTS_URI = '/gen.measurements.table.js';
     const COLUMN_MAPPING = [
         'dc_power'     =>  2,
         'dc_voltage'   =>  5,
@@ -27,8 +29,24 @@ class Measurements {
 
     const UPDATE_INTERVAL = 2;  // seconds
 
+    protected $ip_address;
     protected $measurements = [];
     protected $last_updated_at = 0;
+
+	/**
+	 * Create a new StecaGrid Measurements instance.
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+        $this->ip_address = env('INV_IP_ADDRESS', '127.0.0.1');
+
+        // Initialize an empty array, so the app works even if the inverter if offline.
+        foreach (self::COLUMN_MAPPING as $key => $value) {
+            $this->measurements[$key] = null;
+        }
+	}
 
     /**
      * Parse an inverter measurement.
@@ -55,19 +73,21 @@ class Measurements {
      */
     protected function get_measurements()
     {
-        $ip_address = env('INV_IP_ADDRESS', '127.0.0.1');
-        $response = file_get_contents("http://{$ip_address}/gen.measurements.table.js");
+        $url = "http://{$this->ip_address}" . self::MEASUREMENTS_URI;
+        $response = HTTP::get($url);
 
-        // Suppress errors regarding malformed HTML.
-        libxml_use_internal_errors(true);
+        if ($response) {
+            // Suppress errors regarding malformed HTML.
+            libxml_use_internal_errors(true);
 
-        $dom = new DOMDocument();
-        $dom->loadHTML($response);
-        $elements = $dom->getElementsByTagName('td');
+            $dom = new DOMDocument();
+            $dom->loadHTML($response);
+            $elements = $dom->getElementsByTagName('td');
 
-        foreach (self::COLUMN_MAPPING as $key => $index)
-        {
-            $this->parse_measurement($key, $elements[$index]->nodeValue);
+            foreach (self::COLUMN_MAPPING as $key => $index)
+            {
+                $this->parse_measurement($key, $elements[$index]->nodeValue);
+            }            
         }
     }
 

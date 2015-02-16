@@ -144,6 +144,8 @@ return [
 		'App\Providers\ConfigServiceProvider',
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
+        'App\Providers\InverterServiceProvider',
+        'App\Providers\DownloadServiceProvider',
 
 	],
 
@@ -173,7 +175,7 @@ return [
 		'Eloquent'  => 'Illuminate\Database\Eloquent\Model',
 		'Event'     => 'Illuminate\Support\Facades\Event',
 		'File'      => 'Illuminate\Support\Facades\File',
-		'Hash'      => 'Illuminate\Support\Facades\Hash',
+		'Hash'      => 'Illuminate\Support\Facades\Hash',        
 		'Input'     => 'Illuminate\Support\Facades\Input',
 		'Inspiring' => 'Illuminate\Foundation\Inspiring',
 		'Lang'      => 'Illuminate\Support\Facades\Lang',
@@ -192,6 +194,11 @@ return [
 		'URL'       => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
+
+		/*
+		 * Application Aliases...
+		 */
+        'HTTP'      => 'App\Facades\HTTP',
 
 	],
 

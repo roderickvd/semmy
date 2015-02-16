@@ -3,6 +3,7 @@
 use App\Contracts\Inverter as InverterContract;
 
 class DummyInverter implements InverterContract {
+
     public function ac_power()     { return 1000.01; }
     public function dc_power()     { return  900.02; }
     public function ac_voltage()   { return  230.03; }
@@ -28,6 +29,7 @@ class DummyInverter implements InverterContract {
             'efficiency'   => $this->efficiency()
         ];
     }
+
 }
-    
+
 ?>

@@ -1,7 +1,7 @@
 <?php
 
 class StecaGridStandbyTest extends TestCase {
-    
+
     protected $inverter;
 
     /**
@@ -11,13 +11,13 @@ class StecaGridStandbyTest extends TestCase {
      */
     public function setUp()
     {
-        global $standby;
-        
         parent::setUp();
 
-		require_once __DIR__ . './../Mocks/StecaGrid.php';
-        $standby = true;
-        $this->inverter = $this->app->make('App\Services\StecaGrid');
+        $this->inverter = $this->app->singleton('\App\Contracts\Inverter', 'App\Services\StecaGrid');
+        $this->inverter = $this->app->make('App\Contracts\Inverter');
+
+        require_once __DIR__.'./../Mocks/StecaGrid/StandbyResponse.php';
+        $this->app->singleton('HTTP', 'Mocks\StecaGrid\StandbyResponse');
     }
 
 	/**
@@ -67,7 +67,7 @@ class StecaGridStandbyTest extends TestCase {
 	 */
 	public function testDCVoltage()
 	{        
-        $this->assertEquals(0.10, $this->inverter->dc_voltage());
+        $this->assertEquals(0, $this->inverter->dc_voltage());
 	}
 
 	/**

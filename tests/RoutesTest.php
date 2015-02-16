@@ -11,7 +11,7 @@ class RoutesTest extends TestCase {
     {
         parent::setUp();
 
-		require_once __DIR__ . '/Mocks/DummyInverter.php';
+		require_once __DIR__.'/Mocks/DummyInverter.php';
         $this->app->singleton('App\Contracts\Inverter', 'Mocks\DummyInverter');
     }
 

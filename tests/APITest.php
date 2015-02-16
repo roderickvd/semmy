@@ -11,7 +11,7 @@ class APITest extends TestCase {
     {
         parent::setUp();
 
-		require_once __DIR__ . '/Mocks/DummyInverter.php';
+		require_once __DIR__.'/Mocks/DummyInverter.php';
         $this->app->singleton('App\Contracts\Inverter', 'Mocks\DummyInverter');
     }
 
@@ -28,7 +28,7 @@ class APITest extends TestCase {
         $this->assertEquals(1, $values->version);
         $this->assertEquals('Test Plant', $values->id->name);
 
-        $this->assertEquals(2000, $values->id->power);
+        $this->assertEquals(2000.00, $values->id->power);
         $this->assertEquals(1000.01, $values->measurements->ac_power);
         $this->assertEquals( 900.02, $values->measurements->dc_power);
         $this->assertEquals(  90.00, $values->measurements->efficiency, '', 0.01);

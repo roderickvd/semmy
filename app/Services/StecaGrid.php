@@ -1,6 +1,7 @@
 <?php namespace App\Services;
 
 use App\Contracts\Inverter as InverterContract;
+use App\Services\StecaGrid\Measurements as Measurements;
 
 class StecaGrid implements InverterContract {
 
@@ -21,9 +22,15 @@ class StecaGrid implements InverterContract {
 
     protected $measurements;
 
-	public function __construct(StecaGrid\Measurements $measurements)
+	/**
+	 * Create a new StecaGrid instance.
+	 *
+	 * @param  string  $ip_address
+	 * @return void
+	 */
+	public function __construct(Measurements $measurements)
 	{
-		$this->measurements = $measurements;
+        $this->measurements = $measurements;
 	}
 
     /**

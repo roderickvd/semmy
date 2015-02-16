@@ -1,7 +1,7 @@
 <?php
 
 class StecaGridFeedingTest extends TestCase {
-    
+
     protected $inverter;
 
     /**
@@ -13,8 +13,11 @@ class StecaGridFeedingTest extends TestCase {
     {
         parent::setUp();
 
-		require_once __DIR__ . './../Mocks/StecaGrid.php';
-        $this->inverter = $this->app->make('App\Services\StecaGrid');
+        $this->inverter = $this->app->singleton('\App\Contracts\Inverter', 'App\Services\StecaGrid');
+        $this->inverter = $this->app->make('App\Contracts\Inverter');
+
+        require_once __DIR__.'./../Mocks/StecaGrid/FeedingResponse.php';
+        $this->app->singleton('HTTP', 'Mocks\StecaGrid\FeedingResponse');
     }
 
 	/**

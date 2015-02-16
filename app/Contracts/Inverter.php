@@ -69,7 +69,8 @@ interface Inverter {
     public function efficiency();
     
     /**
-     * Get all values above as an associative array.
+     * Get all values above as an associative array. Your implementation
+     * must return the full array even if the inverter is offline.
      *
      * @return array
      */
