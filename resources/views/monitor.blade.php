@@ -112,9 +112,10 @@
                 max: 100,
                 tickPositions: [0, 100],
                 stops: [
-                    [0.90, '#DF5353'], // red
-                    [0.95, '#254117'], // dark forest green
-                    [0.98, '#52D017'], // yellow green
+                    [0.1,  '#DF5353'], // red
+                    [0.90, '#FF0000'], // yellow
+                    [0.92, '#254117'], // dark forest green
+                    [0.99, '#52D017'], // yellow green
                 ],
                 title: {
                     text: 'Efficiency'
@@ -172,9 +173,9 @@
                 tickPositions: [0, {{ $max_dc_voltage }}],
                 stops: [
                     [{{ $dc_voltage_min_stop }},     '#DF5353'], // red
-                    [{{ $dc_voltage_min_mpp_stop }}, '#254117'], // dark forest green
+                    [{{ $dc_voltage_min_mpp_stop }}, '#254117'], // yellow
                     [{{ $dc_voltage_nom_mpp_stop }}, '#52D017'], // yellow green
-                    [{{ $dc_voltage_max_mpp_stop }}, '#254117'], // dark forest green
+                    [{{ $dc_voltage_max_mpp_stop }}, '#254117'], // yellow
                     [0.9,                            '#DF5353']  // red
                 ],
                 title: {
