@@ -10,7 +10,7 @@ class Kernel extends HttpKernel {
 	 * @var array
 	 */
 	protected $middleware = [
-        //
+		//
 	];
 
 	/**
@@ -19,7 +19,7 @@ class Kernel extends HttpKernel {
 	 * @var array
 	 */
 	protected $routeMiddleware = [
-        //
+		//
 	];
 
 }

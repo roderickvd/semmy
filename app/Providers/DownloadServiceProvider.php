@@ -4,12 +4,12 @@ use Illuminate\Support\ServiceProvider;
 
 class DownloadServiceProvider extends ServiceProvider {
 
-    /**
-     * Indicates that the loading of this provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
+	/**
+	 * Indicates that the loading of this provider is deferred.
+	 *
+	 * @var bool
+	 */
+	protected $defer = true;
 
 	/**
 	 * Bootstrap any download services.
@@ -28,17 +28,17 @@ class DownloadServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-        $this->app->singleton('HTTP', 'App\Services\DownloadService');
+		$this->app->singleton('HTTP', 'App\Services\DownloadService');
 	}
 
-    /**
-     * Get the services provided by this provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return ['HTTP'];
-    }
+	/**
+	 * Get the services provided by this provider.
+	 *
+	 * @return array
+	 */
+	public function provides()
+	{
+		return ['HTTP'];
+	}
 
 }

@@ -5,17 +5,17 @@ use App\Contracts\Inverter;
 
 abstract class Controller extends BaseController {
 
-    protected $inverter;
-    
+	protected $inverter;
+	
 	/**
 	 * Create a new controller instance.
 	 *
-	 * @param  \App\Contracts\Inverter  $inverter
+	 * @param  \App\Contracts\Inverter	$inverter
 	 * @return void
 	 */
-    public function __construct(Inverter $inverter)
-    {
-        $this->inverter = $inverter;
-    }
+	public function __construct(Inverter $inverter)
+	{
+		$this->inverter = $inverter;
+	}
 
 }

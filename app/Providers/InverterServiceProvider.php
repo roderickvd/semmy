@@ -4,12 +4,12 @@ use Illuminate\Support\ServiceProvider;
 
 class InverterServiceProvider extends ServiceProvider {
 
-    /**
-     * Indicates that the loading of this provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
+	/**
+	 * Indicates that the loading of this provider is deferred.
+	 *
+	 * @var bool
+	 */
+	protected $defer = true;
 
 	/**
 	 * Bootstrap any inverter services.
@@ -28,23 +28,23 @@ class InverterServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-        switch (env('INV_DRIVER')) {
-            case 'stecagrid':
-                $driver = 'App\Services\StecaGrid';
-                break;
-        }
+		switch (env('INV_DRIVER')) {
+			case 'stecagrid':
+				$driver = 'App\Services\StecaGrid';
+				break;
+		}
 
 		$this->app->singleton('App\Contracts\Inverter', $driver);
 	}
 
-    /**
-     * Get the services provided by this provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return ['App\Contracts\Inverter'];
-    }
+	/**
+	 * Get the services provided by this provider.
+	 *
+	 * @return array
+	 */
+	public function provides()
+	{
+		return ['App\Contracts\Inverter'];
+	}
 
 }

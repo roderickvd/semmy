@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Facade;
 
 class HTTP extends Facade {
 
-    protected static function getFacadeAccessor() { return 'HTTP'; }
+	protected static function getFacadeAccessor() { return 'HTTP'; }
 
 }
 
