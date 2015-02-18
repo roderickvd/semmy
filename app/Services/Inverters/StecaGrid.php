@@ -20,6 +20,11 @@ class StecaGrid implements InverterContract {
 	|
 	*/
 
+	/**
+	 * The instance of our measurements delegate.
+	 *
+	 * @var App\Services\Inverters\StecaGrid\Measurements
+	 */
 	protected $measurements;
 
 	/**

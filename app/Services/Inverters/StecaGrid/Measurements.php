@@ -16,7 +16,18 @@ class Measurements {
 	|
 	*/
 
+	/**
+	 * The URI to the measurements JavaScript.
+	 *
+	 * @const string
+	 */
 	const MEASUREMENTS_URI = '/gen.measurements.table.js';
+
+	/**
+	 * The mapping of the measurements HTML to our associative array.
+	 *
+	 * @const array
+	 */
 	const COLUMN_MAPPING = [
 		'dc_power'	   =>  2,
 		'dc_voltage'   =>  5,
@@ -27,11 +38,33 @@ class Measurements {
 		'ac_power'	   => 20
 	];
 
+	/**
+	 * The minimum interval before refreshing the measurements.
+	 *
+	 * @const int
+	 */
 	const UPDATE_INTERVAL = 2;	// seconds
 
-	protected $ip_address;
-	protected $measurements = [];
+	/**
+	 * The timestamp of the last measurements update.
+	 *
+	 * @var int
+	 */
 	protected $last_updated_at = 0;
+
+	/**
+	 * The IP address to the inverter.
+	 *
+	 * @var string
+	 */
+	protected $ip_address;
+
+	/**
+	 * The associative array of measurements.
+	 *
+	 * @var array
+	 */
+	protected $measurements = [];
 
 	/**
 	 * Create a new StecaGrid Measurements instance.

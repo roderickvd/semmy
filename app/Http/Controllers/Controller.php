@@ -5,6 +5,11 @@ use App\Contracts\Inverter;
 
 abstract class Controller extends BaseController {
 
+	/**
+	 * The configured inverter.
+	 *
+	 * @var App\Contracts\Inverter
+	 */
 	protected $inverter;
 	
 	/**

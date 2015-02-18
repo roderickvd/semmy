@@ -4,19 +4,79 @@ use App\Contracts\Inverter as InverterContract;
 
 class DummyInverter implements InverterContract {
 
+	/*
+	|--------------------------------------------------------------------------
+	| Dummy Inverter
+	|--------------------------------------------------------------------------
+	|
+	| This dummy inverter immediately returns static values.
+	|
+	*/
+
+	/**
+	 * Get the AC power from the inverter.
+	 *
+	 * @return number
+	 */
     public function ac_power()     { return 1000.01; }
+
+	/**
+	 * Get the DC power from the inverter.
+	 *
+	 * @return number
+	 */
     public function dc_power()     { return  900.02; }
+
+	/**
+	 * Get the AC voltage from the inverter.
+	 *
+	 * @return number
+	 */
     public function ac_voltage()   { return  230.03; }
+
+	/**
+	 * Get the DC voltage from the inverter.
+	 *
+	 * @return number
+	 */
     public function dc_voltage()   { return  300.04; }
+
+	/**
+	 * Get the AC current from the inverter.
+	 *
+	 * @return number
+	 */
     public function ac_current()   { return    4.05; }
+
+	/**
+	 * Get the DC current from the inverter.
+	 *
+	 * @return number
+	 */
     public function dc_current()   { return    3.06; }
+
+	/**
+	 * Get the AC frequency from the inverter.
+	 *
+	 * @return number
+	 */
     public function ac_frequency() { return   50.07; }
 
+	/**
+	 * Get the AC/DC conversion efficiency from the inverter.
+	 *
+	 * @return number
+	 */
     public function efficiency()
     {
         return ($this->dc_power() / $this->ac_power() * 100);
     }
 
+	/**
+	 * Get all values above as an associative array.
+	 *
+	 * @return array
+	 */
     public function measurements() {
         return [
             'ac_power'     => $this->ac_power(),

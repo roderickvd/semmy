@@ -12,7 +12,7 @@ class OfflineResponse {
     */
 
 	/**
-	 * Download an inverter resource.
+	 * Return a null response.
 	 *
 	 * @param  string  $uri
 	 * @return void
