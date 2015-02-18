@@ -2,6 +2,10 @@
 
 class TestCase extends Illuminate\Foundation\Testing\TestCase {
 
+	const SUPPORTED_INVERTERS = [
+		'StecaGrid'
+	];
+
 	/**
 	 * The configured inverter.
 	 *
