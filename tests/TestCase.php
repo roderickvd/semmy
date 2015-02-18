@@ -11,7 +11,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase {
 	 *
 	 * @var App\Contracts\Inverter
 	 */
-	public $inverter;
+	protected $inverter;
 
 	/**
 	 * Creates the application.
@@ -33,7 +33,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase {
 	 * @param string  $mock
 	 * @return void
 	 */
-	public function setInverter($mock)
+	protected function setInverter($mock)
 	{
         $this->app->singleton('App\Contracts\Inverter', 'App\Services\Inverters\\'.$mock);
         $this->inverter = $this->app->make('App\Contracts\Inverter');		
@@ -46,7 +46,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase {
 	 * @param string  $mock
 	 * @return void
 	 */
-	public function setResponse($namespace, $mock)
+	protected function setResponse($namespace, $mock)
 	{
 		if ($namespace) {
 			require_once __DIR__."/Mocks/Responses/{$namespace}/{$mock}.php";
