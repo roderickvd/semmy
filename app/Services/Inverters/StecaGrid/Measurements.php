@@ -125,32 +125,34 @@ class Measurements {
 	}
 
 	/**
-	 * Calculate and update the inverter efficiency.
-	 *
-	 * @return void
-	 */
-	protected function calculate_efficiency()
-	{
-		$ac_power = $this->measurements['ac_power'];
-		$dc_power = $this->measurements['dc_power'];
-
-		$efficiency = null;
-		if ($dc_power > 0) {
-			$efficiency = ($ac_power / $dc_power) * 100;
-		}
-		
-		$this->measurements['efficiency'] = $efficiency;
-	}
-
-	/**
 	 * Update the inverter measurements.
 	 *
 	 * @return void
 	 */
 	protected function update_measurements()
 	{
+		$prev_ac_power = $this->measurements['ac_power'];
+		$prev_dc_power = $this->measurements['dc_power'];
+
 		$this->get_measurements();
-		$this->calculate_efficiency();
+
+		// The AC power measurements of the StecaGrid lag behind the DC measurements.
+		// As a consequence the instantaneous AC/DC conversion efficiency can be
+		// greater than 100%. Try to prevent this by averaging two consecutive
+		// measurements.
+
+		$new_ac_power = $this->measurements['ac_power'];
+		$new_dc_power = $this->measurements['dc_power'];
+
+		$avg_ac_power = ($prev_ac_power + $new_ac_power) / 2;
+		$avg_dc_power = ($prev_dc_power + $new_dc_power) / 2;
+
+		$efficiency = null;
+		if ($avg_dc_power > 0) {
+			$efficiency = ($avg_ac_power / $avg_dc_power) * 100;
+		}
+
+		$this->measurements['efficiency'] = $efficiency;
 	}
 
 	/**
