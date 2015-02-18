@@ -1,4 +1,4 @@
-<?php namespace Mocks\StecaGrid;
+<?php namespace Responses\StecaGrid;
 
 class StandbyResponse {
 

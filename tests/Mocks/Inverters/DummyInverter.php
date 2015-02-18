@@ -1,4 +1,4 @@
-<?php namespace Mocks;
+<?php namespace App\Services\Inverters;
 
 use App\Contracts\Inverter as InverterContract;
 

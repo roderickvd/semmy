@@ -1,4 +1,4 @@
-<?php namespace App\Services\StecaGrid;
+<?php namespace App\Services\Inverters\StecaGrid;
 
 use App\Facades\HTTP;
 use DOMDocument;

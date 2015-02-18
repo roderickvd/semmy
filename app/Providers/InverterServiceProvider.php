@@ -30,11 +30,11 @@ class InverterServiceProvider extends ServiceProvider {
 	{
 		switch (env('INV_DRIVER')) {
 			case 'stecagrid':
-				$driver = 'App\Services\StecaGrid';
+				$driver = 'StecaGrid';
 				break;
 		}
 
-		$this->app->singleton('App\Contracts\Inverter', $driver);
+		$this->app->singleton('App\Contracts\Inverter', 'App\Services\Inverters\\'.$driver);
 	}
 
 	/**

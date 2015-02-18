@@ -1,7 +1,7 @@
-<?php namespace App\Services;
+<?php namespace App\Services\Inverters;
 
 use App\Contracts\Inverter as InverterContract;
-use App\Services\StecaGrid\Measurements as Measurements;
+use App\Services\Inverters\StecaGrid\Measurements as Measurements;
 
 class StecaGrid implements InverterContract {
 

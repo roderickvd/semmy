@@ -3,6 +3,13 @@
 class TestCase extends Illuminate\Foundation\Testing\TestCase {
 
 	/**
+	 * The configured inverter.
+	 *
+	 * @var App\Contracts\Inverter
+	 */
+	public $inverter;
+
+	/**
 	 * Creates the application.
 	 *
 	 * @return \Illuminate\Foundation\Application
@@ -14,6 +21,52 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase {
 		$app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
 
 		return $app;
+	}
+
+	/**
+	 * Set up a particular inverter adapter.
+	 *
+	 * @param string  $mock
+	 * @return void
+	 */
+	public function setInverter($mock)
+	{
+        $this->app->singleton('App\Contracts\Inverter', 'App\Services\Inverters\\'.$mock);
+        $this->inverter = $this->app->make('App\Contracts\Inverter');		
+	}
+
+	/**
+	 * Set up a particular inverter response.
+	 *
+	 * @param string  $namespace
+	 * @param string  $mock
+	 * @return void
+	 */
+	public function setResponse($namespace, $mock)
+	{
+		if ($namespace) {
+			require_once __DIR__."/Mocks/Responses/{$namespace}/{$mock}.php";
+			$this->app->singleton('HTTP', 'Responses\\'.$namespace.'\\'.$mock);
+
+		} else {
+			require_once __DIR__."/Mocks/Responses/{$mock}.php";
+			$this->app->singleton('HTTP', 'Responses\\'.$mock);
+
+		}
+
+	}
+
+	/**
+	 * Set up the dummy inverter by default.
+	 *
+	 * @return void
+	 */
+	public function setUp()
+	{
+		parent::setUp();
+
+		require_once __DIR__.'/Mocks/Inverters/DummyInverter.php';
+		$this->setInverter('DummyInverter');
 	}
 
 }
