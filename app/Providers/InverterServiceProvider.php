@@ -32,6 +32,11 @@ class InverterServiceProvider extends ServiceProvider {
 			case 'stecagrid':
 				$driver = 'StecaGrid';
 				break;
+
+			default:
+				$this->app->abort(501, 'Configured driver not supported.');
+				break;
+
 		}
 
 		$this->app->singleton('App\Contracts\Inverter', 'App\Services\Inverters\\'.$driver);
