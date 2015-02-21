@@ -77,6 +77,7 @@ class Measurements {
 	/**
 	 * Create a new StecaGrid Measurements instance.
 	 *
+	 * @param  App\Contracts\HTTP  $http
 	 * @return void
 	 */
 	public function __construct(HTTP $http)
