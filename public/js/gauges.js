@@ -46,7 +46,8 @@ var gaugeOptions = {
 				y: -56,
 				borderWidth: 0,
 				useHTML: true
-			}
+			},
+			wrap: false
 		}
 	}
 };
