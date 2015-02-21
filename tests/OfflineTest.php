@@ -33,6 +33,7 @@ class OfflineTest extends TestCase {
 			$this->assertEquals(null, $this->inverter->ac_current());
 			$this->assertEquals(null, $this->inverter->dc_current());
 			$this->assertEquals(null, $this->inverter->ac_frequency());
+			$this->assertEquals(null, $this->inverter->generation());
 
 			$measurements = $this->inverter->measurements();
 
@@ -44,6 +45,7 @@ class OfflineTest extends TestCase {
 			$this->assertArrayHasKey('ac_current', $measurements);
 			$this->assertArrayHasKey('dc_current', $measurements);
 			$this->assertArrayHasKey('ac_frequency', $measurements);
+			$this->assertArrayHasKey('generation', $measurements);
 		}
 	}
 

@@ -18,49 +18,49 @@ class DummyInverter implements InverterContract {
 	 *
 	 * @return number
 	 */
-    public function ac_power()     { return 1000.01; }
+    public function ac_power() { return 1000.01; }
 
 	/**
 	 * Get the DC power from the inverter.
 	 *
 	 * @return number
 	 */
-    public function dc_power()     { return  900.02; }
+    public function dc_power() { return 900.02; }
 
 	/**
 	 * Get the AC voltage from the inverter.
 	 *
 	 * @return number
 	 */
-    public function ac_voltage()   { return  230.03; }
+    public function ac_voltage() { return 230.03; }
 
 	/**
 	 * Get the DC voltage from the inverter.
 	 *
 	 * @return number
 	 */
-    public function dc_voltage()   { return  300.04; }
+    public function dc_voltage() { return 300.04; }
 
 	/**
 	 * Get the AC current from the inverter.
 	 *
 	 * @return number
 	 */
-    public function ac_current()   { return    4.05; }
+    public function ac_current() { return 4.05; }
 
 	/**
 	 * Get the DC current from the inverter.
 	 *
 	 * @return number
 	 */
-    public function dc_current()   { return    3.06; }
+    public function dc_current() { return 3.06; }
 
 	/**
 	 * Get the AC frequency from the inverter.
 	 *
 	 * @return number
 	 */
-    public function ac_frequency() { return   50.07; }
+    public function ac_frequency() { return 50.07; }
 
 	/**
 	 * Get the AC/DC conversion efficiency from the inverter.
@@ -71,6 +71,13 @@ class DummyInverter implements InverterContract {
     {
         return ($this->dc_power() / $this->ac_power() * 100);
     }
+
+	/**
+	 * Get today's yield from the inverter.
+	 *
+	 * @return number
+	 */
+    public function generation() { return 4000; }
 
 	/**
 	 * Get all values above as an associative array.
@@ -86,7 +93,8 @@ class DummyInverter implements InverterContract {
             'ac_current'   => $this->ac_current(),
             'dc_current'   => $this->dc_current(),
             'ac_frequency' => $this->ac_frequency(),
-            'efficiency'   => $this->efficiency()
+            'efficiency'   => $this->efficiency(),
+			'generation'   => $this->generation()
         ];
     }
 

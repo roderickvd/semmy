@@ -69,6 +69,13 @@ interface Inverter {
 	public function efficiency();
 	
 	/**
+	 * Get today's yield from the inverter.
+	 *
+	 * @return number
+	 */
+	public function generation();
+
+	/**
 	 * Get all values above as an associative array. Your implementation
 	 * must return the full array even if the inverter is offline.
 	 *

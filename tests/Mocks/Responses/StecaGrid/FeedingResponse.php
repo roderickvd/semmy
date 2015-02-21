@@ -29,7 +29,13 @@ class FeedingResponse implements HTTPContract {
 	 */
     public static function get($url)
     {
-        return self::FEEDING_RESPONSE;
+		if (strpos($url, 'gen.yield.day.chart.js') === false) {
+			return self::FEEDING_RESPONSE;
+
+		} else {
+			return file_get_contents(__DIR__.'/js/3900.js');
+
+		}
     }
 
 	public static function post($url, $data)

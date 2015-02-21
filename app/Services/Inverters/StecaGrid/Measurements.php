@@ -24,6 +24,13 @@ class Measurements {
 	const MEASUREMENTS_URI = '/gen.measurements.table.js';
 
 	/**
+	 * The URI to the yield JavaScript.
+	 *
+	 * @const string
+	 */
+	const GENERATION_URI = '/gen.yield.day.chart.js';
+
+	/**
 	 * The mapping of the measurements HTML to our associative array.
 	 *
 	 * @const array
@@ -86,6 +93,7 @@ class Measurements {
 		$this->ip_address = env('INV_IP_ADDRESS', '127.0.0.1');
 
 		// Initialize an empty array, so the app works even if the inverter if offline.
+		$this->measurements['generation'] = null;
 		foreach (self::COLUMN_MAPPING as $key => $value) {
 			$this->measurements[$key] = null;
 		}
@@ -113,15 +121,25 @@ class Measurements {
 	}
 
 	/**
-	 * Get the inverter measurements.
+	 * Get an inverter resource.
+	 *
+	 * @param  string  $uri
+	 * @return string
+	 */
+	protected function get_resource($uri)
+	{
+		$url = "http://{$this->ip_address}{$uri}";
+		return $this->http->get($url);
+	}
+
+	/**
+	 * Fetch the instantaneous inverter measurements.
 	 *
 	 * @return void
 	 */
-	protected function get_measurements()
+	protected function fetch_measurements()
 	{
-		$url = "http://{$this->ip_address}" . self::MEASUREMENTS_URI;
-		$response = $this->http->get($url);
-
+		$response = $this->get_resource(self::MEASUREMENTS_URI);
 		if ($response) {
 			$dom = new DOMDocument();
 			$dom->loadHTML($response);
@@ -135,6 +153,20 @@ class Measurements {
 	}
 
 	/**
+	 * Fetch the inverter yield for today.
+	 *
+	 * @return void
+	 */
+	protected function fetch_generation()
+	{
+		$response = $this->get_resource(self::GENERATION_URI);
+		if ($response) {
+			preg_match('/(([1-9]\d*\.){0,1}\d+)kWh/', $response, $matches);
+			$this->measurements['generation'] = intval(str_replace('.', '', $matches[1]));
+		}
+	}
+
+	/**
 	 * Update the inverter measurements.
 	 *
 	 * @return void
@@ -144,7 +176,8 @@ class Measurements {
 		$prev_ac_power = $this->measurements['ac_power'];
 		$prev_dc_power = $this->measurements['dc_power'];
 
-		$this->get_measurements();
+		$this->fetch_measurements();
+		$this->fetch_generation();
 
 		// The AC power measurements of the StecaGrid lag behind the DC measurements.
 		// As a consequence the instantaneous AC/DC conversion efficiency can be

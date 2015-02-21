@@ -18,38 +18,46 @@
 <body>
 
 	<header class="row">
-	<div class="small-12 columns">
-		<h1>{{ $pv_name }} ({{ number_format($pv_power, 0, ',', '.') }} Wp)</h1>
-	</div>
+		<div class="small-12 columns">
+			<h1>{{ $pv_name }} ({{ number_format($pv_power, 0, ',', '.') }} Wp)</h1>
+		</div>
 	</header>
 
 	<div class="row">
-	<div class="small-4 columns" id="ac-power">
-	</div>
-	<div class="small-4 columns" id="efficiency">
-	</div>
-	<div class="small-4 columns text-center" id="weather">
-		<h2>Weather</h2>
-		<p>No data to display.</p>
-	</div>		
+		<div class="small-12 columns">
+			<p>Generated <span id="generation">{{ number_format($measurements['generation'], 0, ',', '.') }}</span> Wh so far,
+				which comes down to <span id="pv_efficiency">{{ round($measurements['generation'] / $pv_power, 2) }}</span> kWh/kWp.
+			</p>
+		</div>
 	</div>
 
 	<div class="row">
-	<div class="small-4 columns" id="dc-power">
-	</div>
-	<div class="small-4 columns" id="dc-voltage">
-	</div>
-	<div class="small-4 columns" id="dc-current">
-	</div>
+		<div class="small-4 columns" id="ac-power">
+		</div>
+		<div class="small-4 columns" id="efficiency">
+		</div>
+		<div class="small-4 columns text-center" id="weather">
+			<h2>Weather</h2>
+			<p>No data to display.</p>
+		</div>		
 	</div>
 
 	<div class="row">
-	<div class="small-4 columns" id="ac-voltage">
+		<div class="small-4 columns" id="dc-power">
+		</div>
+		<div class="small-4 columns" id="dc-voltage">
+		</div>
+		<div class="small-4 columns" id="dc-current">
+		</div>
 	</div>
-	<div class="small-4 columns" id="ac-current">
-	</div>
-	<div class="small-4 columns" id="ac-frequency">
-	</div>
+
+	<div class="row">
+		<div class="small-4 columns" id="ac-voltage">
+		</div>
+		<div class="small-4 columns" id="ac-current">
+		</div>
+		<div class="small-4 columns" id="ac-frequency">
+		</div>
 	</div>
 
 	<footer class="row">
@@ -70,6 +78,7 @@
 	<script src="js/highcharts/modules/no-data-to-display.js"></script>
 
 	<script src="js/gauges.js"></script>
+	<script src="js/refresh.js"></script>
 
 	<script>
 	$(document).foundation();

@@ -95,4 +95,14 @@ class StecaGridStandbyTest extends TestCase {
         $this->assertEquals(null, $this->inverter->ac_frequency());
 	}
 
+	/**
+	 * Test that the StecaGrid service returns the correct yield.
+	 *
+	 * @return void
+	 */
+	public function testGeneration()
+	{        
+        $this->assertEquals(900, $this->inverter->generation());
+	}
+
 }

@@ -29,7 +29,13 @@ class StandbyResponse implements HTTPContract {
 	 */
     public static function get($url)
     {
-        return self::STANDBY_RESPONSE;
+		if (strpos($url, 'gen.yield.day.chart.js') === false) {
+			return self::STANDBY_RESPONSE;
+
+		} else {
+			return file_get_contents(__DIR__.'/js/900.js');
+
+		}
     }
 
 	public static function post($url, $data)

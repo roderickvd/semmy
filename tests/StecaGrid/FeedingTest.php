@@ -96,6 +96,16 @@ class StecaGridFeedingTest extends TestCase {
 	}
 
 	/**
+	 * Test that the StecaGrid service returns the correct yield.
+	 *
+	 * @return void
+	 */
+	public function testGeneration()
+	{        
+        $this->assertEquals(3900, $this->inverter->generation());
+	}
+
+	/**
 	 * Test that the StecaGrid service returns all measurements correctly.
 	 *
 	 * @return void
@@ -111,6 +121,7 @@ class StecaGridFeedingTest extends TestCase {
         $this->assertArrayHasKey('dc_current', $measurements);
         $this->assertArrayHasKey('ac_frequency', $measurements);
         $this->assertArrayHasKey('efficiency', $measurements);
+		$this->assertArrayHasKey('generation', $measurements);
 	}
 
 }
