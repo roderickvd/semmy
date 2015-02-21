@@ -38,7 +38,7 @@ class FeedingResponse implements HTTPContract {
 		}
     }
 
-	public static function post($url, $data)
+	public static function post($url, $data, $headers)
 	{
 		//
 	}

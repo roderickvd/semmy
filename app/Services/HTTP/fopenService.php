@@ -2,7 +2,7 @@
 
 use App\Contracts\HTTP as HTTPContract;
 
-class cURLService implements HTTPContract {
+class fopenService implements HTTPContract {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,21 +26,41 @@ class cURLService implements HTTPContract {
 	}
 
 	/**
+	 * Builds a header string for the stream context.
+	 *
+	 * @param  array  $headers
+	 * @return string
+	 */
+	protected static function build_headers($headers)
+	{
+		$header_string = '';
+		foreach ($headers as $header) {
+			$header_string = $header_string . $header . "\r\n";
+		}
+
+		return $header_string;
+	}
+
+	/**
 	 * Create a HTTP resource.
 	 *
 	 * @param  string  $url
 	 * @param  string  $data
+	 * @param  array   $headers
 	 * @return string
 	 */
-	public static function post($url, $data)
+	public static function post($url, $data, $headers)
 	{
 		$content = http_build_query($data);
+
+		$headers[] = "Content-Type: application/x-www-form-urlencoded";
+		$headers[] = "Content-Length: " . strlen($content);
+
 		$options = [
 		    'http' => [
-		        'header'  => "Content-Type: application/x-www-form-urlencoded\r\n" .
-							 "Content-Length: " . strlen($data) . "\r\n",
 		        'method'  => 'POST',
-		        'content' => http_build_query($content),
+		        'header'  => self::build_headers($headers),
+		        'content' => $content,
 			]
 		];
 

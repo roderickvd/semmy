@@ -36,14 +36,18 @@ class cURLService implements HTTPContract {
 	 *
 	 * @param  string  $url
 	 * @param  string  $data
+	 * @param  array   $headers
 	 * @return string
 	 */
-	public static function post($url, $data)
+	public static function post($url, $data, $headers)
 	{
 		$session = curl_init($url);
+		$content = http_build_query($data);
+
+		curl_setopt($session, CURLOPT_HTTPHEADER,     $headers);
+		curl_setopt($session, CURLOPT_POST,           TRUE);
+		curl_setopt($session, CURLOPT_POSTFIELDS,     $content);
 		curl_setopt($session, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($session, CURLOPT_POST, TRUE);
-		curl_setopt($session, CURLOPT_POSTFIELDS, $data);
 
 		$response = curl_exec($session);
 

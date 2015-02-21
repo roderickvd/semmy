@@ -24,9 +24,10 @@ interface HTTP {
 	 *
 	 * @param  string  $url
 	 * @param  string  $data
+	 * @param  array   $headers
 	 * @return string
 	 */
-	public static function post($url, $data);
+	public static function post($url, $data, $headers);
 
 }
 
