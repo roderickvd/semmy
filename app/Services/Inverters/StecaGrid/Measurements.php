@@ -1,6 +1,6 @@
 <?php namespace App\Services\Inverters\StecaGrid;
 
-use App\Facades\HTTP;
+use App\Contracts\HTTP;
 use DOMDocument;
 
 class Measurements {
@@ -66,13 +66,22 @@ class Measurements {
 	 */
 	protected $measurements = [];
 
+
+	/**
+	 * The HTTP service.
+	 *
+	 * @var App\Contracts\HTTP
+	 */
+	protected $http;
+
 	/**
 	 * Create a new StecaGrid Measurements instance.
 	 *
 	 * @return void
 	 */
-	public function __construct()
+	public function __construct(HTTP $http)
 	{
+		$this->http = $http;
 		$this->ip_address = env('INV_IP_ADDRESS', '127.0.0.1');
 
 		// Initialize an empty array, so the app works even if the inverter if offline.
@@ -110,7 +119,7 @@ class Measurements {
 	protected function get_measurements()
 	{
 		$url = "http://{$this->ip_address}" . self::MEASUREMENTS_URI;
-		$response = HTTP::get($url);
+		$response = $this->http->get($url);
 
 		if ($response) {
 			$dom = new DOMDocument();

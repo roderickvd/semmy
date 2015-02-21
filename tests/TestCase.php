@@ -50,11 +50,11 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase {
 	{
 		if ($namespace) {
 			require_once __DIR__."/Mocks/Responses/{$namespace}/{$mock}.php";
-			$this->app->singleton('HTTP', 'Responses\\'.$namespace.'\\'.$mock);
+			$this->app->singleton('App\Contracts\HTTP', 'Responses\\'.$namespace.'\\'.$mock);
 
 		} else {
 			require_once __DIR__."/Mocks/Responses/{$mock}.php";
-			$this->app->singleton('HTTP', 'Responses\\'.$mock);
+			$this->app->singleton('App\Contracts\HTTP', 'Responses\\'.$mock);
 
 		}
 

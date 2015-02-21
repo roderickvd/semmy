@@ -145,7 +145,7 @@ return [
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
 		'App\Providers\InverterServiceProvider',
-		'App\Providers\DownloadServiceProvider',
+		'App\Providers\HTTPServiceProvider',
 
 	],
 
@@ -194,11 +194,6 @@ return [
 		'URL'		=> 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'		=> 'Illuminate\Support\Facades\View',
-
-		/*
-		 * Application Aliases...
-		 */
-		'HTTP'		=> 'App\Facades\HTTP',
 
 	],
 

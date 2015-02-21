@@ -1,6 +1,8 @@
 <?php namespace Responses\StecaGrid;
 
-class StandbyResponse {
+use App\Contracts\HTTP as HTTPContract;
+
+class StandbyResponse implements HTTPContract {
 
     /*
 	|--------------------------------------------------------------------------
@@ -25,10 +27,15 @@ class StandbyResponse {
 	 * @param  string  $uri
 	 * @return string
 	 */
-    public function get($url)
+    public static function get($url)
     {
         return self::STANDBY_RESPONSE;
     }
+
+	public static function post($url, $data)
+	{
+		//
+	}
 
 }
 

@@ -1,6 +1,8 @@
 <?php namespace Responses;
 
-class OfflineResponse {
+use App\Contracts\HTTP as HTTPContract;
+
+class OfflineResponse implements HTTPContract {
 
     /*
 	|--------------------------------------------------------------------------
@@ -17,10 +19,15 @@ class OfflineResponse {
 	 * @param  string  $uri
 	 * @return void
 	 */
-    public function get($url)
+    public static function get($url)
     {
         return;
     }
+
+	public static function post($url, $data)
+	{
+		//
+	}
 
 }
 

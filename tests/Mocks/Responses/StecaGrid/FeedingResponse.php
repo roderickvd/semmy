@@ -1,6 +1,8 @@
 <?php namespace Responses\StecaGrid;
 
-class FeedingResponse {
+use App\Contracts\HTTP as HTTPContract;
+
+class FeedingResponse implements HTTPContract {
 
     /*
 	|--------------------------------------------------------------------------
@@ -25,10 +27,15 @@ class FeedingResponse {
 	 * @param  string  $uri
 	 * @return string
 	 */
-    public function get($url)
+    public static function get($url)
     {
         return self::FEEDING_RESPONSE;
     }
+
+	public static function post($url, $data)
+	{
+		//
+	}
 
 }
 

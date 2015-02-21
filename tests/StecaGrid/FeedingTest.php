@@ -11,8 +11,8 @@ class StecaGridFeedingTest extends TestCase {
     {
         parent::setUp();
 
-		$this->setInverter('StecaGrid');
 		$this->setResponse('StecaGrid', 'FeedingResponse');
+		$this->setInverter('StecaGrid');
     }
 
 	/**

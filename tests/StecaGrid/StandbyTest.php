@@ -11,8 +11,8 @@ class StecaGridStandbyTest extends TestCase {
     {
         parent::setUp();
 
-		$this->setInverter('StecaGrid');
 		$this->setResponse('StecaGrid', 'StandbyResponse');
+		$this->setInverter('StecaGrid');
     }
 
 	/**
