@@ -35,7 +35,9 @@ class Measurements {
 	 *
 	 * @const array
 	 */
-	const COLUMN_MAPPING = [
+
+	// Array constants are not supported before PHP 5.6.
+	private static $COLUMN_MAPPING = [
 		'dc_power'	   =>  2,
 		'dc_voltage'   =>  5,
 		'dc_current'   =>  8,
@@ -94,7 +96,7 @@ class Measurements {
 
 		// Initialize an empty array, so the app works even if the inverter if offline.
 		$this->measurements['generation'] = null;
-		foreach (self::COLUMN_MAPPING as $key => $value) {
+		foreach (self::$COLUMN_MAPPING as $key => $value) {
 			$this->measurements[$key] = null;
 		}
 
@@ -145,9 +147,9 @@ class Measurements {
 			$dom->loadHTML($response);
 			$elements = $dom->getElementsByTagName('td');
 
-			foreach (self::COLUMN_MAPPING as $key => $index)
+			foreach (self::$COLUMN_MAPPING as $key => $index)
 			{
-				$this->parse_measurement($key, $elements[$index]->nodeValue);
+				$this->parse_measurement($key, $elements->item($index)->nodeValue);
 			}			 
 		}
 	}
