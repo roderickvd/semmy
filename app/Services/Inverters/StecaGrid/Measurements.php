@@ -79,6 +79,9 @@ class Measurements {
 		foreach (self::COLUMN_MAPPING as $key => $value) {
 			$this->measurements[$key] = null;
 		}
+
+		// Suppress errors regarding malformed HTML.
+		libxml_use_internal_errors(true);
 	}
 
 	/**
@@ -110,9 +113,6 @@ class Measurements {
 		$response = HTTP::get($url);
 
 		if ($response) {
-			// Suppress errors regarding malformed HTML.
-			libxml_use_internal_errors(true);
-
 			$dom = new DOMDocument();
 			$dom->loadHTML($response);
 			$elements = $dom->getElementsByTagName('td');
