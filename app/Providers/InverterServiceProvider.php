@@ -5,13 +5,6 @@ use Illuminate\Support\ServiceProvider;
 class InverterServiceProvider extends ServiceProvider {
 
 	/**
-	 * Indicates that the loading of this provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = true;
-
-	/**
 	 * Bootstrap any inverter services.
 	 *
 	 * @return void
@@ -40,16 +33,6 @@ class InverterServiceProvider extends ServiceProvider {
 		}
 
 		$this->app->singleton('App\Contracts\Inverter', 'App\Services\Inverters\\'.$driver);
-	}
-
-	/**
-	 * Get the services provided by this provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return ['App\Contracts\Inverter'];
 	}
 
 }
