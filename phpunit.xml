@@ -22,5 +22,8 @@
         <env name="PV_POWER" value="2000"/>
 		<env name="PVOUTPUT_API_KEY" value="PVOutput API Key"/>
 		<env name="PVOUTPUT_SID" value="1234567890"/>
+		<env name="SONNENERTRAG_PB_ID" value="1234567890"/>
+		<env name="SONNENERTRAG_USERNAME" value="Sonnenertrag username"/>
+		<env name="SONNENERTRAG_PASSWORD" value="Sonnenertrag secret"/>
     </php>
 </phpunit>

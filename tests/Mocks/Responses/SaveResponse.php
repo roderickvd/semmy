@@ -44,6 +44,9 @@ class SaveResponse implements HTTPContract {
 	{
 		self::$data    = http_build_query($data);
 		self::$headers = $headers;
+
+		// Most callers do not care, except for the SonnenertragLogger.
+		return 'true';
 	}
 
 }
