@@ -2,6 +2,7 @@
 
 use App\Contracts\HTTP;
 use App\Contracts\Inverter;
+use App\Contracts\WeatherStation;
 
 class PVOutputLogger {
 	
@@ -36,6 +37,13 @@ class PVOutputLogger {
 	protected $http;
 
 	/**
+	 * The weather station.
+	 *
+	 * @var App\Contracts\WeatherStation
+	 */
+	protected $weather_station;
+
+	/**
 	 * The inverter.
 	 *
 	 * @var App\Contracts\Inverter
@@ -63,10 +71,11 @@ class PVOutputLogger {
 	 * @param  App\Contracts\Inverter  $inverter;
 	 * @return void
 	 */
-	public function __construct(HTTP $http, Inverter $inverter)
+	public function __construct(HTTP $http, Inverter $inverter, WeatherStation $weather_station)
 	{
-		$this->http     = $http;
-		$this->inverter = $inverter;
+		$this->http            = $http;
+		$this->inverter        = $inverter;
+		$this->weather_station = $weather_station;
 
 		$this->sid     = env('PVOUTPUT_SID');
 		$this->api_key = env('PVOUTPUT_API_KEY');
@@ -117,6 +126,14 @@ class PVOutputLogger {
 				'v2' => $ac_power,
 				'v6' => $dc_voltage
 			];
+
+			if ($this->weather_station) {
+
+				$status = $status + [
+					'v5' => $this->weather_station->temperature()
+				];
+
+			}
 
 			$this->http->post(self::PVOUTPUT_HOST, self::STATUS_URI, $status, $headers);
 

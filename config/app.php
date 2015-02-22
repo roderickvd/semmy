@@ -146,6 +146,7 @@ return [
 		'App\Providers\RouteServiceProvider',
 		'App\Providers\InverterServiceProvider',
 		'App\Providers\HTTPServiceProvider',
+		'App\Providers\WeatherStationServiceProvider',
 
 	],
 

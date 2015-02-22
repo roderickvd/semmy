@@ -25,5 +25,7 @@
 		<env name="SONNENERTRAG_PB_ID" value="1234567890"/>
 		<env name="SONNENERTRAG_USERNAME" value="Sonnenertrag username"/>
 		<env name="SONNENERTRAG_PASSWORD" value="Sonnenertrag secret"/>
+		<env name="OPENWEATHERMAP_API_KEY" value="OpenWeatherMap API Key"/>
+		<env name="OPENWEATHERMAP_LOCATION" value="Amsterdam,nl"/>		
     </php>
 </phpunit>
