@@ -23,7 +23,7 @@ class APIController extends Controller {
 		$pv_name  = env('PV_NAME', 'My Solar Power Plant');
 		$pv_power = env('PV_POWER', 6700);
 
-		$response = [
+		$measurements = [
 			'version' => 1,
 
 			'id' => [
@@ -34,7 +34,7 @@ class APIController extends Controller {
 			'measurements' => $this->inverter->measurements()
 		];
 
-		return view('api/v1/measurements', compact('response'));
+		return response()->json($measurements);
 	}
 
 }
