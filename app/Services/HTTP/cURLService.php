@@ -21,10 +21,21 @@ class cURLService extends HTTPCookieService implements HTTPContract {
 	 */
 
 	// Array constants are not supported before PHP 5.6.
-	protected static $default_curlopts = [
-		CURLOPT_HEADERFUNCTION => __CLASS__.'::save_cookies',
-		CURLOPT_RETURNTRANSFER => TRUE
-	];
+	protected static $default_curlopts;
+
+	/**
+	 * Create a new cURL HTTP instance.
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+		// Concatenating in the class property is not supported before PHP 5.6.
+	    self::$default_curlopts = [
+	   		CURLOPT_HEADERFUNCTION => __CLASS__.'::save_cookies',
+	   		CURLOPT_RETURNTRANSFER => TRUE
+	   	];
+	}
 
 	/**
 	 * Access a HTTP resource.

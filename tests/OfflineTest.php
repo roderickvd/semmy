@@ -22,7 +22,7 @@ class OfflineTest extends TestCase {
 	 */
 	public function testOffline()
 	{        
-		foreach (self::SUPPORTED_INVERTERS as $inverter) {
+		foreach (self::$SUPPORTED_INVERTERS as $inverter) {
 			$this->setInverter($inverter);
 
 			$this->assertEquals(null, $this->inverter->ac_power());
