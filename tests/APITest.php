@@ -27,3 +27,5 @@ class APITest extends TestCase {
 	}
 
 }
+
+?>

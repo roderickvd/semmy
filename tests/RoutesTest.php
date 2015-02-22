@@ -25,3 +25,5 @@ class RoutesTest extends TestCase {
 	}
 
 }
+
+?>

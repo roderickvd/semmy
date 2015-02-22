@@ -106,3 +106,5 @@ class StecaGridStandbyTest extends TestCase {
 	}
 
 }
+
+?>
