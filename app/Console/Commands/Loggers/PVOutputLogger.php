@@ -1,27 +1,32 @@
-<?php namespace App\Services\Loggers;
+<?php namespace App\Console\Commands\Loggers;
 
 use App\Contracts\HTTP;
 use App\Contracts\Inverter;
 
-class PVOutput {
+class PVOutputLogger {
 	
 	/*
 	|--------------------------------------------------------------------------
 	| PVOutput Logger
 	|--------------------------------------------------------------------------
 	|
-	| This delegate gets and memoizes the StecaGrid measurements. By hiding
-	| the measurements array from the delegator, we ensure that they are
-	| properly memoized.
+	| Sends inverter measurements to the PVOutput API.
 	|
 	*/
 
 	/**
-	 * The URL to the PVOutput Status Service.
+	 * The PVOutput host.
 	 *
 	 * @const string
 	 */
-	const STATUS_URL = 'http://pvoutput.org/service/r2/addstatus.jsp';
+	const PVOUTPUT_HOST = 'http://pvoutput.org';
+
+	/**
+	 * The URI to the PVOutput Status Service.
+	 *
+	 * @const string
+	 */
+	const STATUS_URI = '/service/r2/addstatus.jsp';
 
 	/**
 	 * The HTTP service.
@@ -70,26 +75,28 @@ class PVOutput {
 	/**
 	 * Update PVOutput with a given set of measurements at a certain time.
 	 *
-	 * @param  int    $timestamp
-	 * @param  array  $measurements
+	 * @param  int  $timestamp
+	 * @param  int  $generation
+	 * @param  int  $ac_power
+	 * @param  int  $dc_voltage
 	 * @return void
 	 */
 	public function update_with($timestamp, $generation, $ac_power, $dc_voltage)
 	{
 		$headers = [
-			"X-Pvoutput-Apikey:{$this->api_key}",
-			"X-Pvoutput-SystemId:{$this->sid}"
+			"X-Pvoutput-Apikey: {$this->api_key}",
+			"X-Pvoutput-SystemId: {$this->sid}"
 		];
 
 		$status = [
 			'd'  => date('Ymd', $timestamp),
-			't'  => date('H:i'),
+			't'  => date('H:i', $timestamp),
 			'v1' => $generation,
 			'v2' => $ac_power,
 			'v6' => $dc_voltage
 		];
 
-		$this->http->post(self::STATUS_URL, $status, $headers);
+		$this->http->post(self::PVOUTPUT_HOST, self::STATUS_URI, $status, $headers);
 	}
 
 	/**

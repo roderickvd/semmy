@@ -1,4 +1,4 @@
-<?php namespace App\Console\Commands\Loggers;
+<?php namespace App\Console\Commands;
 
 use App;
 use Illuminate\Console\Command;
@@ -29,7 +29,7 @@ class Update extends Command {
 	 */
 	public function fire()
 	{
-		$pvoutput = App::make('App\Services\Loggers\PVOutput');
+		$pvoutput = App::make('App\Console\Commands\Loggers\PVOutputLogger');
 		$pvoutput->update();
 	}
 
