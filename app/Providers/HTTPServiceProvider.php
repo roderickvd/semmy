@@ -1,6 +1,7 @@
 <?php namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Log;
 
 class HTTPServiceProvider extends ServiceProvider {
 
