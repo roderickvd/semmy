@@ -26,9 +26,10 @@ class FeedingResponse implements HTTPContract {
 	 *
 	 * @param  string  $host
 	 * @param  string  $uri
+	 * @param  array   $headers
 	 * @return string
 	 */
-    public static function get($host, $uri)
+    public static function get($host, $uri, $headers = [])
     {
 		if (strpos($uri, 'gen.yield.day.chart.js') === false) {
 			return self::FEEDING_RESPONSE;
@@ -39,7 +40,7 @@ class FeedingResponse implements HTTPContract {
 		}
     }
 
-	public static function post($host, $uri, $data, $headers)
+	public static function post($host, $uri, $data, $headers = [])
 	{
 		//
 	}

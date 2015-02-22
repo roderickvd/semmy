@@ -33,14 +33,15 @@ class SaveResponse implements HTTPContract {
 	 *
 	 * @param  string  $host
 	 * @param  string  $uri
+	 * @param  array   $headers
 	 * @return string
 	 */
-    public static function get($host, $uri)
+    public static function get($host, $uri, $headers = [])
     {
 		//
     }
 
-	public static function post($host, $uri, $data, $headers)
+	public static function post($host, $uri, $data, $headers = [])
 	{
 		self::$data    = http_build_query($data);
 		self::$headers = $headers;

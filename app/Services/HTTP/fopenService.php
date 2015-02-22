@@ -20,10 +20,13 @@ class fopenService extends HTTPCookieService implements HTTPContract {
 	 * @param  string  $host
 	 * @param  string  $uri
 	 * @param  array   $options
+	 * @param  array   $headers
 	 * @return string
 	 */
-	protected static function access($host, $uri, $options)
+	protected static function access($host, $uri, $options, $headers)
 	{
+		$options['http']['header'] = implode("\r\n", self::add_cookies($headers));
+
 		$context  = stream_context_create($options);
 		$response = file_get_contents(self::init_url($host, $uri), false, $context);
 
@@ -39,17 +42,12 @@ class fopenService extends HTTPCookieService implements HTTPContract {
 	 *
 	 * @param  string  $host
 	 * @param  string  $uri
+	 * @param  array   $headers
 	 * @return string
 	 */
-	public static function get($host, $uri)
+	public static function get($host, $uri, $headers = [])
 	{
-		$options = [
-		    'http' => [
-		        'header'  => self::add_cookies([])
-			]
-		];
-
-		return self::access($host, $uri, $options);
+		return self::access($host, $uri, [], $headers);
 	}
 
 	/**
@@ -61,7 +59,7 @@ class fopenService extends HTTPCookieService implements HTTPContract {
 	 * @param  array   $headers
 	 * @return string
 	 */
-	public static function post($host, $uri, $data, $headers)
+	public static function post($host, $uri, $data, $headers = [])
 	{
 		$content = http_build_query($data);
 
@@ -71,12 +69,11 @@ class fopenService extends HTTPCookieService implements HTTPContract {
 		$options = [
 		    'http' => [
 		        'method'  => 'POST',
-		        'header'  => implode("\r\n", self::add_cookies($headers)),
 		        'content' => $content,
 			]
 		];
 
-		return self::access($host, $uri, $options);
+		return self::access($host, $uri, $options, $headers);
 	}
 
 }

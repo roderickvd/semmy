@@ -18,14 +18,15 @@ class OfflineResponse implements HTTPContract {
 	 *
 	 * @param  string  $host
 	 * @param  string  $uri
+	 * @param  array   $headers
 	 * @return void
 	 */
-    public static function get($host, $uri)
+    public static function get($host, $uri, $headers = [])
     {
         return;
     }
 
-	public static function post($host, $uri, $data, $headers)
+	public static function post($host, $uri, $data, $headers = [])
 	{
 		//
 	}

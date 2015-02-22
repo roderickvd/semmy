@@ -32,10 +32,15 @@ class cURLService extends HTTPCookieService implements HTTPContract {
 	 * @param  string  $host
 	 * @param  string  $uri
 	 * @param  array   $options
+	 * @param  array   $headers
 	 * @return string
 	 */
-	protected static function access($host, $uri, $options)
+	protected static function access($host, $uri, $options, $headers)
 	{
+		$options = $options + [
+			CURLOPT_HTTPHEADER => self::add_cookies($headers)
+		];
+
 		$session = curl_init(self::init_url($host, $uri));
 		curl_setopt_array($session, self::$default_curlopts + $options);
 
@@ -50,15 +55,12 @@ class cURLService extends HTTPCookieService implements HTTPContract {
 	 *
 	 * @param  string  $host
 	 * @param  string  $uri
+	 * @param  array   $headers
 	 * @return string
 	 */
-	public static function get($host, $uri)
+	public static function get($host, $uri, $headers = [])
 	{
-		$options = [
-			CURLOPT_HTTPHEADER => self::add_cookies([])
-		];
-
-		return self::access($host, $uri, $options);
+		return self::access($host, $uri, [], $headers);
 	}
 
 	/**
@@ -69,16 +71,15 @@ class cURLService extends HTTPCookieService implements HTTPContract {
 	 * @param  array   $headers
 	 * @return string
 	 */
-	public static function post($host, $uri, $data, $headers)
+	public static function post($host, $uri, $data, $headers = [])
 	{
 		$content = http_build_query($data);
 		$options = [
-			CURLOPT_HTTPHEADER => self::add_cookies($headers),
 			CURLOPT_POST       => TRUE,
 			CURLOPT_POSTFIELDS => $content
 		];
 
-		return self::access($host, $uri, $options);
+		return self::access($host, $uri, $options, $headers);
 	}
 
 }
