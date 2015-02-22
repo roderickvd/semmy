@@ -57,7 +57,7 @@ $(function () {
 				efficiency = generation / data.id.power;
 
 				$('#generation').text(addThousandsSeperator(generation));
-				$('#pv_efficiency').text(efficiency.toFixed(2));
+				$('#pv_efficiency').text(efficiency.toFixed(2).toString().replace(".", ","));
 
 		});
 

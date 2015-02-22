@@ -26,7 +26,7 @@
 	<div class="row">
 		<div class="small-12 columns">
 			<p>Generated <span id="generation">{{ number_format($measurements['generation'], 0, ',', '.') }}</span> Wh so far,
-				which comes down to <span id="pv_efficiency">{{ round($measurements['generation'] / $pv_power, 2) }}</span> kWh/kWp.
+				which comes down to <span id="pv_efficiency">{{ number_format($measurements['generation'] / $pv_power, 2, ',', '.') }}</span> kWh/kWp.
 			</p>
 		</div>
 	</div>
