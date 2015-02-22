@@ -91,8 +91,13 @@ class Measurements {
 	 */
 	public function __construct(HTTP $http)
 	{
+		$this->ip_address = env('INV_IP_ADDRESS');
+		if (!$this->ip_address) {
+			abort(500, 'No IP address configured for StecaGrid inverter.');
+
+		}
+
 		$this->http = $http;
-		$this->ip_address = env('INV_IP_ADDRESS', '127.0.0.1');
 
 		// Initialize an empty array, so the app works even if the inverter if offline.
 		$this->measurements['generation'] = null;

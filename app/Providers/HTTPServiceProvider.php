@@ -1,7 +1,6 @@
 <?php namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Log;
 
 class HTTPServiceProvider extends ServiceProvider {
 
@@ -36,7 +35,7 @@ class HTTPServiceProvider extends ServiceProvider {
 			$driver = 'fopenService';
 
 		} else {
-			Log::error('Load the cURL module or enable allow_url_fopen in your PHP configuration.');
+			abort(500, 'Load the cURL module or enable allow_url_fopen in your PHP configuration.');
 
 		}
 

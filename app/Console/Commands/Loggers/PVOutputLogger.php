@@ -70,6 +70,12 @@ class PVOutputLogger {
 
 		$this->sid     = env('PVOUTPUT_SID');
 		$this->api_key = env('PVOUTPUT_API_KEY');
+
+		if (!$this->is_configured()) {
+			abort(500, 'PVOutput configuration incomplete.');
+
+		}
+			
 	}
 
 	/**

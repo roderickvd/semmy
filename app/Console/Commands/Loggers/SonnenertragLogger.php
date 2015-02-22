@@ -86,6 +86,11 @@ class SonnenertragLogger {
 		$this->pb_id    = env('SONNENERTRAG_PB_ID');
 		$this->username = env('SONNENERTRAG_USERNAME');
 		$this->password = env('SONNENERTRAG_PASSWORD');
+
+		if (!$this->is_configured()) {
+			abort(500, 'Sonnenertrag configuration incomplete.');
+
+		}
 	}
 
 	/**
