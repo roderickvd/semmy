@@ -73,6 +73,20 @@ class PVOutputLogger {
 	}
 
 	/**
+	 * Check if PVOutput is fully configured.
+	 *
+	 * @return boolean
+	 */
+	protected function is_configured()
+	{
+		if ($this->sid && $this->api_key) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Update PVOutput with a given set of measurements at a certain time.
 	 *
 	 * @param  int  $timestamp
@@ -83,20 +97,24 @@ class PVOutputLogger {
 	 */
 	public function update_with($timestamp, $generation, $ac_power, $dc_voltage)
 	{
-		$headers = [
-			"X-Pvoutput-Apikey: {$this->api_key}",
-			"X-Pvoutput-SystemId: {$this->sid}"
-		];
+		if ($this->is_configured()) {
 
-		$status = [
-			'd'  => date('Ymd', $timestamp),
-			't'  => date('H:i', $timestamp),
-			'v1' => $generation,
-			'v2' => $ac_power,
-			'v6' => $dc_voltage
-		];
+			$headers = [
+				"X-Pvoutput-Apikey: {$this->api_key}",
+				"X-Pvoutput-SystemId: {$this->sid}"
+			];
 
-		$this->http->post(self::PVOUTPUT_HOST, self::STATUS_URI, $status, $headers);
+			$status = [
+				'd'  => date('Ymd', $timestamp),
+				't'  => date('H:i', $timestamp),
+				'v1' => $generation,
+				'v2' => $ac_power,
+				'v6' => $dc_voltage
+			];
+
+			$this->http->post(self::PVOUTPUT_HOST, self::STATUS_URI, $status, $headers);
+
+		}
 	}
 
 	/**
@@ -106,14 +124,18 @@ class PVOutputLogger {
 	 */
 	public function update()
 	{
-		$measurements = $this->inverter->measurements();
-		$timestamp = time();
+		if ($this->is_configured()) {
 
-		$generation = $measurements['generation'];
-		$ac_power   = $measurements['ac_power'];
-		$dc_voltage = $measurements['dc_voltage'];
+			$measurements = $this->inverter->measurements();
+			$timestamp = time();
 
-		$this->update_with($timestamp, $generation, $ac_power, $dc_voltage);
+			$generation = $measurements['generation'];
+			$ac_power   = $measurements['ac_power'];
+			$dc_voltage = $measurements['dc_voltage'];
+
+			$this->update_with($timestamp, $generation, $ac_power, $dc_voltage);
+
+		}
 	}
 
 }
