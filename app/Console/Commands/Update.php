@@ -29,8 +29,11 @@ class Update extends Command {
 	 */
 	public function fire()
 	{
-		$pvoutput = App::make('App\Console\Commands\Loggers\PVOutputLogger');
+		$pvoutput     = App::make('App\Console\Commands\Loggers\PVOutputLogger');
+		$sonnenertrag = App::make('App\Console\Commands\Loggers\SonnenertragLogger');
+
 		$pvoutput->update();
+		$sonnenertrag->update();
 	}
 
 }

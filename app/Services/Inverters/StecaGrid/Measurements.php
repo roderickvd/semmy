@@ -37,7 +37,7 @@ class Measurements {
 	 */
 
 	// Array constants are not supported before PHP 5.6.
-	private static $COLUMN_MAPPING = [
+	protected static $COLUMN_MAPPING = [
 		'dc_power'	   =>  2,
 		'dc_voltage'   =>  5,
 		'dc_current'   =>  8,
@@ -130,8 +130,8 @@ class Measurements {
 	 */
 	protected function get_resource($uri)
 	{
-		$url = "http://{$this->ip_address}{$uri}";
-		return $this->http->get($url);
+		$host = "http://{$this->ip_address}";
+		return $this->http->get($host, $uri);
 	}
 
 	/**

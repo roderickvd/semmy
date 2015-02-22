@@ -24,12 +24,13 @@ class StandbyResponse implements HTTPContract {
 	/**
 	 * Return the sample response.
 	 *
+	 * @param  string  $host
 	 * @param  string  $uri
 	 * @return string
 	 */
-    public static function get($url)
+    public static function get($host, $uri)
     {
-		if (strpos($url, 'gen.yield.day.chart.js') === false) {
+		if (strpos($uri, 'gen.yield.day.chart.js') === false) {
 			return self::STANDBY_RESPONSE;
 
 		} else {
@@ -38,7 +39,7 @@ class StandbyResponse implements HTTPContract {
 		}
     }
 
-	public static function post($url, $data, $headers)
+	public static function post($host, $uri, $data, $headers)
 	{
 		//
 	}

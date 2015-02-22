@@ -2,7 +2,7 @@
 
 use App\Contracts\HTTP as HTTPContract;
 
-class fopenService implements HTTPContract {
+class fopenService extends HTTPCookieService implements HTTPContract {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -15,41 +15,53 @@ class fopenService implements HTTPContract {
 	*/
 
 	/**
-	 * Retrieve a HTTP resource.
+	 * Access a HTTP resource.
 	 *
-	 * @param  string  $url
+	 * @param  string  $host
+	 * @param  string  $uri
+	 * @param  array   $options
 	 * @return string
 	 */
-	public static function get($url)
+	protected static function access($host, $uri, $options)
 	{
-		return file_get_contents($url);
+		$context  = stream_context_create($options);
+		$response = file_get_contents(self::init_url($host, $uri), false, $context);
+
+		foreach ($http_response_header as $header_line) {
+			self::save_cookies($context, $header_line);
+		}
+
+		return $response;
 	}
 
 	/**
-	 * Builds a header string for the stream context.
+	 * Retrieve a HTTP resource.
 	 *
-	 * @param  array  $headers
+	 * @param  string  $host
+	 * @param  string  $uri
 	 * @return string
 	 */
-	protected static function build_headers($headers)
+	public static function get($host, $uri)
 	{
-		$header_string = '';
-		foreach ($headers as $header) {
-			$header_string = $header_string . $header . "\r\n";
-		}
+		$options = [
+		    'http' => [
+		        'header'  => self::add_cookies([])
+			]
+		];
 
-		return $header_string;
+		return self::access($host, $uri, $options);
 	}
 
 	/**
 	 * Create a HTTP resource.
 	 *
-	 * @param  string  $url
+	 * @param  string  $host
+	 * @param  string  $uri
 	 * @param  string  $data
 	 * @param  array   $headers
 	 * @return string
 	 */
-	public static function post($url, $data, $headers)
+	public static function post($host, $uri, $data, $headers)
 	{
 		$content = http_build_query($data);
 
@@ -59,13 +71,12 @@ class fopenService implements HTTPContract {
 		$options = [
 		    'http' => [
 		        'method'  => 'POST',
-		        'header'  => self::build_headers($headers),
+		        'header'  => implode("\r\n", self::add_cookies($headers)),
 		        'content' => $content,
 			]
 		];
 
-		$context  = stream_context_create($options);
-		return file_get_contents($url, false, $context);
+		return self::access($host, $uri, $options);
 	}
 
 }

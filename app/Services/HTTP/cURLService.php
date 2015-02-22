@@ -2,7 +2,7 @@
 
 use App\Contracts\HTTP as HTTPContract;
 
-class cURLService implements HTTPContract {
+class cURLService extends HTTPCookieService implements HTTPContract {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -15,20 +15,50 @@ class cURLService implements HTTPContract {
 	*/
 
 	/**
-	 * Retrieve a HTTP resource.
+	 * The default cURL options.
 	 *
-	 * @param  string  $url
+	 * @const array
+	 */
+
+	// Array constants are not supported before PHP 5.6.
+	protected static $default_curlopts = [
+		CURLOPT_HEADERFUNCTION => __CLASS__.'::save_cookies',
+		CURLOPT_RETURNTRANSFER => TRUE
+	];
+
+	/**
+	 * Access a HTTP resource.
+	 *
+	 * @param  string  $host
+	 * @param  string  $uri
+	 * @param  array   $options
 	 * @return string
 	 */
-	public static function get($url)
+	protected static function access($host, $uri, $options)
 	{
-		$session = curl_init($url);
-		curl_setopt($session, CURLOPT_RETURNTRANSFER, TRUE);
+		$session = curl_init(self::init_url($host, $uri));
+		curl_setopt_array($session, self::$default_curlopts + $options);
 
 		$response = curl_exec($session);
-
 		curl_close($session);
+
 		return $response;
+	}
+
+	/**
+	 * Retrieve a HTTP resource.
+	 *
+	 * @param  string  $host
+	 * @param  string  $uri
+	 * @return string
+	 */
+	public static function get($host, $uri)
+	{
+		$options = [
+			CURLOPT_HTTPHEADER => self::add_cookies([])
+		];
+
+		return self::access($host, $uri, $options);
 	}
 
 	/**
@@ -39,20 +69,16 @@ class cURLService implements HTTPContract {
 	 * @param  array   $headers
 	 * @return string
 	 */
-	public static function post($url, $data, $headers)
+	public static function post($host, $uri, $data, $headers)
 	{
-		$session = curl_init($url);
 		$content = http_build_query($data);
+		$options = [
+			CURLOPT_HTTPHEADER => self::add_cookies($headers),
+			CURLOPT_POST       => TRUE,
+			CURLOPT_POSTFIELDS => $content
+		];
 
-		curl_setopt($session, CURLOPT_HTTPHEADER,     $headers);
-		curl_setopt($session, CURLOPT_POST,           TRUE);
-		curl_setopt($session, CURLOPT_POSTFIELDS,     $content);
-		curl_setopt($session, CURLOPT_RETURNTRANSFER, TRUE);
-
-		$response = curl_exec($session);
-
-		curl_close($session);
-		return $response;
+		return self::access($host, $uri, $options);
 	}
 
 }
