@@ -11,7 +11,8 @@ class Kernel extends ConsoleKernel {
 	 * @var array
 	 */
 	protected $commands = [
-		'App\Console\Commands\Update',
+		'App\Console\Commands\LogPVOutput',
+		'App\Console\Commands\LogSonnenertrag'
 	];
 
 	/**
@@ -22,8 +23,11 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-		$schedule->command('loggers:update')
+		$schedule->command('log:pvoutput')
 				 ->everyFiveMinutes();
+
+		$schedule->command('log:sonnenertrag')
+				 ->dailyAt('23:55');
 	}
 
 }

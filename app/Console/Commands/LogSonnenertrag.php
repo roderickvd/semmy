@@ -6,21 +6,21 @@ use Illuminate\Foundation\Inspiring;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class Update extends Command {
+class LogSonnenertrag extends Command {
 
 	/**
 	 * The console command name.
 	 *
 	 * @var string
 	 */
-	protected $name = 'loggers:update';
+	protected $name = 'log:sonnenertrag';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Update the loggers with the instantaneous measurements';
+	protected $description = "Update Sonnenertrag with today's measurements";
 
 	/**
 	 * Execute the console command.
@@ -29,11 +29,7 @@ class Update extends Command {
 	 */
 	public function fire()
 	{
-		$pvoutput     = App::make('App\Console\Commands\Loggers\PVOutputLogger');
-		$sonnenertrag = App::make('App\Console\Commands\Loggers\SonnenertragLogger');
-
-		$pvoutput->update();
-		$sonnenertrag->update();
+		App::make('App\Console\Commands\Loggers\SonnenertragLogger')->update();
 	}
 
 }
