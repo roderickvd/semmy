@@ -36,7 +36,8 @@ class APIController extends Controller {
 
 		];
 
-		return response()->json($measurements);
+		// Cache for 10 seconds to not hammer the inverter
+		return response()->json($measurements)->setTtl(self::INVERTER_TTL);
 	}
 
 	/**
@@ -51,7 +52,8 @@ class APIController extends Controller {
 			'temperature' => $weather_station->temperature()
 		];
 
-		return response()->json($weather);
+		// Cache for 10 minutes to save external API requests
+		return response()->json($weather)->setTtl(self::WEATHER_TTL);
 	}
 
 }

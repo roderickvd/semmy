@@ -4,8 +4,108 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "24c3946acc997e3f3eca7fc5c99585b2",
+    "hash": "5a6205f9397d16629d21d661aa118b16",
     "packages": [
+        {
+            "name": "barryvdh/laravel-httpcache",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barryvdh/laravel-httpcache.git",
+                "reference": "ffc802cc2992e569b5e6fe0e7b0cf15683c1cf86"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barryvdh/laravel-httpcache/zipball/ffc802cc2992e569b5e6fe0e7b0cf15683c1cf86",
+                "reference": "ffc802cc2992e569b5e6fe0e7b0cf15683c1cf86",
+                "shasum": ""
+            },
+            "require": {
+                "barryvdh/laravel-stack-middleware": "0.2.*",
+                "illuminate/support": "5.0.x",
+                "php": ">=5.4.0",
+                "symfony/console": "~2.6",
+                "symfony/http-kernel": "~2.6"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Barryvdh\\HttpCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "HttpCache for Laravel 5",
+            "keywords": [
+                "cache",
+                "esi",
+                "httpcache",
+                "laravel"
+            ],
+            "time": "2015-02-18 09:11:01"
+        },
+        {
+            "name": "barryvdh/laravel-stack-middleware",
+            "version": "v0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barryvdh/laravel-stack-middleware.git",
+                "reference": "40b2917fdb62a46a3352ccc927e9c8e9016a5cbe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barryvdh/laravel-stack-middleware/zipball/40b2917fdb62a46a3352ccc927e9c8e9016a5cbe",
+                "reference": "40b2917fdb62a46a3352ccc927e9c8e9016a5cbe",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.0.x",
+                "php": ">=5.4.0",
+                "symfony/http-kernel": "~2.6"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Barryvdh\\StackMiddleware\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "Stack Middleware for Laravel 5",
+            "keywords": [
+                "StackPHP",
+                "laravel",
+                "middleware",
+                "stack"
+            ],
+            "time": "2015-02-18 08:01:48"
+        },
         {
             "name": "classpreloader/classpreloader",
             "version": "1.2.0",
@@ -2792,7 +2892,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "barryvdh/laravel-httpcache": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

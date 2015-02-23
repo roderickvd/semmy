@@ -137,6 +137,11 @@ return [
 		'Illuminate\View\ViewServiceProvider',
 
 		/*
+		 * Third Party Service Providers...
+		 */
+		'Barryvdh\HttpCache\ServiceProvider',
+
+		/*
 		 * Application Service Providers...
 		 */
 		'App\Providers\AppServiceProvider',

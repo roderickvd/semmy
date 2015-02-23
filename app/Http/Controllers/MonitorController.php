@@ -65,7 +65,7 @@ class MonitorController extends Controller {
 		$weather_station = App::make('App\Contracts\WeatherStation');
 		$temperature = $weather_station->temperature();
 
-		return view('monitor', compact(
+		return response()->view('monitor', compact(
 			'pv_name',
 			'pv_power',
 			'measurements',
@@ -87,7 +87,7 @@ class MonitorController extends Controller {
 			'min_temperature',
 			'max_temperature',
 			'temperature'
-		));
+		))->setTtl(self::INVERTER_TTL);  // cache for 10 seconds to not hammer the inverter
 	}
 
 }

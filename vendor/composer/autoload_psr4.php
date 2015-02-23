@@ -13,5 +13,7 @@ return array(
     'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),
     'Illuminate\\' => array($vendorDir . '/laravel/framework/src/Illuminate'),
     'ClassPreloader\\' => array($vendorDir . '/classpreloader/classpreloader/src'),
+    'Barryvdh\\StackMiddleware\\' => array($vendorDir . '/barryvdh/laravel-stack-middleware/src'),
+    'Barryvdh\\HttpCache\\' => array($vendorDir . '/barryvdh/laravel-httpcache/src'),
     'App\\' => array($baseDir . '/app'),
 );

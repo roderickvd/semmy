@@ -71,6 +71,8 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase {
 
 		require_once __DIR__.'/Mocks/Inverters/DummyInverter.php';
 		$this->setInverter('DummyInverter');
+
+		Artisan::call('httpcache:clear');
 	}
 
 }

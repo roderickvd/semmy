@@ -10,7 +10,7 @@ class Kernel extends HttpKernel {
 	 * @var array
 	 */
 	protected $middleware = [
-		//
+		'Barryvdh\HttpCache\Middleware\CacheRequests'
 	];
 
 	/**

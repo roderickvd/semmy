@@ -1,0 +1,29 @@
+{
+    "name": "barryvdh/laravel-httpcache",
+    "description": "HttpCache for Laravel 5",
+    "license": "MIT",
+    "keywords": ["laravel", "httpcache", "cache", "esi"],
+    "authors": [
+        {
+            "name": "Barry vd. Heuvel",
+            "email": "barryvdh@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "5.0.x",
+        "symfony/console": "~2.6",
+        "symfony/http-kernel": "~2.6",
+        "barryvdh/laravel-stack-middleware": "0.2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Barryvdh\\HttpCache\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.2-dev"
+        }
+    }
+}
