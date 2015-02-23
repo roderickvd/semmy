@@ -28,15 +28,14 @@ $(function () {
 					'ac-current',
 					'ac-frequency'
 				];
-			
-		
+
 				for (var index in dials) {
 					chart = $('#' + dials[index]).highcharts();
 
 					if (chart) {
 						series = chart.series[0];
 						points = series.points;
-						value = data.measurements[dials[index].replace('-','_')];
+						value  = data.measurements[dials[index].replace('-','_')];
 
 						// Explicitly check for null, because 0 evaluates as false
 						if (value != null) {
@@ -48,13 +47,14 @@ $(function () {
 						} else {
 							if (points[0]) {
 								points[0].remove();
-							}								 
+							}
 						}
 					}
 				}
 
-				generation = data.measurements.generation;
-				efficiency = generation / data.id.power;
+				temperature = data.temperature;
+				generation  = data.measurements.generation;
+				efficiency  = generation / data.id.power;
 
 				$('#generation').text(addThousandsSeperator(generation));
 				$('#pv_efficiency').text(efficiency.toFixed(2).toString().replace(".", ","));
@@ -62,5 +62,36 @@ $(function () {
 		});
 
 	}, 2000);
+
+	// Update the weather every 10 minutes to save external API requests
+	setInterval(function () {
+		$.getJSON('api/v1/weather').done( function(data) {
+			var chart,
+				series,
+
+				chart = $('#temperature').highcharts();
+
+				if (chart) {
+					series = chart.series[0];
+					points = series.points;
+					value  = data.temperature;
+
+					// Explicitly check for null, because 0 evaluates as false
+					if (value != null) {
+						if (points[0]) {
+							points[0].update(value);
+						} else {
+							series.addPoint(value);
+						}
+					} else {
+						if (points[0]) {
+							points[0].remove();
+						}
+					}
+				}
+
+		});
+
+	}, 600000);
 
 });

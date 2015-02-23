@@ -12,4 +12,6 @@
 */
 
 Route::get('/', 'MonitorController@index');
+
 Route::get('api/v1/measurements', 'APIController@measurements_v1');
+Route::get('api/v1/weather',      'APIController@weather_v1');

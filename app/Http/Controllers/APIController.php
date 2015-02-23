@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App;
 use App\Http\Controllers\Controller;
 
 class APIController extends Controller {
@@ -31,10 +32,26 @@ class APIController extends Controller {
 				'power' => $pv_power
 			],
 			
-			'measurements' => $this->inverter->measurements()
+			'measurements' => $this->inverter->measurements(),
+
 		];
 
 		return response()->json($measurements);
+	}
+
+	/**
+	 * Return the current weather to the caller.
+	 *
+	 * @return Response
+	 */
+	public function weather_v1()
+	{
+		$weather_station = App::make('App\Contracts\WeatherStation');
+		$weather = [
+			'temperature' => $weather_station->temperature()
+		];
+
+		return response()->json($weather);
 	}
 
 }

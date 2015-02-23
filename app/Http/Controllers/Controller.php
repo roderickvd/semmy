@@ -2,6 +2,7 @@
 
 use Illuminate\Routing\Controller as BaseController;
 use App\Contracts\Inverter;
+use App\Contracts\WeatherStation;
 
 abstract class Controller extends BaseController {
 
@@ -15,7 +16,7 @@ abstract class Controller extends BaseController {
 	/**
 	 * Create a new controller instance.
 	 *
-	 * @param  \App\Contracts\Inverter	$inverter
+	 * @param  \App\Contracts\Inverter  $inverter
 	 * @return void
 	 */
 	public function __construct(Inverter $inverter)

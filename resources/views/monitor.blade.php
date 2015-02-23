@@ -36,9 +36,7 @@
 		</div>
 		<div class="small-4 columns" id="efficiency">
 		</div>
-		<div class="small-4 columns text-center" id="weather">
-			<h2>Weather</h2>
-			<p>No data to display.</p>
+		<div class="small-4 columns" id="temperature">
 		</div>		
 	</div>
 
@@ -121,7 +119,7 @@
 				max: 100,
 				tickPositions: [0, 100],
 				stops: [
-					[0.1,	 '#DF5353'], // red
+					[0.1,  '#DF5353'], // red
 					[0.90, '#FF0000'], // yellow
 					[0.92, '#254117'], // dark forest green
 					[0.99, '#52D017'], // yellow green
@@ -137,6 +135,36 @@
 				dataLabels: {
 					format: '<div class="text-center"><span class="value">{y:.1f}</span><br/>' +
 							'<span class="unit">%</span></div>'
+				},
+				tooltip: {
+					valueSuffix: ' %'
+				}
+			}]
+
+		}));
+
+		// The temperature gauge
+		$('#temperature').highcharts(Highcharts.merge(gaugeOptions, {
+			yAxis: {
+				min: {{ $min_temperature }},
+				max: {{ $max_temperature }},
+				tickPositions: [{{ $min_temperature }}, {{ $max_temperature }}],
+				stops: [
+					[0.1,  '#368BC1'],  // glacial blue ice
+					[0.33, '#56A5EC'],  // iceberg
+					[0.9,  '#E42217'],  // fire brick
+				],
+				title: {
+					text: 'Temperature'
+				}
+			},
+
+			series: [{
+				name: 'Weather',
+				data: [{{ $temperature }}],
+				dataLabels: {
+					format: '<div class="text-center"><span class="value">{y:.1f}</span><br/>' +
+							'<span class="unit">&deg;C</span></div>'
 				},
 				tooltip: {
 					valueSuffix: ' %'

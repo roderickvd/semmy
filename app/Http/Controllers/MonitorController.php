@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App;
 use App\Http\Controllers\Controller;
 
 class MonitorController extends Controller {
@@ -45,6 +46,9 @@ class MonitorController extends Controller {
 		$max_dc_current = env('MAX_DC_CURRENT', 11);
 		$max_ac_current = env('MAX_AC_CURRENT', 18.5);
 
+		$min_temperature = env('MIN_TEMPERATURE', -20);
+		$max_temperature = env('MAX_TEMPERATURE', 40);
+
 		// Calculate stops for the graph color gradients
 		$dc_voltage_min_stop	 = $min_dc_voltage / $max_dc_voltage;
 		$dc_voltage_min_mpp_stop = $min_mpp_voltage / $max_dc_voltage;
@@ -56,6 +60,10 @@ class MonitorController extends Controller {
 
 		// Get the inverter measurements
 		$measurements = $this->inverter->measurements();
+
+		// Get the latest weather
+		$weather_station = App::make('App\Contracts\WeatherStation');
+		$temperature = $weather_station->temperature();
 
 		return view('monitor', compact(
 			'pv_name',
@@ -75,7 +83,10 @@ class MonitorController extends Controller {
 			'max_ac_current',
 			'min_ac_frequency',
 			'ac_frequency_nom_stop',
-			'max_ac_frequency'
+			'max_ac_frequency',
+			'min_temperature',
+			'max_temperature',
+			'temperature'
 		));
 	}
 
