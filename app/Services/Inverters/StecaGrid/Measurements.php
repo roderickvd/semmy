@@ -52,7 +52,7 @@ class Measurements {
 	 *
 	 * @const int
 	 */
-	const UPDATE_INTERVAL = 2;	// seconds
+	const UPDATE_INTERVAL = 10;	// seconds
 
 	/**
 	 * The timestamp of the last measurements update.
