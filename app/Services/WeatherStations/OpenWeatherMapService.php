@@ -59,11 +59,11 @@ class OpenWeatherMapService implements WeatherStationContract {
 	protected $location;
 
 	/**
-	 * The latest weather.
+	 * The latest temperature.
 	 *
 	 * @var array
 	 */
-	protected $measurements;
+	protected $temperature;
 
 	/**
 	 * The HTTP service.
@@ -85,7 +85,7 @@ class OpenWeatherMapService implements WeatherStationContract {
 		$this->api_key  = env('OPENWEATHERMAP_API_KEY');
 		$this->location = env('OPENWEATHERMAP_LOCATION');
 
-		if (!$this->location) {
+		if (!$this->is_configured()) {
 			Log::error('No location set for OpenWeatherMap.');
 
 		}
@@ -124,24 +124,16 @@ class OpenWeatherMapService implements WeatherStationContract {
 			$uri = self::WEATHER_URI.'?'.http_build_query(['q' => $this->location]);
 			$response = $this->http->get(self::OPENWEATHERMAP_HOST, $uri, $header);
 
-			$this->measurements = json_decode($response);
-		}
-	}
+			$weather = json_decode($response);
 
-	/**
-	 * Get and memoize all inverter measurements.
-	 *
-	 * @return array
-	 */
-	public function all()
-	{
-		$timestamp = time();
-		if ($timestamp - $this->last_updated_at > self::UPDATE_INTERVAL) {
-			$this->update_weather();
-			$this->last_updated_at = $timestamp;
-		}
+			$temperature = null;
+			if (property_exists($weather, 'main') && property_exists($weather->main, 'temp')) {
+				$temperature = $weather->main->temp - 273.15;  // Kelvin to Celcius
 
-		return $this->measurements;
+			}
+
+			$this->temperature = $temperature;
+		}
 	}
 
 	/**
@@ -151,25 +143,13 @@ class OpenWeatherMapService implements WeatherStationContract {
 	 */
 	public function temperature()
 	{
-		$memoized = $this->all();
-		if ($memoized) {
-			return $memoized->main->temp - 273.15;  // Kelvin to Celcius
-
+		$timestamp = time();
+		if ($timestamp - $this->last_updated_at > self::UPDATE_INTERVAL) {
+			$this->update_weather();
+			$this->last_updated_at = $timestamp;
 		}
-	}
-	
-	/**
-	 * Get and memoize the current cloudiness in percent.
-	 *
-	 * @return int
-	 */
-	public function cloudiness()
-	{
-		$memoized = $this->all();
-		if ($memoized) {
-			return $memoized->clouds->all;
 
-		}
+		return $this->temperature;
 	}
 
 }

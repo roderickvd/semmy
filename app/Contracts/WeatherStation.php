@@ -17,13 +17,6 @@ interface WeatherStation {
 	 * @return float
 	 */
 	public function temperature();
-	
-	/**
-	 * Get the current cloudiness in percent.
-	 *
-	 * @return int
-	 */
-	public function cloudiness();
 
 }
 

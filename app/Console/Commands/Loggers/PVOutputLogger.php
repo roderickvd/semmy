@@ -128,7 +128,6 @@ class PVOutputLogger {
 			];
 
 			if ($this->weather_station) {
-
 				$status = $status + [
 					'v5' => $this->weather_station->temperature()
 				];
