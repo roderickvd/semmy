@@ -52,8 +52,7 @@ $(function () {
 					}
 				}
 
-				temperature = data.temperature;
-				generation  = data.measurements.generation;
+				generation  = data.measurements.generation || 0;
 				efficiency  = generation / data.id.power;
 
 				$('#generation').text(addThousandsSeperator(generation));
