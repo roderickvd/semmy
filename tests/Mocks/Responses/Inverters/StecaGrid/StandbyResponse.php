@@ -1,4 +1,4 @@
-<?php namespace Responses\StecaGrid;
+<?php namespace Responses\Inverters\StecaGrid;
 
 use App\Contracts\HTTP as HTTPContract;
 

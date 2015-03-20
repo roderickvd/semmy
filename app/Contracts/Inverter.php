@@ -83,6 +83,13 @@ interface Inverter {
 	 */
 	public function measurements();
 
+	/**
+	 * Get the minimum interval in seconds before refreshing the measurements.
+	 *
+	 * @return int
+	 */
+	public function update_interval();
+
 }
 
 ?>

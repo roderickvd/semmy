@@ -9,7 +9,7 @@ class SonnenertragTest extends TestCase {
 	 */
 	public function testSonnenertragUpdate()
 	{
-		$this->setResponse('', 'SaveResponse');
+		$this->setResponse('SaveResponse');
 		$http = $this->app->make('App\Contracts\HTTP');
 
 		$timestamp = time();

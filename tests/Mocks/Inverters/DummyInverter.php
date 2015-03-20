@@ -98,6 +98,16 @@ class DummyInverter implements InverterContract {
         ];
     }
 
+	/**
+	 * Get the minimum interval in seconds before refreshing the measurements.
+	 *
+	 * @return int
+	 */
+	public function update_interval()
+	{
+		return 0;
+	}
+
 }
 
 ?>

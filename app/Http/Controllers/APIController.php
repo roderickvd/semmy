@@ -21,6 +21,8 @@ class APIController extends Controller {
 	 */
 	public function measurements_v1()
 	{
+		$inverter = $this->inverter;
+
 		$pv_name  = env('PV_NAME', 'My Solar Power Plant');
 		$pv_power = env('PV_POWER', 6700);
 
@@ -32,12 +34,11 @@ class APIController extends Controller {
 				'power' => $pv_power
 			],
 			
-			'measurements' => $this->inverter->measurements(),
+			'measurements' => $inverter->measurements(),
 
 		];
 
-		// Cache for 10 seconds to not hammer the inverter
-		return response()->json($measurements)->setTtl(self::INVERTER_TTL);
+		return response()->json($measurements)->setTtl($inverter->update_interval());
 	}
 
 	/**
@@ -52,8 +53,7 @@ class APIController extends Controller {
 			'temperature' => $weather_station->temperature()
 		];
 
-		// Cache for 10 minutes to save external API requests
-		return response()->json($weather)->setTtl(self::WEATHER_TTL);
+		return response()->json($weather)->setTtl($weather_station->update_interval());
 	}
 
 }

@@ -138,6 +138,16 @@ class StecaGrid implements InverterContract {
 		return $this->measurements->all();
 	}
 
+	/**
+	 * Get the minimum interval in seconds before refreshing the measurements.
+	 *
+	 * @return int
+	 */
+	public function update_interval()
+	{
+		return Measurements::UPDATE_INTERVAL;
+	}
+
 }
 	
 ?>

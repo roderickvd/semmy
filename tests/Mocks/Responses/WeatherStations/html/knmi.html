@@ -1,0 +1,987 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" href="/styles/rijksvinkstyle.css" type="text/css">
+<link rel="shortcut icon" href="/favicon.ico" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META HTTP-EQUIV="Cache Control" CONTENT="max-age=120,must-revalidate">
+<META HTTP-EQUIV="Pragma" CONTENT="max-age=120,must-revalidate">
+<meta http-equiv='imagetoolbar' content='no'>
+<title>Weer - Actueel</title>
+<meta name="Author" content="Henk van Dorp">
+<script language="javascript" src="/library/javascript/pop_page.js"></script> 
+<script language="javascript" src="/library/javascript/pop_picture.js"></script> 
+<script language="javascript" src="/library/javascript/sorttable.js"></script>
+<script type="text/javascript" src="/library/javascript/cookies.js"></script>
+<script type="text/javascript" src="/library/javascript/makelogicalpath.js"></script>
+<script language="javascript" src="/library/javascript/summertime.js"></script>
+<script language="javascript">
+<!--
+var vorig = "Temperatuur";
+function showItem(keuze, vorig) {
+   var kiekeboe = document.getElementById(keuze);
+   if(keuze) { 
+     //alert(vorig + " " + keuze);  
+      if (vorig && vorig != keuze) {
+         var vorigstyle = document.getElementById(vorig);
+         vorigstyle.style.display = "none";
+      }
+      if (kiekeboe.style.display == "none") {
+         kiekeboe.style.display = "inline";
+         kiekeboe.focus();
+         vorig = keuze;
+      }
+   } else {
+      if (vorig) {
+         var vorigstyle = document.getElementById(vorig);
+         vorigstyle.style.display = "none";
+      }
+   }
+   
+}
+// uncloaking -->
+</script>
+<meta http-equiv="refresh" content="300">
+</head>
+<body>
+<!-- De kop van de pagina, /vinklude/header_algemeen.html, wordt automatisch ingevoegd -->
+<script type="text/javascript" src="/library/javascript/pop_page.js"></script>
+<script type="text/javascript" src="/library/javascript/pop_picture.js"></script>
+<script type="text/javascript" src="/library/javascript/change_font_size4.js"></script>
+<script type="text/javascript" src="/library/javascript/cookies.js"></script>
+<script type="text/javascript" src="/library/javascript/makelogicalpath.js"></script>
+<!-- 21-07-09: begin toevoeging voor de header -->
+
+<div class="container">
+   <div class="header">
+     <span></span>
+
+     <h1 class="branding"><img src="/images/logo_knmi_venw.png" alt="Koninklijk Nederlands Meteorologisch Instituut; Ministerie van Verkeer en Waterstaat" height="87" width="500" /></h1>
+
+     <div class="nav_bar">
+        
+		<!--<ul class="nav_main" id="nav_main">-->
+        <script language="JavaScript">
+		<!--
+        document.write('<ul class="nav_main" id="nav_main">');
+           document.write('<li class="sel"><!-- home --><a href="/" title="Home">Home</a></li>');
+		   document.write('<li><!-- weer --><a href="/weer" title="Weer">Weer</a></li>');
+		   document.write('<li><!-- klimaat --><a href="/klimaat" title="Klimaat">Klimaat</a></li>');
+		   document.write('<li><!-- seismologie --><a href="/seismologie" title="Seismologie">Seismologie</a></li>');
+		   document.write('<li><!-- datacentrum --><a href="https://data.knmi.nl/admin/cgi-bin/redirect.pl?lang=nl&url=/portal-webapp/KNMI-Datacentrum.html" title="Datacentrum" target="datacentrum">Datacentrum</a></li>');
+		   document.write('<li><!-- over het knmi --><a href="/over_het_knmi" title="Over het KNMI">Over het KNMI</a></li>');
+		   document.write('<li><!-- faq --><a href="/faq" title="Veelgestelde vragen">Veelgestelde vragen</a></li>');
+        document.write('</ul>');
+		//-->
+		</script>
+		<noscript>
+		<ul class="nav_main" id="nav_main"><li><a href="/" title="Home">Home</a></li><li class="sel"><a href="/weer" title="Weer">Weer</a></li><li><a href="/klimaat" title="Klimaat">Klimaat</a></li><li><a href="/seismologie" title="Seismologie">Seismologie</a></li><li><a href="https://data.knmi.nl/admin/cgi-bin/redirect.pl?lang=nl&url=/portal-webapp/KNMI-Datacentrum.html" title="Datacentrum" target="datacentrum">Datacentrum</a></li><li><a href="/over_het_knmi" title="Over het KNMI">Over het KNMI</a></li><li><a href="/faq" title="Vacatures">Veelgestelde vragen</a></li></ul>
+		</noscript>
+		<!--</ul>-->
+
+        <div class="search centered">
+           <form method=GET action="/search/search.cgi" id="zoeken">
+              <fieldset>
+                 <legend>Zoeken</legend>
+                 <dl>
+                    <dd><input type="text" class="text" name="q" maxlength=255 value="" /></dd>
+                    <dd><input type="submit" name="submit" value="zoek" class="submit" /></dd>
+                 </dl>
+              </fieldset>
+           </form>
+        </div>
+
+     </div>
+
+  </div>
+
+  <div class="c1"><div class="c2">
+
+<div class="content">
+<!-- einde toevoeging voor de template -->
+
+<script type="text/javascript">
+<!--
+window.onLoad=init_prefs();
+var header_layout;
+var show_crumbpath;
+
+var heelUrl = String(document.location);
+//alert("header: "+typeof klimaat);
+// Strip eventuele parameters eraf
+j = heelUrl.indexOf("?");
+if ( j != -1) { heelUrl = heelUrl.substr(0,j);}
+urlDelen = heelUrl.split("/");
+
+var ulContent = document.getElementById("nav_main").innerHTML;
+//alert(ulContent.indexOf('class=sel')+' - '+ulContent);
+if (ulContent.indexOf('class="sel"') > -1) ulContent = ulContent.replace(' class="sel"','');
+if (ulContent.indexOf('class=sel') > -1) ulContent = ulContent.replace(' class=sel','');
+//alert(ulContent.indexOf('class=sel')+' - '+ulContent);
+//alert(urlDelen[3]+" - "+in_array(urlDelen[3],Klimaat)+" - "+in_array(urlDelen[3],Over_het_knmi)+" - "+in_array(urlDelen[3],Weer)+" - "+in_array(urlDelen[3],Faq)+" - "+in_array(urlDelen[3],Seismologie));
+while(ulContent.indexOf('<LI>') > -1) ulContent = ulContent.replace('<LI>','<li>');
+
+if (in_array(urlDelen[3],Klimaat)) { 
+   ulContent = ulContent.replace('<li><!-- klimaat -->','<li class="sel"><!-- klimaat -->');
+} else {
+
+   if (in_array(urlDelen[3],Over_het_knmi)) { 
+      ulContent = ulContent.replace('<li><!-- over het knmi -->','<li class="sel"><!-- over het knmi -->');
+   } else {
+
+      if (in_array(urlDelen[3],Weer)) {
+         ulContent = ulContent.replace('<li><!-- weer -->','<li class="sel"><!-- weer -->');
+      } else {
+
+         if (in_array(urlDelen[3],Faq)) {
+            ulContent = ulContent.replace('<li><!-- faq -->','<li class="sel"><!-- faq -->');
+		 } else {
+		    
+			if (in_array(urlDelen[3],Seismologie)) {
+               ulContent = ulContent.replace('<li><!-- seismologie -->','<li class="sel"><!-- seismologie -->');
+            } else {
+			
+			   if (in_array(urlDelen[3],Datacentrum)) {
+                  ulContent = ulContent.replace('<li><!-- datacentrum -->','<li class="sel"><!-- datacentrum -->');
+               } else {
+				
+			      if (urlDelen[3] == "research") { 
+			         //alert(urlDelen[3]+" - "+urlDelen[4]+" - "+in_array(urlDelen[4],Research_seismologie));
+			         if (in_array(urlDelen[4],Research_weer)) {
+				        ulContent = ulContent.replace('<li><!-- weer -->','<li class="sel"><!-- weer -->');
+			         } else {
+				  	    //if (urlDelen[4].indexOf('limate')) {
+					    if (in_array(urlDelen[4],Research_klimaat)) {
+				           ulContent = ulContent.replace('<li><!-- klimaat -->','<li class="sel"><!-- klimaat -->');
+				        } else {
+					       if (in_array(urlDelen[4],Research_seismologie)) {
+				              ulContent = ulContent.replace('<li><!-- seismologie -->','<li class="sel"><!-- seismologie -->');
+				           } // Einde Research_seismologie
+					    } // Einde Research_klimaat
+				     } // Einde Research_weer
+			      } // Einde Research
+			   } // Einde Datacentrum
+			} // Einde Seismologie
+		 } // Einde Faq
+	  } // Einde Weer
+   } // Einde Over_het_knmi
+} // Einde Klimaat
+
+//alert(ulContent.indexOf('class="sel"')+" - "+ulContent);
+if (ulContent.indexOf('class="sel"') < 0) { ulContent = ulContent.replace('<li><!-- home -->','<li class="sel"><!-- home -->'); }
+//if (ulContent.indexOf('class=sel') < 0) { ulContent = ulContent.replace('<li><a href="/"','<li class="sel"><a href="/"'); }
+document.getElementById("nav_main").innerHTML = ulContent;
+//-->
+</script>
+<!--formatting table voor de brede paginastijl-->
+<table border=0 cellpadding="0" cellspacing="0">
+<tr>
+<script type="text/javascript">
+<!--
+if (header_layout != "Full") document.write('<td><div style="width:150px;"></div></td>');
+//-->
+</script>
+<noscript>
+<td><div style="width:150px;"></div></td>
+<!--<td><div style="width:150px;">150</div></td>-->
+</noscript>
+<td>
+   <script type="text/javascript">
+   <!-- cloaking
+//   if (show_crumbpath != "No") { 
+      if (header_layout != "Full") { 
+         document.write('<div class="kruimelpad">');
+      } else {
+	     if (show_crumbpath == "150") {
+		    document.write('<div class="kruimelpad230">');
+		 } else {
+            document.write('<div class="kruimelpadzonderwitruimte">');
+         }
+	  }
+	  if (show_crumbpath != "No") {
+         document.write(makeLogicalPath()+"</div>");
+      } else {
+	     document.write(makeLogicalPath()+"</div>");
+	  }
+   //-->
+   </script>
+   <noscript>
+   <a class='kalelink' href='http://www.knmi.nl'>Home</a> <img src='/vinklude/images/pad_pijl.gif' border=0 hspace=0 vspace=0 valign=middle> actueel
+   </noscript>
+<!-- De rest van de pagina-->
+<!-- EINDE HEADER INCLUDE -->
+
+
+
+
+<script type="text/javascript">
+<!-- cloaking
+var date = new Date();
+var timestmp = new Date().getTime();
+
+timestmp = Math.round(timestmp/100);
+// uncloaking -->
+</script>
+
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="80">&nbsp;</td>
+<td width="451" valign="top">  
+
+   <div id="printable"> 
+   <!-- Begin Linker Data Kolom -->
+   <div class="rubriekkop">Weer</div>
+   <div class="hoofdkop">Actueel</div>		
+   <div class="subkop">Waarnemingen</div>
+
+   <table width="451" border="0" cellspacing="0" cellpadding="0">
+   <tr> 
+   <td width="220" align="left" valign="top">
+      <div id="Temperatuur" style="display:inline">
+      <div class="alineakop">Temperatuur</div>
+      
+      <script language="javascript">
+<!-- cloaking
+document.write("<a href=\"javascript:pop_picture('images/tempgmt.png','copyright','','Actueel kaartje temperatuur')\">");
+//document.write("<img src=\"images/tempgmt220x247.gif?"+timestmp+"\" alt=\"Actueel kaartje Temperatuur\" title=\"Actueel kaartje Temperatuur\" width=220 height=247 border=0></a>");
+document.write("<img src=\"images/tempgmt220x247.gif\" alt=\"Actueel kaartje Temperatuur\" title=\"Actueel kaartje Temperatuur\" width=220 height=247 border=0></a>");
+//-->
+      </script>
+	  <noscript>
+	  <a href="images/tempgmt.png" target="actueel">
+	  <img src="images/tempgmt220x247.gif" alt="Actueel kaartje Temperatuur" title="Actueel kaartje Temperatuur" width=220 height=247 border=0>
+	  </a>
+	  </noscript>
+	  
+	  <script language="javascript">
+<!-- cloaking
+var zomertijd = zomertijduur();
+// Om de 'Winterijd' langer te laten duren in JavaScript-routine zomertijduur (/library/javascript/summertime.js)
+// de variable UTChours op 1 zetten.
+zomertijd = 0;
+if (zomertijd == 1) {
+   // Wintertijd
+   document.write("<span class=kalelink><a href=\"javascript:showItem('Gevoelstemperatuur','Temperatuur')\">Klik hier voor Gevoelstemperatuur</a></span><p>");
+} else {
+   // Zomertijd
+}
+// uncloaking -->
+      </script>
+	  </div>
+      
+	  <div id="Gevoelstemperatuur" style="display:none">
+      <div class="alineakop">Gevoelstemperatuur</div>
+      <script language="javascript">
+<!-- cloaking
+document.write("<a href=\"javascript:pop_picture('images/windchillgmt.png','copyright','','Actueel kaartje Gevoelstemperatuur')\">");
+//document.write("<img src=\"images/windchillgmt220x247.gif?"+timestmp+"\" alt=\"Actueel kaartje Gevoelstemperatuur\" title=\"Actueel kaartje Gevoelstemperatuur\" width=220 height=247 border=0></a>");
+document.write("<img src=\"images/windchillgmt220x247.gif\" alt=\"Actueel kaartje Gevoelstemperatuur\" title=\"Actueel kaartje Gevoelstemperatuur\" width=220 height=247 border=0></a>");
+//-->
+      </script>
+	  <noscript>
+	  <a href="images/windchillgmt.png"  target="actueel">
+      <img src="images/windchillgmt220x247.gif" alt="Actueel kaartje Gevoelstemperatuur" title="Actueel kaartje Gevoelstemperatuur" width=220 height=247 border=0>
+	  </a>
+	  </noscript>
+	  
+      <span class=kalelink><a href="javascript:showItem('Temperatuur','Gevoelstemperatuur')">Klik hier voor Temperatuur</a></span>
+	  <p>
+	  </div>
+   </td>
+   <td width="11">&nbsp;</td>
+   <td width="220" align="left" valign="top">
+      <div class="alineakop">Zicht</div>
+      <!-- M.i.v. 25-08-2009 vervangen door een nieuw kaartje met bolletjes i.p.v. isolijnen
+      <a href="javascript:pop_picture('images/zichtgmt.png','copyright')">
+      <img src="images/zichtgmt220x247.gif" alt="Zicht" title="Zicht" width="220" height="247" border="0"></a>
+      -->
+      <script language="javascript">
+<!-- cloaking
+document.write("<a href=\"javascript:pop_picture('images/zichtgmt.png','copyright','','Actueel kaartje Zicht')\">");
+//document.write("<img src=\"images/zichtgmt220x247.gif?"+timestmp+"\" alt=\"Actueel kaartje Zicht\" title=\"Actueel kaartje Zicht\" width=220 height=247 border=0></a>");
+document.write("<img src=\"images/zichtgmt220x247.gif\" alt=\"Actueel kaartje Zicht\" title=\"Actueel kaartje Zicht\" width=220 height=247 border=0></a>");
+//-->
+      </script>
+	  <noscript>
+	  <a href="images/zichtgmt.png" target="actueel">
+	  <img src="images/zichtgmt220x247.gif" alt="Actueel kaartje Zicht" title="Actueel kaartje Zicht" width=220 height=247 border=0>
+	  </a>
+	  </noscript>
+
+      <p>
+   </td>
+   </tr>
+   <tr>
+   <td width="220" align="left" valign="top">
+      <div id="Windsnelheid" style="display:inline">
+      <div class="alineakop">Wind (m/s)</div> 
+      <script language="javascript">
+<!-- cloaking
+document.write("<a href=\"javascript:pop_picture('images/windffgmt.png','copyright','','Actueel kaartje Wind (m/sec)')\">");
+//document.write("<img src=\"images/windffgmt220x247.gif?"+timestmp+"\" alt=\"Actueel kaartje Wind (m/s)\" title=\"Actueel kaartje Wind (m/s)\" width=220 height=247 border=0></a>");
+document.write("<img src=\"images/windffgmt220x247.gif\" alt=\"Actueel kaartje Wind (m/s)\" title=\"Actueel kaartje Wind (m/s)\" width=220 height=247 border=0></a>");
+//-->
+      </script>
+	  <noscript>
+	  <a href="images/windffgmt.png" target="actueel">
+	  <img src="images/windffgmt220x247.gif" alt="Actueel kaartje Wind (m/s)" title="Actueel kaartje Wind (m/s)" width=220 height=247 border=0>
+	  </a>
+	  </noscript>
+      
+
+      </div>
+      
+	  <div id="Windstoten" style="display:none">
+      <div class="alineakop">Windstoten (m/s)</div>
+      <script language="javascript">
+<!-- cloaking
+document.write("<a href=\"javascript:pop_picture('images/windfxgmt.png','copyright','','Actueel kaartje Windstoten')\">");
+//document.write("<img src=\"images/windchillgmt220x247.gif?"+timestmp+"\" alt=\"Actueel kaartje Gevoelstemperatuur\" title=\"Actueel kaartje Gevoelstemperatuur\" width=220 height=247 border=0></a>");
+document.write("<img src=\"images/windfxgmt220x247.gif\" alt=\"Actueel kaartje Windstoten\" title=\"Actueel kaartje Windstoten\" width=220 height=247 border=0></a>");
+//-->
+      </script>
+	  <noscript>
+	  <a href="images/windfxgmt.png"  target="actueel">
+      <img src="images/windfxgmt220x247.gif" alt="Actueel kaartje Windstoten" title="Actueel kaartje Windstoten" width=220 height=247 border=0>
+	  </a>
+	  </noscript>
+	  
+      <span class=kalelink><a href="javascript:showItem('Windsnelheid','Windstoten')">Klik hier voor Windsnelheid</a></span>
+	  <p>
+	  </div>
+   </td>
+   <td width="11">&nbsp;</td>
+   <td width="220" align="left" valign="top">
+      <div class="alineakop">Wind (bft)</div>
+      <script language="javascript">
+<!-- cloaking
+document.write("<a href=\"javascript:pop_picture('images/windbftgmt.png','copyright','','Actueel kaartje Wind (Beaufort)')\">");
+//document.write("<img src=\"images/windbftgmt220x247.gif?"+timestmp+"\" alt=\"Actueel kaartje Wind (Beaufort)\" title=\"Actueel kaartje Wind (Beaufort)\" width=220 height=247 border=0></a>");
+document.write("<img src=\"images/windbftgmt220x247.gif\" alt=\"Actueel kaartje Wind (Beaufort)\" title=\"Actueel kaartje Wind (Beaufort)\" width=220 height=247 border=0></a>");
+//-->
+      </script>
+	  <noscript>
+	  <a href="images/windbftgmt.png" target="actueel">
+	  <img src="images/windbftgmt220x247.gif" alt="Actueel kaartje Wind (Beaufort)" title="Actueel kaartje Wind (Beaufort)" width=220 height=247 border=0>
+	  </a>
+	  </noscript>
+ 
+      <p>
+   </td>
+   </tr> 
+   <tr>
+   <td width="451" colspan="3" align="right" valign="top">
+      <br> 
+      <span class="kalelink" style="float:right">
+      <!--<a href= "javascript:pop_page('/voorl/maand/images/stations.jpg',600,451)">-->
+      <script language="javascript">
+<!-- cloaking
+document.write('<a href="javascript:pop_page(\'legenda_waarnemingsstations.html\',600,550)">');
+document.write('<img style="vertical-align:top;margin-right:5px" src="/images/info-i.gif" vspace=0 hspace=0 border=0 alt="Uitleg" title="Uitleg">Uitleg</a>');
+//-->
+      </script>
+	  <noscript>
+      <a href="legenda_waarnemingsstations.html" target="legenda">
+      <img style="vertical-align:top;margin-right:5px" src="/images/info-i.gif" vspace=0 hspace=0 border=0 alt="Uitleg" title="Uitleg">Uitleg</a>
+      </noscript>
+	  </span>
+   </td>
+   </tr>
+   </table>
+			
+   <!-- <hr noshade size=1> -->
+   <p></p>
+   <a name="stationslijst"></a>
+   <!--
+<table width="762" border="0" cellspacing="0" cellpadding="0">
+<tr>
+   <td width="80">&nbsp;</td>
+   <td width="451" valign="top">
+-->
+       <div class="alineakop">Waarnemingen 24 februari 2015 16:00</div>
+       <table width="451" border="0" cellspacing="0" cellpadding="0" id="sortable" class="realtable">
+       <tr class="trcolor">
+           <th align="left">Station</th>
+           <th align="left">Weer</th>
+           <th width="9%" align="center">Temp<br>(&deg;C)</th>
+<th width="9%" align="center">Chill</th>
+           <th align="center">RV<br>(%)</th>
+           <!--<th colspan=2 align="center">Wind<br>(m/s)</th>-->
+           <th align="center">Wind</th>
+           <th align="center">Wind<br>(m/s)</th>
+           <th align="center">Zicht<br>(m)</th>
+           <th align="center">Druk<br>(hPa)</th>
+       </tr>
+       <tr >
+           <td>Lauwersoog</td>
+           <td> </td>
+           <td align=right>6.9&nbsp;</td>
+<td align=right>  1.9&nbsp;</td>           <td align=right>            76&nbsp;</td>
+           <td align=right>  W&nbsp;</td>
+           <td align=right>11&nbsp;</td>
+           <td align=right> &nbsp;</td>
+           <td align=right> &nbsp;</td>
+        </tr>
+       <tr class="trcolor">
+           <td>Nieuw Beerta</td>
+           <td> </td>
+           <td align=right>7.6&nbsp;</td>
+<td align=right>  3.5&nbsp;</td>           <td align=right>            74&nbsp;</td>
+           <td align=right>WZW&nbsp;</td>
+           <td align=right>8&nbsp;</td>
+           <td align=right> &nbsp;</td>
+           <td align=right> &nbsp;</td>
+        </tr>
+       <tr >
+           <td>Terschelling</td>
+           <td> </td>
+           <td align=right>7.2&nbsp;</td>
+<td align=right>  2.5&nbsp;</td>           <td align=right>            79&nbsp;</td>
+           <td align=right>WZW&nbsp;</td>
+           <td align=right>10&nbsp;</td>
+           <td align=right>12300&nbsp;</td>
+           <td align=right>1002.7&nbsp;</td>
+        </tr>
+       <tr class="trcolor">
+           <td>Vlieland</td>
+           <td>onbewolkt</td>
+           <td align=right>7.1&nbsp;</td>
+<td align=right>  1.9&nbsp;</td>           <td align=right>            79&nbsp;</td>
+           <td align=right>WZW&nbsp;</td>
+           <td align=right>12&nbsp;</td>
+           <td align=right>9290&nbsp;</td>
+           <td align=right>1003.1&nbsp;</td>
+        </tr>
+       <tr >
+           <td>Leeuwarden</td>
+           <td>onbewolkt</td>
+           <td align=right>7.4&nbsp;</td>
+<td align=right>  3.0&nbsp;</td>           <td align=right>            73&nbsp;</td>
+           <td align=right>  W&nbsp;</td>
+           <td align=right>9&nbsp;</td>
+           <td align=right>16500&nbsp;</td>
+           <td align=right>1003.3&nbsp;</td>
+        </tr>
+       <tr class="trcolor">
+           <td>Stavoren</td>
+           <td>onbewolkt</td>
+           <td align=right>6.9&nbsp;</td>
+<td align=right>  2.3&nbsp;</td>           <td align=right>            77&nbsp;</td>
+           <td align=right>  W&nbsp;</td>
+           <td align=right>9&nbsp;</td>
+           <td align=right>15500&nbsp;</td>
+           <td align=right> &nbsp;</td>
+        </tr>
+       <tr >
+           <td>Houtribdijk</td>
+           <td> </td>
+           <td align=right> &nbsp;</td>
+<td align=right>&nbsp;</td>           <td align=right> &nbsp;</td>
+           <td align=right>WZW&nbsp;</td>
+           <td align=right>10&nbsp;</td>
+           <td align=right> &nbsp;</td>
+           <td align=right> &nbsp;</td>
+        </tr>
+       <tr class="trcolor">
+           <td>Eelde</td>
+           <td>zwaar bewolkt</td>
+           <td align=right>7.3&nbsp;</td>
+<td align=right>  3.5&nbsp;</td>           <td align=right>            73&nbsp;</td>
+           <td align=right>  W&nbsp;</td>
+           <td align=right>7&nbsp;</td>
+           <td align=right>18400&nbsp;</td>
+           <td align=right>1003.3&nbsp;</td>
+        </tr>
+       <tr >
+           <td>Hoogeveen</td>
+           <td>droog na regen</td>
+           <td align=right>7.7&nbsp;</td>
+<td align=right>  3.7&nbsp;</td>           <td align=right>            72&nbsp;</td>
+           <td align=right>WZW&nbsp;</td>
+           <td align=right>8&nbsp;</td>
+           <td align=right>24100&nbsp;</td>
+           <td align=right>1004.3&nbsp;</td>
+        </tr>
+       <tr class="trcolor">
+           <td>Heino</td>
+           <td> </td>
+           <td align=right>7.3&nbsp;</td>
+<td align=right>  4.2&nbsp;</td>           <td align=right>            77&nbsp;</td>
+           <td align=right>  W&nbsp;</td>
+           <td align=right>5&nbsp;</td>
+           <td align=right> &nbsp;</td>
+           <td align=right> &nbsp;</td>
+        </tr>
+       <tr >
+           <td>Twenthe</td>
+           <td>af en toe lichte regen</td>
+           <td align=right>5.5&nbsp;</td>
+<td align=right>  1.9&nbsp;</td>           <td align=right>            89&nbsp;</td>
+           <td align=right> ZW&nbsp;</td>
+           <td align=right>5&nbsp;</td>
+           <td align=right>13300&nbsp;</td>
+           <td align=right>1005.6&nbsp;</td>
+        </tr>
+       <tr class="trcolor">
+           <td>Deelen</td>
+           <td>geheel bewolkt</td>
+           <td align=right>7.4&nbsp;</td>
+<td align=right>  3.9&nbsp;</td>           <td align=right>            74&nbsp;</td>
+           <td align=right>WZW&nbsp;</td>
+           <td align=right>6&nbsp;</td>
+           <td align=right>29600&nbsp;</td>
+           <td align=right>1005.6&nbsp;</td>
+        </tr>
+       <tr >
+           <td>Hupsel</td>
+           <td> </td>
+           <td align=right>6.4&nbsp;</td>
+<td align=right>  3.1&nbsp;</td>           <td align=right>            84&nbsp;</td>
+           <td align=right>WZW&nbsp;</td>
+           <td align=right>5&nbsp;</td>
+           <td align=right> &nbsp;</td>
+           <td align=right> &nbsp;</td>
+        </tr>
+       <tr class="trcolor">
+           <td>Herwijnen</td>
+           <td>licht bewolkt</td>
+           <td align=right>8.4&nbsp;</td>
+<td align=right>  5.2&nbsp;</td>           <td align=right>            74&nbsp;</td>
+           <td align=right>  W&nbsp;</td>
+           <td align=right>6&nbsp;</td>
+           <td align=right> &nbsp;</td>
+           <td align=right>1006.5&nbsp;</td>
+        </tr>
+       <tr >
+           <td>Marknesse</td>
+           <td> </td>
+           <td align=right>7.8&nbsp;</td>
+<td align=right>  4.1&nbsp;</td>           <td align=right>            74&nbsp;</td>
+           <td align=right>  W&nbsp;</td>
+           <td align=right>7&nbsp;</td>
+           <td align=right>17800&nbsp;</td>
+           <td align=right> &nbsp;</td>
+        </tr>
+       <tr class="trcolor">
+           <td>Lelystad</td>
+           <td>onbewolkt</td>
+           <td align=right>7.7&nbsp;</td>
+<td align=right>  4.3&nbsp;</td>           <td align=right>            75&nbsp;</td>
+           <td align=right>  W&nbsp;</td>
+           <td align=right>6&nbsp;</td>
+           <td align=right>21900&nbsp;</td>
+           <td align=right>1005.3&nbsp;</td>
+        </tr>
+       <tr >
+           <td>De Bilt</td>
+           <td>licht bewolkt</td>
+           <td align=right>8.5&nbsp;</td>
+<td align=right>  5.3&nbsp;</td>           <td align=right>            62&nbsp;</td>
+           <td align=right>  W&nbsp;</td>
+           <td align=right>6&nbsp;</td>
+           <td align=right>24000&nbsp;</td>
+           <td align=right>1006.2&nbsp;</td>
+        </tr>
+       <tr class="trcolor">
+           <td>Cabauw</td>
+           <td> </td>
+           <td align=right>8.2&nbsp;</td>
+<td align=right>  4.6&nbsp;</td>           <td align=right>            71&nbsp;</td>
+           <td align=right>  W&nbsp;</td>
+           <td align=right>7&nbsp;</td>
+           <td align=right>23800&nbsp;</td>
+           <td align=right>1006.4&nbsp;</td>
+        </tr>
+       <tr >
+           <td>Den Helder</td>
+           <td>onbewolkt</td>
+           <td align=right>7.4&nbsp;</td>
+<td align=right>  3.0&nbsp;</td>           <td align=right>            77&nbsp;</td>
+           <td align=right>WZW&nbsp;</td>
+           <td align=right>9&nbsp;</td>
+           <td align=right>14200&nbsp;</td>
+           <td align=right>1004.1&nbsp;</td>
+        </tr>
+       <tr class="trcolor">
+           <td>Berkhout</td>
+           <td> </td>
+           <td align=right>7.8&nbsp;</td>
+<td align=right>  3.3&nbsp;</td>           <td align=right>            75&nbsp;</td>
+           <td align=right>WZW&nbsp;</td>
+           <td align=right>10&nbsp;</td>
+           <td align=right>17400&nbsp;</td>
+           <td align=right> &nbsp;</td>
+        </tr>
+       <tr >
+           <td>IJmuiden</td>
+           <td> </td>
+           <td align=right> &nbsp;</td>
+<td align=right>&nbsp;</td>           <td align=right> &nbsp;</td>
+           <td align=right> &nbsp;</td>
+           <td align=right> &nbsp;</td>
+           <td align=right> &nbsp;</td>
+           <td align=right> &nbsp;</td>
+        </tr>
+       <tr class="trcolor">
+           <td>Wijk aan Zee</td>
+           <td> </td>
+           <td align=right>7.3&nbsp;</td>
+<td align=right>&nbsp;</td>           <td align=right>            78&nbsp;</td>
+           <td align=right> &nbsp;</td>
+           <td align=right> &nbsp;</td>
+           <td align=right> &nbsp;</td>
+           <td align=right> &nbsp;</td>
+        </tr>
+       <tr >
+           <td>Schiphol</td>
+           <td>onbewolkt</td>
+           <td align=right>8.1&nbsp;</td>
+<td align=right>  3.9&nbsp;</td>           <td align=right>            72&nbsp;</td>
+           <td align=right>WZW&nbsp;</td>
+           <td align=right>9&nbsp;</td>
+           <td align=right>17100&nbsp;</td>
+           <td align=right>1005.8&nbsp;</td>
+        </tr>
+       <tr class="trcolor">
+           <td>Voorschoten</td>
+           <td>onbewolkt</td>
+           <td align=right>7.5&nbsp;</td>
+<td align=right>  3.1&nbsp;</td>           <td align=right>            76&nbsp;</td>
+           <td align=right>WZW&nbsp;</td>
+           <td align=right>9&nbsp;</td>
+           <td align=right>15500&nbsp;</td>
+           <td align=right>1006.3&nbsp;</td>
+        </tr>
+       <tr >
+           <td>Rotterdam</td>
+           <td>onbewolkt</td>
+           <td align=right>8.0&nbsp;</td>
+<td align=right>  4.1&nbsp;</td>           <td align=right>            70&nbsp;</td>
+           <td align=right>  W&nbsp;</td>
+           <td align=right>8&nbsp;</td>
+           <td align=right>20500&nbsp;</td>
+           <td align=right>1006.5&nbsp;</td>
+        </tr>
+       <tr class="trcolor">
+           <td>Hoek van Holland</td>
+           <td> </td>
+           <td align=right>7.4&nbsp;</td>
+<td align=right>  2.8&nbsp;</td>           <td align=right>            71&nbsp;</td>
+           <td align=right>WZW&nbsp;</td>
+           <td align=right>10&nbsp;</td>
+           <td align=right> &nbsp;</td>
+           <td align=right>1006.5&nbsp;</td>
+        </tr>
+       <tr >
+           <td>Vlissingen</td>
+           <td>licht bewolkt</td>
+           <td align=right>6.9&nbsp;</td>
+<td align=right>  2.6&nbsp;</td>           <td align=right>            81&nbsp;</td>
+           <td align=right>  W&nbsp;</td>
+           <td align=right>8&nbsp;</td>
+           <td align=right>13300&nbsp;</td>
+           <td align=right>1007.7&nbsp;</td>
+        </tr>
+       <tr class="trcolor">
+           <td>Westdorpe</td>
+           <td> </td>
+           <td align=right>7.8&nbsp;</td>
+<td align=right>  4.1&nbsp;</td>           <td align=right>            68&nbsp;</td>
+           <td align=right>  W&nbsp;</td>
+           <td align=right>7&nbsp;</td>
+           <td align=right>26400&nbsp;</td>
+           <td align=right>1008.0&nbsp;</td>
+        </tr>
+       <tr >
+           <td>Woensdrecht</td>
+           <td>onbewolkt</td>
+           <td align=right>8.2&nbsp;</td>
+<td align=right>  4.3&nbsp;</td>           <td align=right>            70&nbsp;</td>
+           <td align=right>  W&nbsp;</td>
+           <td align=right>8&nbsp;</td>
+           <td align=right>26400&nbsp;</td>
+           <td align=right>1007.5&nbsp;</td>
+        </tr>
+       <tr class="trcolor">
+           <td>Gilze Rijen</td>
+           <td>zwaar bewolkt</td>
+           <td align=right>7.3&nbsp;</td>
+<td align=right>  4.2&nbsp;</td>           <td align=right>            69&nbsp;</td>
+           <td align=right>  W&nbsp;</td>
+           <td align=right>5&nbsp;</td>
+           <td align=right>19100&nbsp;</td>
+           <td align=right>1007.2&nbsp;</td>
+        </tr>
+       <tr >
+           <td>Volkel</td>
+           <td>droog na regen</td>
+           <td align=right>7.7&nbsp;</td>
+<td align=right>  4.7&nbsp;</td>           <td align=right>            74&nbsp;</td>
+           <td align=right>WZW&nbsp;</td>
+           <td align=right>5&nbsp;</td>
+           <td align=right>26300&nbsp;</td>
+           <td align=right>1006.7&nbsp;</td>
+        </tr>
+       <tr class="trcolor">
+           <td>Eindhoven</td>
+           <td>half bewolkt</td>
+           <td align=right>8.5&nbsp;</td>
+<td align=right>  5.0&nbsp;</td>           <td align=right>            71&nbsp;</td>
+           <td align=right>  W&nbsp;</td>
+           <td align=right>7&nbsp;</td>
+           <td align=right>22600&nbsp;</td>
+           <td align=right>1007.1&nbsp;</td>
+        </tr>
+       <tr >
+           <td>Ell</td>
+           <td>droog na regen</td>
+           <td align=right>7.4&nbsp;</td>
+<td align=right>  3.9&nbsp;</td>           <td align=right>            76&nbsp;</td>
+           <td align=right>WZW&nbsp;</td>
+           <td align=right>6&nbsp;</td>
+           <td align=right>29900&nbsp;</td>
+           <td align=right> &nbsp;</td>
+        </tr>
+       <tr class="trcolor">
+           <td>Arcen</td>
+           <td> </td>
+           <td align=right>6.8&nbsp;</td>
+<td align=right>  4.1&nbsp;</td>           <td align=right>            84&nbsp;</td>
+           <td align=right>WZW&nbsp;</td>
+           <td align=right>4&nbsp;</td>
+           <td align=right> &nbsp;</td>
+           <td align=right> &nbsp;</td>
+        </tr>
+       <tr >
+           <td>Maastricht AP</td>
+           <td>zwaar bewolkt</td>
+           <td align=right>7.2&nbsp;</td>
+<td align=right>  3.7&nbsp;</td>           <td align=right>            76&nbsp;</td>
+           <td align=right>WZW&nbsp;</td>
+           <td align=right>6&nbsp;</td>
+           <td align=right>21000&nbsp;</td>
+           <td align=right>1008.1&nbsp;</td>
+        </tr>
+       </table>
+<!--
+    </td>
+    <td width="11">&nbsp;</td>
+    <td width="220" valign="top">&nbsp;</td>
+</tr>
+</table>
+-->
+<div class=noot>De waarde in de kolom 'Chill' in de waarnemingentabel is de gevoelstemperatuur in graden volgens JAG/TI-methode, meer informatie over gevoelstemperaturen in onze rubriek <a href="http://www.knmi.nl/cms/content/31764/gevoelstemperatuur_windchill">Nader Verklaard</a>.</div>
+
+   <script language="javascript">
+   <!--
+   document.write("<div class=noot>Snel zien waar bijvoorbeeld de laagste temperatuur gemeten is? Klik op kolomhoofd 'Temp' voor het sorteren van de temperatuur. U kunt ook de andere kolommen op deze wijze sorteren.</div>");
+   //-->
+   </script>
+   <noscript></noscript>
+   <!-- Einde Linker Data Kolom -->
+   </div>
+</td>
+<td width="11">&nbsp;</td>
+<td width="220" valign=top>
+   <!-- Begin Rechter Menu Kolom -->
+   <div class="menukopje">Actueel</div>
+<div class="menulink"><a href="/actueel/index.html">Waarnemingen NL</a></div>
+<div class="menulink"><a href="/actueel/noordzeetabel.html">Waarnemingen Noordzee en Kust</a></div>
+<script language="javascript" src="/library/javascript/summertime.js"></script>
+<script language="javascript">
+<!-- cloaking
+// Alleen link naar de Gevoelstemperatuur in de Wintertijdperiode
+var zomertijd = zomertijduur();
+zomertijd = 0;
+if (zomertijd == 1) {
+   // Wintertijd
+   document.write('<div class="menulink"><a href="javascript:pop_picture(\'images/windchillgmt.png\',\'copyright\')">Gevoelstemperatuur</a></div>');
+
+}
+// uncloaking -->
+</script>
+<noscript></noscript>
+<div class="menulink"><a href="/datacentrum/satellite_earth_observations/NOAA/">Zeewatertemperatuur</a></div>
+<div class="menulink"><a href="/waarschuwingen_en_verwachtingen/luchtvaart/index.html ">Luchtvaart</a></div>
+<div class="menulink"><a href="/actueel/satelliet.php">IR satellietbeelden</a></div>
+<div class="menulink"><a href="/actueel/satelliet_loop.php">IR satellietbeeldenfilm</a></div>
+<!--<div class="menulink"><a href="/datacentrum/satellite_earth_observations/MSG/index.html">Meer satellietbeelden</a></div>-->
+<div class="menulink"><a href="/actueel/opgetreden_extremen.html">Opgetreden extremen</a></div>
+<div class="menulink"><a target="new" href="/omi/publ-nl/metingen/no2/metingen_no2_nrt.html">Luchtkwaliteitsmetingen OMI</a></div>
+<div class="menulink"><a href="/neerslagradar">Neerslagradar</a></div>
+<div class="menulink"><a href="/webcam">Webcam</a></div>
+
+<div class="menukopje">Waarschuwingen</div>
+<div class="menulink"><a href="/waarschuwingen_en_verwachtingen/overzicht_waarschuwingen.html">Overzicht</a></div>
+<div class="menukopje">Verwachtingen</div>
+<div class="menulink"><a href="/waarschuwingen_en_verwachtingen">Overzicht</a></div>
+
+<div class="menukopje">Diversen</div>
+<div class="menulink"><a target="ext" href="/satrep/">Satrep (Satellite Report)</a></div>
+<div class="menulink"><a href="/klimatologie/daggegevens/index.cgi">Daggegevens van het weer in Nederland<!--Download klimatologische data--></a></div>
+<div class="menulink"><a href="omrekenen.html">Omrekenen temperatuur en wind</a></div>
+<div class="menulink"><a href="/klimatologie/achtergrondinformatie/windroos.pdf">Windroos</a></div>
+<div class="menulink"><a href="/klimatologie/achtergrondinformatie/beaufortschaal.pdf">Beaufortschaal</a></div>
+<div class="menulink"><a href="/actueel/externe_links.html">Externe links</a></div>
+<div class="menulink"><a href="/waarschuwingen_en_verwachtingen/disclaimer.html">Disclaimer</a></div>
+
+<div class="menukopje">Nader Verklaard dossier</div>
+<div class="menulink"><a href="/cms/content/17485/weeralarm_en_waarschuwingen">Weeralarm</a></div>
+<div class="menulink"><a href="/cms/content/20458/satellieten">Satellieten</a></div>
+<div class="menulink"><a href="/cms/content/17609/waarnemingen_metingen_en_weerstations">Waarnemingen, metingen en weerstations</a></div>
+
+<div class="menukopje">Nader Verklaard begrippen</div>
+<div class="menulink"><a href="/cms/content/37023/temperatuur">Temperatuur</a></div>
+<script language="javascript">
+<!-- cloaking
+// Alleen link naar dossier Gevoelstemperatuur in Wintertijd-periode, eg zomertijd=1
+if (zomertijd == 1) {
+   // Wintertijd
+   document.write('<div class="menulink"><a href="/cms/content/31764/gevoelstemperatuur_windchill">Gevoelstemperatuur (windchill)</a></div>');
+}
+//-->
+</script>
+<div class="menulink"><a href="/cms/content/37193/relatieve_vochtigheid">Relatieve vochtigheid</a></div>
+<div class="menulink"><a href="/cms/content/27059/windmetingen">Windmetingen</a></div>
+<div class="menulink"><a href="/cms/content/36213/luchtdruk">Luchtdruk</a></div>
+<div class="menulink"><a href="/cms/content/40787/zicht">Zicht</a></div>
+
+   <!-- Einde Rechter Menu Kolom -->
+</td>
+</tr>
+</table>
+</td></tr></table>
+<!-- Bottomfloat bevat de copyright-vermelding, printknop en de 'terug naar boven'-knop -->
+<!-- 21-07-2009: begin toevoeging voor de template -->
+
+<!--Afsluiting van de buitenste tabel-->
+</td>
+</tr>
+</table>
+<p><br>
+<script type="text/javascript" src="/library/javascript/socialmedia.js"></script>
+</div> <!-- EINDE 'content' div -->
+</div></div> <!-- EINDE 'c1', 'c2' div -->
+
+<div class="func_links" id="service_menu">
+   <h3>Service menu</h3>
+   <ul class="right">
+      <li><span id = "printertje">
+	         <script language="javascript">
+			 <!--
+			 document.write('<a href="javascript:printpage();"><img src="/images/rijksprintertje.gif" border=0 alt="Print deze pagina" title="Print deze pagina"></a>');
+			 //-->
+			 </script>  
+          </span>
+      </li>
+
+      <li><a href="/over_het_knmi/cookies.html" title="Cookies">Cookies</a></li>
+      <!--<li><a href="/faq" title="Veelgestelde vragen">Veelgestelde vragen</a></li>-->
+      <li><a href="/contact/" title="Contact">Contact</a></li>
+      <li><a href="/links/" title="Links">Links</a></li>
+      <script language="javascript">
+	  <!--
+	  if (typeof(engelse_url) != 'undefined' && engelse_url != null) {
+		  document.write('<li><a href="'+engelse_url+'" title="English">English</a></li>');
+	  } else {
+		  document.write('<li><a href="/index_en.html" title="English">English</a></li>');
+	  }
+      //-->
+	  </script>
+      <noscript>
+	  <li><a href="/index_en.html" title="English">English</a></li>
+      </noscript>
+   </ul>
+   <ul class="left">
+      <!--include virtual="/library/php/check4IPv6.php"-->
+      <!--li><a href="/rss_feeds/" title="Abonneer op de RSS nieuws feed" class="rss">RSS</a></li-->
+      
+      <li><a href="/rss_feeds/"><img src="/images/rssgrey.png" border=0 alt="RSS feeds" title="RSS feeds"></a></li>
+	  <li><a href="http://m.knmi.nl" title="Mobiele website KNMI">Mobiel</a></li>
+      <li><a href="http://twitter.com/knmi" target="Twitter"><img src="/library/images/Twitter-icon14.png" border=0  alt="Volg het KNMI op Twitter - Follow KNMI on Twitter" title="Volg het KNMI op Twitter - Follow KNMI on Twitter"></a></li>
+      <script language="javascript">
+	  <!--
+	  document.write('<li>Tekstgrootte</li>');
+      document.write('<li><a href="javascript:changeFontSize(-1);"><img src="/images/tsizemin.png" border=0 alt="Kleinere letters" title="Kleinere letters"></a>&nbsp;</li>');
+      document.write('<li><a href="javascript:resetFontSize();"><img src="/images/tsizenul.png" border=0 alt="Standaardlettergrootte" title="Standaardlettergrootte"></a>&nbsp;</li>');
+      document.write('<li><a href="javascript:changeFontSize(+1);"><img src="/images/tsizeplus.png" border=0 alt="Grotere letters" title="Grotere letters"></a></li>');
+      //-->
+	  </script>
+	        <!--<a href="javascript:changeFontSize(-1);"><span class="minnulplus"> - </span></a>&nbsp;-->
+            <!--<a href="javascript:resetFontSize();"><span class="minnulplus"> 0 </span></a>&nbsp;-->
+            <!--<a href="javascript:changeFontSize(+1);"><span class="minnulplus"> + </span></a>--> 
+   </ul>
+</div>
+
+<div class="footer">
+   <div class="ref"><img src="/images/RO_footer.png" height="25" width="500" alt="Rijkshuisstijl footer" title="Rijkshuisstijl footer"></div>
+   <span></span>
+</div>
+
+<div class="func_links_footer" id="service_menu2">
+<ul class="left">
+<li>
+</li>
+</ul>
+
+<ul class="right">
+<!--<li><a href="">Cookies</a></li>-->
+<li>
+<span id="socialmedia" style="display:none;">
+<script language="JavaScript">
+<!--
+socialmedia();
+//-->
+</script>
+</span>
+</li>
+</ul>
+
+</div>
+
+</div> <!-- EINDE 'container' DIV -->
+<div style="margin-left:10px;">
+</div>
+<!-- einde toevoeging voor de template -->
+
+
+<!-- EINDE FOOTER INCLUDE -->
+<script type="text/javascript">
+<!-- cloaking
+
+function printpage() {
+  newwindow = window.open("","Printje","toolbar=0,location=0,status=0,menubar=0,scrollbars=1,width=600,height=600")
+  newwindow.document.open();
+  newwindow.focus();
+  newwindow.document.write("\<html\>\<head\>\<link rel='stylesheet' ");
+  newwindow.document.write("href='\/styles\/rijksvinkstyle.css' type='text\/css'\>\<\/head\>");
+  newwindow.document.write("\<body style='background-color: #ffffff;' onLoad='this.print();'\>");
+  var body = document.getElementById('printable').innerHTML;
+  newwindow.document.write(body);
+  newwindow.document.write("<\/body\>\<\/html\>");
+  newwindow.document.close();
+}
+
+   if (document.getElementById('printable')) {
+      var kiekeboe = document.getElementById('printertje');
+      kiekeboe.style.display = "inline";
+   }
+   if (document.getElementById('engelse_taal')) {
+      var kiekeboe = document.getElementById('engelse_taal');
+	  var newStr = "href=\""+kiekeboe.innerHTML+"\"";
+	  
+      var kiekeboe = document.getElementById('english-language');
+	  kiekeboe.style.display = "inline";
+	  
+	  var oldStr = kiekeboe.innerHTML;
+ 	  kiekeboe.innerHTML = oldStr.replace(/href=\"\"/g,newStr); 
+	  //alert(kiekeboe.innerHTML + "\n" + newStr);
+   }
+// uncloaking -->
+</script>
+
+
+
+</body>
+</html>
+

@@ -28,7 +28,26 @@ class WeatherStationServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->app->singleton('App\Contracts\WeatherStation', 'App\Services\WeatherStations\OpenWeatherMapService');
+		switch (env('WEATHER_DRIVER')) {
+			case 'knmi':
+				$driver = 'KNMI';
+				break;
+
+			case 'openweathermap':
+				$driver = 'OpenWeatherMap';
+				break;
+
+			case 'weatherunderground':
+				$driver = 'WeatherUnderground';
+				break;
+
+			default:
+				$driver = 'Null';
+				break;
+
+		}
+
+		$this->app->singleton('App\Contracts\WeatherStation', 'App\Services\WeatherStations\\'.$driver.'Service');
 	}
 
 	/**

@@ -21,6 +21,8 @@ class MonitorController extends Controller {
 	 */
 	public function index()
 	{
+		$inverter = $this->inverter;
+
 		// Load configuration
 		$pv_name  = env('PV_NAME', 'My Solar Power Plant');
 		$pv_power = env('PV_POWER', 6700);
@@ -59,7 +61,7 @@ class MonitorController extends Controller {
 		$ac_frequency_nom_stop = ($nom_ac_frequency - $min_ac_frequency) / ($max_ac_frequency - $min_ac_frequency);
 
 		// Get the inverter measurements
-		$measurements = $this->inverter->measurements();
+		$measurements = $inverter->measurements();
 
 		// Get the latest weather
 		$weather_station = App::make('App\Contracts\WeatherStation');
@@ -87,7 +89,7 @@ class MonitorController extends Controller {
 			'min_temperature',
 			'max_temperature',
 			'temperature'
-		))->setTtl(self::INVERTER_TTL);  // cache for 10 seconds to not hammer the inverter
+		))->setTtl($inverter->update_interval());
 	}
 
 }

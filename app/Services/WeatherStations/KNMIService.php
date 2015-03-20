@@ -2,33 +2,33 @@
 
 use App\Contracts\HTTP;
 use App\Contracts\WeatherStation as WeatherStationContract;
-
+use DOMDocument;
 use Log;
 
-class OpenWeatherMapService implements WeatherStationContract {
+class KNMIService implements WeatherStationContract {
 
 	/*
 	|--------------------------------------------------------------------------
-	| OpenWeatherMap
+	| KNMI Weather Station
 	|--------------------------------------------------------------------------
 	|
-	| This weather adapter returns weather conditions from OpenWeatherMap.
+	| This weather adapter returns weather conditions from KNMI.
 	|
 	*/
 
 	/**
-	 * The OpenWeatherMap host.
+	 * The KNMI host.
 	 *
 	 * @const string
 	 */
-	const OPENWEATHERMAP_HOST = 'http://openweathermap.org';
+	const KNMI_HOST = 'http://www.knmi.nl';
 
 	/**
-	 * The URI to the weather API.
+	 * The URI to the weather page.
 	 *
 	 * @const string
 	 */
-	const WEATHER_URI = '/data/2.5/weather';
+	const WEATHER_URI = '/actueel/';
 
 	/**
 	 * The minimum interval before refreshing the weather.
@@ -43,13 +43,6 @@ class OpenWeatherMapService implements WeatherStationContract {
 	 * @var int
 	 */
 	protected $last_updated_at = 0;
-
-	/**
-	 * The OpenWeatherMap API key.
-	 *
-	 * @var string
-	 */
-	protected $api_key;
 
 	/**
 	 * The weather station location.
@@ -73,7 +66,7 @@ class OpenWeatherMapService implements WeatherStationContract {
 	protected $http;
 
 	/**
-	 * Create a new OpenWeatherMap instance.
+	 * Create a new KNMI instance.
 	 *
 	 * @param  App\Contracts\HTTP  $http
 	 * @return void
@@ -81,20 +74,15 @@ class OpenWeatherMapService implements WeatherStationContract {
 	public function __construct(HTTP $http)
 	{
 		$this->http = $http;
-
-		$this->api_key  = env('WEATHER_API_KEY');
 		$this->location = env('WEATHER_LOCATION');
 
 		if (!$this->is_configured()) {
-			Log::error('No location set for OpenWeatherMap.');
+			Log::error('No KNMI weather station set.');
 
 		}
 
-		// Queries without an API key *may* work.
-		if (!$this->api_key) {
-			Log::warning('No API key set for OpenWeatherMap.');
-
-		}
+		// Suppress errors regarding malformed HTML.
+		libxml_use_internal_errors(true);
 	}
 
 	/**
@@ -120,19 +108,30 @@ class OpenWeatherMapService implements WeatherStationContract {
 	{
 		if ($this->is_configured()) {
 
-			$header = ["x-api-key:{$this->api_key}"];
-			$uri = self::WEATHER_URI.'?'.http_build_query(['q' => $this->location]);
-			$response = $this->http->get(self::OPENWEATHERMAP_HOST, $uri, $header);
-
-			$weather = json_decode($response);
+			$response = $this->http->get(self::KNMI_HOST, self::WEATHER_URI);
 
 			$temperature = null;
-			if (property_exists($weather, 'main') && property_exists($weather->main, 'temp')) {
-				$temperature = $weather->main->temp - 273.15;  // Kelvin to Celcius
+			if ($response) {
+				$dom = new DOMDocument();
+				$dom->loadHTML($response);
+				$elements = $dom->getElementsByTagName('td');
 
+				for ($i = 0; $i < $elements->length; $i++) {
+					if ($elements->item($i)->nodeValue == $this->location) {
+						$temperature = floatval($elements->item($i+2)->nodeValue);
+						break;
+					}
+
+				}
 			}
 
-			$this->temperature = $temperature;
+			if ($temperature) {
+				$this->temperature = $temperature;
+
+			} else {
+				Log::error('KNMI weather station was not found.');
+
+			}
 		}
 	}
 

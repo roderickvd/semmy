@@ -7,20 +7,6 @@ use App\Contracts\WeatherStation;
 abstract class Controller extends BaseController {
 
 	/**
-	 * The cache time to live in seconds for inverter resources.
-	 *
-	 * @const int
-	 */
-	const INVERTER_TTL = 10;
-
-	/**
-	 * The cache time to live in seconds for weather resources.
-	 *
-	 * @const int
-	 */
-	const WEATHER_TTL = 600;	
-
-	/**
 	 * The configured inverter.
 	 *
 	 * @var App\Contracts\Inverter

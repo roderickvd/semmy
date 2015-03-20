@@ -10,9 +10,7 @@ class OfflineTest extends TestCase {
     public function setUp()
     {
         parent::setUp();
-
-        require_once __DIR__.'/Mocks/Responses/OfflineResponse.php';
-        $this->setResponse('', 'OfflineResponse');
+        $this->setResponse('OfflineResponse');
     }
 
 	/**

@@ -152,8 +152,7 @@ class Measurements {
 			$dom->loadHTML($response);
 			$elements = $dom->getElementsByTagName('td');
 
-			foreach (self::$COLUMN_MAPPING as $key => $index)
-			{
+			foreach (self::$COLUMN_MAPPING as $key => $index) {
 				$this->parse_measurement($key, $elements->item($index)->nodeValue);
 			}			 
 		}

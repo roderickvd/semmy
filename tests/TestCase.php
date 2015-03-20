@@ -46,18 +46,17 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase {
 	 * @param string  $mock
 	 * @return void
 	 */
-	protected function setResponse($namespace, $mock)
+	protected function setResponse($mock)
 	{
-		if ($namespace) {
-			require_once __DIR__."/Mocks/Responses/{$namespace}/{$mock}.php";
-			$this->app->singleton('App\Contracts\HTTP', 'Responses\\'.$namespace.'\\'.$mock);
+		$file = str_replace('\\', '/', $mock);
+		require_once __DIR__."/Mocks/Responses/{$file}.php";
+		$this->app->singleton('App\Contracts\HTTP', 'Responses\\'.$mock);
+	}
 
-		} else {
-			require_once __DIR__."/Mocks/Responses/{$mock}.php";
-			$this->app->singleton('App\Contracts\HTTP', 'Responses\\'.$mock);
-
-		}
-
+	protected function setInverterAndResponse($inverter, $response)
+	{
+		$this->setResponse('Inverters\\'.$inverter.'\\'.$response);
+		$this->setInverter($inverter);
 	}
 
 	/**

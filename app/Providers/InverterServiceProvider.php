@@ -27,7 +27,7 @@ class InverterServiceProvider extends ServiceProvider {
 				break;
 
 			default:
-				$this->app->abort(501, 'Configured driver not supported.');
+				$this->app->abort(501, 'Configured inverter driver not supported.');
 				break;
 
 		}
