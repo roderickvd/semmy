@@ -62,10 +62,12 @@ class MonitorController extends Controller {
 
 		// Get the inverter measurements
 		$measurements = $inverter->measurements();
+		$inverter_interval = $inverter->update_interval();
 
 		// Get the latest weather
 		$weather_station = App::make('App\Contracts\WeatherStation');
 		$temperature = $weather_station->temperature();
+		$weather_interval =	$weather_station->update_interval();
 
 		return response()->view('monitor', compact(
 			'pv_name',
@@ -88,8 +90,10 @@ class MonitorController extends Controller {
 			'max_ac_frequency',
 			'min_temperature',
 			'max_temperature',
-			'temperature'
-		))->setTtl($inverter->update_interval());
+			'temperature',
+			'inverter_interval',
+			'weather_interval'
+		))->setTtl($inverter_interval);
 	}
 
 }

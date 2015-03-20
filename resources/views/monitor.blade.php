@@ -354,6 +354,10 @@
 		}));
 
 	});
+
+	inverterInterval = {{ $inverter_interval }};
+	weatherInterval = {{ $weather_interval }};
+
 	</script>
 </body>
 </html>

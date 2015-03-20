@@ -34,20 +34,13 @@ $(function () {
 
 					if (chart) {
 						series = chart.series[0];
-						points = series.points;
 						value  = data.measurements[dials[index].replace('-','_')];
 
 						// Explicitly check for null, because 0 evaluates as false
 						if (value != null) {
-							if (points[0]) {
-								points[0].update(value);
-							} else {
-								series.addPoint(value);
-							}
+							series.setData([value]);
 						} else {
-							if (points[0]) {
-								points[0].remove();
-							}
+							series.removePoint(0);
 						}
 					}
 				}
@@ -60,9 +53,8 @@ $(function () {
 
 		});
 
-	}, 2000);
+	}, inverterInterval);
 
-	// Update the weather every 10 minutes to save external API requests
 	setInterval(function () {
 		$.getJSON('api/v1/weather').done( function(data) {
 			var chart,
@@ -72,25 +64,18 @@ $(function () {
 
 				if (chart) {
 					series = chart.series[0];
-					points = series.points;
 					value  = data.temperature;
 
 					// Explicitly check for null, because 0 evaluates as false
 					if (value != null) {
-						if (points[0]) {
-							points[0].update(value);
-						} else {
-							series.addPoint(value);
-						}
+						series.setData([value]);
 					} else {
-						if (points[0]) {
-							points[0].remove();
-						}
+						series.removePoint(0);
 					}
 				}
 
 		});
 
-	}, 600000);
+	}, weatherInterval);
 
 });
