@@ -160,7 +160,7 @@ class OpenWeatherMapService implements WeatherStationContract {
 	 */
 	public function update_interval()
 	{
-		return UPDATE_INTERVAL;
+		return self::UPDATE_INTERVAL;
 	}
 
 }
