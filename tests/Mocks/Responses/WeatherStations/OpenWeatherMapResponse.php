@@ -1,16 +1,15 @@
-<?php namespace Responses\Inverters\StecaGrid;
+<?php namespace Responses\WeatherStations;
 
 use App\Contracts\HTTP as HTTPContract;
 
-class FeedingResponse implements HTTPContract {
+class OpenWeatherMapResponse implements HTTPContract {
 
     /*
 	|--------------------------------------------------------------------------
-    | Mock Feeding StecaGrid HTTP Response
+    | Mock OpenWeatherMap HTTP Response
     |--------------------------------------------------------------------------
     |
-    | This mock returns a real-world response that a StecaGrid inverter may
-    | send when feeding.
+    | This mock returns a real-world OpenWeatherMap page.
     |
     */
 
@@ -24,13 +23,7 @@ class FeedingResponse implements HTTPContract {
 	 */
     public static function get($host, $uri, $headers = [])
     {
-		if (strpos($uri, 'gen.yield.day.chart.js') === false) {
-			return file_get_contents(__DIR__.'/JavaScript/feeding.js');
-
-		} else {
-			return file_get_contents(__DIR__.'/JavaScript/3900.js');
-
-		}
+		return file_get_contents(__DIR__.'/JSON/OpenWeatherMap.json');
     }
 
 	public static function post($host, $uri, $data, $headers = [])

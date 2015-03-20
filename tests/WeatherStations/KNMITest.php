@@ -9,10 +9,7 @@ class KNMITest extends TestCase {
 	 */
 	public function testKNMIWeatherConditions()
 	{
-		Dotenv::makeMutable();
-		Dotenv::setEnvironmentVariable('WEATHER_LOCATION', 'Den Helder');
 		$this->setResponse('WeatherStations\KNMIResponse');
-
 		$knmi = $this->app->make('App\Services\WeatherStations\KNMIService');
 		$this->assertEquals(7.4, $knmi->temperature());
 	}

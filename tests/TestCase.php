@@ -67,6 +67,11 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase {
 	public function setUp()
 	{
 		parent::setUp();
+		Dotenv::makeMutable();
+
+		// FIXME - why is WEATHER_LOCATION pulled from the actual .env file
+		// instead of phpunit.xml?
+		Dotenv::setEnvironmentVariable('WEATHER_LOCATION', 'Den Helder');
 
 		require_once __DIR__.'/Mocks/Inverters/DummyInverter.php';
 		$this->setInverter('DummyInverter');

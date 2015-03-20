@@ -6,10 +6,10 @@ class KNMIResponse implements HTTPContract {
 
     /*
 	|--------------------------------------------------------------------------
-    | Mock KNMI HTTP Response
+    | Mock OpenWeatherMap HTTP Response
     |--------------------------------------------------------------------------
     |
-    | This mock returns a real-world KNMI page.
+    | This mock returns a real-world OpenWeatherMap response.
     |
     */
 
@@ -23,7 +23,7 @@ class KNMIResponse implements HTTPContract {
 	 */
     public static function get($host, $uri, $headers = [])
     {
-		return file_get_contents(__DIR__.'/html/knmi.html');
+		return file_get_contents(__DIR__.'/HTML/KNMI.html');
     }
 
 	public static function post($host, $uri, $data, $headers = [])

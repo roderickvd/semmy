@@ -25,7 +25,6 @@
 		<env name="SONNENERTRAG_PB_ID" value="1234567890"/>
 		<env name="SONNENERTRAG_USERNAME" value="Sonnenertrag username"/>
 		<env name="SONNENERTRAG_PASSWORD" value="Sonnenertrag secret"/>
-		<env name="WEATHER_DRIVER" value="openweathermap"/>
-		<env name="WEATHER_LOCATION" value="Schagen,nl"/>		
+		<env name="WEATHER_LOCATION" value="Den Helder"/>
     </php>
 </phpunit>

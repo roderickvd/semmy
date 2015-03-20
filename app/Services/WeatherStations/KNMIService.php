@@ -129,7 +129,7 @@ class KNMIService implements WeatherStationContract {
 				$this->temperature = $temperature;
 
 			} else {
-				Log::error('KNMI weather station was not found.');
+				Log::error("KNMI weather station \"{$this->location}\" was not found.");
 
 			}
 		}

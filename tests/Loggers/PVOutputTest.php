@@ -23,19 +23,24 @@ class PVOutputTest extends TestCase {
 		$api_key = env('PVOUTPUT_API_KEY');
 		$sid     = env('PVOUTPUT_SID');
 
-		$temperature = $this->app->make('App\Contracts\WeatherStation')->temperature();
-		$this->app->make('App\Console\Commands\Loggers\PVOutputLogger')->update();
-
-		$this->assertContains("X-Pvoutput-Apikey: {$api_key}", $http::$headers);
-		$this->assertContains("X-Pvoutput-SystemId: {$sid}", $http::$headers);
-		$this->assertEquals("d={$date}&t={$time}&v1={$generation}&v2={$ac_power}&v6={$dc_voltage}&v5={$temperature}", $http::$data);
-
+		// without a weather station adapter
 		$this->app->singleton('App\Contracts\WeatherStation', 'App\Services\WeatherStations\NullService');
 		$this->app->make('App\Console\Commands\Loggers\PVOutputLogger')->update();
 
 		$this->assertContains("X-Pvoutput-Apikey: {$api_key}", $http::$headers);
 		$this->assertContains("X-Pvoutput-SystemId: {$sid}", $http::$headers);
 		$this->assertEquals("d={$date}&t={$time}&v1={$generation}&v2={$ac_power}&v6={$dc_voltage}", $http::$data);		
+
+		// with a weather station adapter
+		$this->app->singleton('App\Contracts\WeatherStation', 'App\Services\WeatherStations\OpenWeatherMapService');		
+		$temperature = $this->app->make('App\Contracts\WeatherStation')->temperature();
+
+		$this->app->make('App\Console\Commands\Loggers\PVOutputLogger')->update();
+
+		$this->assertContains("X-Pvoutput-Apikey: {$api_key}", $http::$headers);
+		$this->assertContains("X-Pvoutput-SystemId: {$sid}", $http::$headers);
+		$this->assertEquals("d={$date}&t={$time}&v1={$generation}&v2={$ac_power}&v6={$dc_voltage}&v5={$temperature}", $http::$data);
+
 	}
 
 }

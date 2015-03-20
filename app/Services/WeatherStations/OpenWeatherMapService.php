@@ -124,10 +124,11 @@ class OpenWeatherMapService implements WeatherStationContract {
 			$uri = self::WEATHER_URI.'?'.http_build_query(['q' => $this->location]);
 			$response = $this->http->get(self::OPENWEATHERMAP_HOST, $uri, $header);
 
+			// this returns null on an invalid response
 			$weather = json_decode($response);
 
 			$temperature = null;
-			if (property_exists($weather, 'main') && property_exists($weather->main, 'temp')) {
+			if ($weather && property_exists($weather, 'main') && property_exists($weather->main, 'temp')) {
 				$temperature = $weather->main->temp - 273.15;  // Kelvin to Celcius
 
 			}
