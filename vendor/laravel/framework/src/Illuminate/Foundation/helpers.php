@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 if ( ! function_exists('abort'))
 {
 	/**
@@ -40,13 +42,14 @@ if ( ! function_exists('app'))
 	 * Get the available container instance.
 	 *
 	 * @param  string  $make
-	 * @return mixed
+	 * @param  array   $parameters
+	 * @return mixed|\Illuminate\Foundation\Application
 	 */
-	function app($make = null)
+	function app($make = null, $parameters = array())
 	{
 		if ( ! is_null($make))
 		{
-			return app()->make($make);
+			return app()->make($make, $parameters);
 		}
 
 		return Illuminate\Container\Container::getInstance();
@@ -368,6 +371,22 @@ if ( ! function_exists('redirect'))
 	}
 }
 
+if ( ! function_exists('resource'))
+{
+	/**
+	 * Route a resource to a controller.
+	 *
+	 * @param  string  $name
+	 * @param  string  $controller
+	 * @param  array   $options
+	 * @return void
+	 */
+	function resource($name, $controller, array $options = [])
+	{
+		return app('router')->resource($name, $controller, $options);
+	}
+}
+
 if ( ! function_exists('response'))
 {
 	/**
@@ -580,6 +599,11 @@ if ( ! function_exists('env'))
 			case 'empty':
 			case '(empty)':
 				return '';
+		}
+		
+		if (Str::startsWith($value, '"') && Str::endsWith($value, '"'))
+		{
+			return substr($value, 1, -1);
 		}
 
 		return $value;
