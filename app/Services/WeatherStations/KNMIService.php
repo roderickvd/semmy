@@ -21,7 +21,7 @@ class KNMIService implements WeatherStationContract {
 	 *
 	 * @const string
 	 */
-	const KNMI_HOST = 'http://www.knmi.nl';
+	const HOST = 'http://www.knmi.nl';
 
 	/**
 	 * The URI to the weather page.
@@ -108,7 +108,7 @@ class KNMIService implements WeatherStationContract {
 	{
 		if ($this->is_configured()) {
 
-			$response = $this->http->get(self::KNMI_HOST, self::WEATHER_URI);
+			$response = $this->http->get(self::HOST, self::WEATHER_URI);
 
 			$temperature = null;
 			if ($response) {

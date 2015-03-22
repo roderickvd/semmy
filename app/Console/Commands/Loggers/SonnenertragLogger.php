@@ -2,6 +2,7 @@
 
 use App\Contracts\HTTP;
 use App\Contracts\Inverter;
+use Dotenv;
 
 class SonnenertragLogger {
 	
@@ -20,21 +21,42 @@ class SonnenertragLogger {
 	 *
 	 * @const string
 	 */
-	const SONNENERTRAG_HOST = 'http://www.sonnenertrag.eu';
+	const HOST = 'http://www.sonnenertrag.eu';
 
 	/**
 	 * The URI to the Sonnenertrag login form handler.
 	 *
 	 * @const string
 	 */
-	const SONNENERTRAG_LOGIN_URI = '/ajax/user/login';
+	const LOGIN_URI = '/ajax/user/login';
 
 	/**
 	 * The URI to the Sonnenertrag daily data form handler.
 	 *
 	 * @const string
 	 */
-	const SONNENERTRAG_DAILY_URI = '/plant/insertdatadaily';
+	const DAILY_URI = '/plant/insertdatadaily';
+
+	/*
+	 * The environment variable for the system ID.
+	 *
+	 * @const string
+	 */
+	const PB_VAR = 'SONNENERTRAG_PB_ID';
+
+	/*
+	 * The environment variable for the username.
+	 *
+	 * @const string
+	 */
+	const USERNAME_VAR = 'SONNENERTRAG_USERNAME';
+
+	/*
+	 * The environment variable for the password.
+	 *
+	 * @const string
+	 */
+	const PASSWORD_VAR = 'SONNENERTRAG_PASSWORD';
 
 	/**
 	 * The HTTP service.
@@ -83,28 +105,11 @@ class SonnenertragLogger {
 		$this->http     = $http;
 		$this->inverter = $inverter;
 
-		$this->pb_id    = env('SONNENERTRAG_PB_ID');
-		$this->username = env('SONNENERTRAG_USERNAME');
-		$this->password = env('SONNENERTRAG_PASSWORD');
+		Dotenv::required(array(self::PB_VAR, self::USERNAME_VAR, self::PASSWORD_VAR));
 
-		if (!$this->is_configured()) {
-			abort(500, 'Sonnenertrag configuration incomplete.');
-
-		}
-	}
-
-	/**
-	 * Check if Sonnenertrag is fully configured.
-	 *
-	 * @return boolean
-	 */
-	protected function is_configured()
-	{
-		if ($this->pb_id && $this->username && $this->password) {
-			return true;
-		}
-
-		return false;
+		$this->pb_id    = env(self::PB_VAR);
+		$this->username = env(self::USERNAME_VAR);
+		$this->password = env(self::PASSWORD_VAR);
 	}
 
 	/**
@@ -122,7 +127,7 @@ class SonnenertragLogger {
 			'submit' => 'Login'
 		];
 
-		if ($this->http->post(self::SONNENERTRAG_HOST, self::SONNENERTRAG_LOGIN_URI, $login, []) === 'true')
+		if ($this->http->post(self::HOST, self::LOGIN_URI, $login, []) === 'true')
 		{
 			return true;
 
@@ -140,7 +145,7 @@ class SonnenertragLogger {
 	 */
 	public function update_with($timestamp, $generation)
 	{
-		if ($this->is_configured() && $this->login()) {
+		if ($this->login()) {
 
 			$date  = date('Y-m-d', $timestamp);
 			$year  = date('Y', $timestamp);
@@ -159,7 +164,7 @@ class SonnenertragLogger {
 				'save' => 'Save'			
 			];
 
-			$this->http->post(self::SONNENERTRAG_HOST, self::SONNENERTRAG_DAILY_URI, $daily_data, []);
+			$this->http->post(self::HOST, self::DAILY_URI, $daily_data, []);
 
 		}
 	}
@@ -171,13 +176,9 @@ class SonnenertragLogger {
 	 */
 	public function update()
 	{
-		if ($this->is_configured()) {
-			$timestamp  = time();
-			$generation = $this->inverter->generation();
-
-			$this->update_with($timestamp, $generation);
-
-		}
+		$timestamp  = time();
+		$generation = $this->inverter->generation();
+		$this->update_with($timestamp, $generation);
 	}
 
 }

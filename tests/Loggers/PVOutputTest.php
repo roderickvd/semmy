@@ -1,5 +1,7 @@
 <?php
 
+use App\Console\Commands\Loggers\PVOutputLogger;
+
 class PVOutputTest extends TestCase {
 
 	/**
@@ -20,8 +22,8 @@ class PVOutputTest extends TestCase {
 		$ac_power   = $this->inverter->ac_power();
 		$dc_voltage = $this->inverter->dc_voltage();
 
-		$api_key = env('PVOUTPUT_API_KEY');
-		$sid     = env('PVOUTPUT_SID');
+		$api_key = env(PVOutputLogger::API_KEY_VAR);
+		$sid     = env(PVOutputLogger::SID_VAR);
 
 		// without a weather station adapter
 		$this->app->singleton('App\Contracts\WeatherStation', 'App\Services\WeatherStations\NullService');

@@ -1,8 +1,27 @@
 <?php namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Dotenv;
 
 class InverterServiceProvider extends ServiceProvider {
+
+	/*
+	 * The environment variable for the inverter driver.
+	 *
+	 * @const string
+	 */
+	const DRIVER_VAR = 'INV_DRIVER';
+
+	/**
+	 * The supported inverter drivers.
+	 *
+	 * @const array
+	 */
+
+	// Array constants are not supported before PHP 5.6.
+	protected static $DRIVERS = [
+		'StecaGrid' => 'stecagrid'
+	];
 
 	/**
 	 * Bootstrap any inverter services.
@@ -21,17 +40,8 @@ class InverterServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		switch (env('INV_DRIVER')) {
-			case 'stecagrid':
-				$driver = 'StecaGrid';
-				break;
-
-			default:
-				$this->app->abort(501, 'Configured inverter driver not supported.');
-				break;
-
-		}
-
+		Dotenv::required(self::DRIVER_VAR, array_values(self::$DRIVERS));
+		$driver = array_search(env(self::DRIVER_VAR), self::$DRIVERS);
 		$this->app->singleton('App\Contracts\Inverter', 'App\Services\Inverters\\'.$driver);
 	}
 

@@ -3,6 +3,7 @@
 use App\Contracts\HTTP;
 use App\Contracts\Inverter;
 use App\Contracts\WeatherStation;
+use Dotenv;
 
 class PVOutputLogger {
 	
@@ -20,7 +21,7 @@ class PVOutputLogger {
 	 *
 	 * @const string
 	 */
-	const PVOUTPUT_HOST = 'http://pvoutput.org';
+	const HOST = 'http://pvoutput.org';
 
 	/**
 	 * The URI to the PVOutput Status Service.
@@ -28,6 +29,20 @@ class PVOutputLogger {
 	 * @const string
 	 */
 	const STATUS_URI = '/service/r2/addstatus.jsp';
+
+	/*
+	 * The environment variable for the system ID.
+	 *
+	 * @const string
+	 */
+	const SID_VAR = 'PVOUTPUT_SID';
+
+	/*
+	 * The environment variable for the API key.
+	 *
+	 * @const string
+	 */
+	const API_KEY_VAR = 'PVOUTPUT_API_KEY';
 
 	/**
 	 * The HTTP service.
@@ -77,28 +92,10 @@ class PVOutputLogger {
 		$this->inverter        = $inverter;
 		$this->weather_station = $weather_station;
 
-		$this->sid     = env('PVOUTPUT_SID');
-		$this->api_key = env('PVOUTPUT_API_KEY');
+		Dotenv::required(array(self::SID_VAR, self::API_KEY_VAR));
 
-		if (!$this->is_configured()) {
-			abort(500, 'PVOutput configuration incomplete.');
-
-		}
-			
-	}
-
-	/**
-	 * Check if PVOutput is fully configured.
-	 *
-	 * @return boolean
-	 */
-	protected function is_configured()
-	{
-		if ($this->sid && $this->api_key) {
-			return true;
-		}
-
-		return false;
+		$this->sid     = env(self::SID_VAR);
+		$this->api_key = env(self::API_KEY_VAR);
 	}
 
 	/**
@@ -112,31 +109,27 @@ class PVOutputLogger {
 	 */
 	public function update_with($timestamp, $generation, $ac_power, $dc_voltage)
 	{
-		if ($this->is_configured()) {
+		$headers = [
+			"X-Pvoutput-Apikey: {$this->api_key}",
+			"X-Pvoutput-SystemId: {$this->sid}"
+		];
 
-			$headers = [
-				"X-Pvoutput-Apikey: {$this->api_key}",
-				"X-Pvoutput-SystemId: {$this->sid}"
+		$status = [
+			'd'  => date('Ymd', $timestamp),
+			't'  => date('H:i', $timestamp),
+			'v1' => $generation,
+			'v2' => $ac_power,
+			'v6' => $dc_voltage
+		];
+
+		if ($this->weather_station) {
+			$status = $status + [
+				'v5' => $this->weather_station->temperature()
 			];
-
-			$status = [
-				'd'  => date('Ymd', $timestamp),
-				't'  => date('H:i', $timestamp),
-				'v1' => $generation,
-				'v2' => $ac_power,
-				'v6' => $dc_voltage
-			];
-
-			if ($this->weather_station) {
-				$status = $status + [
-					'v5' => $this->weather_station->temperature()
-				];
-
-			}
-
-			$this->http->post(self::PVOUTPUT_HOST, self::STATUS_URI, $status, $headers);
 
 		}
+
+		$this->http->post(self::HOST, self::STATUS_URI, $status, $headers);
 	}
 
 	/**
@@ -146,18 +139,14 @@ class PVOutputLogger {
 	 */
 	public function update()
 	{
-		if ($this->is_configured()) {
+		$measurements = $this->inverter->measurements();
+		$timestamp = time();
 
-			$measurements = $this->inverter->measurements();
-			$timestamp = time();
+		$generation = $measurements['generation'];
+		$ac_power   = $measurements['ac_power'];
+		$dc_voltage = $measurements['dc_voltage'];
 
-			$generation = $measurements['generation'];
-			$ac_power   = $measurements['ac_power'];
-			$dc_voltage = $measurements['dc_voltage'];
-
-			$this->update_with($timestamp, $generation, $ac_power, $dc_voltage);
-
-		}
+		$this->update_with($timestamp, $generation, $ac_power, $dc_voltage);
 	}
 
 }

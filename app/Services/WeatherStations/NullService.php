@@ -10,7 +10,6 @@ class NullService implements WeatherStationContract {
 	|--------------------------------------------------------------------------
 	|
 	| This weather adapter just returns null.
-	| It is mainly used for testing.
 	|
 	*/
 

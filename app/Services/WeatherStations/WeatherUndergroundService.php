@@ -21,7 +21,7 @@ class WeatherUndergroundService implements WeatherStationContract {
 	 *
 	 * @const string
 	 */
-	const WEATHERUNDERGROUND_HOST = 'http://api.wunderground.com';
+	const HOST = 'http://api.wunderground.com';
 
 	/**
 	 * The URI to the weather API.
@@ -120,7 +120,7 @@ class WeatherUndergroundService implements WeatherStationContract {
 		if ($this->is_configured()) {
 
 			$uri = self::WEATHER_URI.'/'.$this->api_key.'/conditions/q/'.$this->location.'.json';
-			$response = $this->http->get(self::WEATHERUNDERGROUND_HOST, $uri);
+			$response = $this->http->get(self::HOST, $uri);
 
 			// this returns null on an invalid response
 			$weather = json_decode($response);

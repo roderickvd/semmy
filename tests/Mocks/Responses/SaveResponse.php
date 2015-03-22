@@ -41,7 +41,7 @@ class SaveResponse implements HTTPContract {
 	 */
     public static function get($host, $uri, $headers = [])
     {
-		if ($host == OpenWeatherMapService::OPENWEATHERMAP_HOST) {
+		if ($host == OpenWeatherMapService::HOST) {
 			require_once __DIR__.'/WeatherStations/OpenWeatherMapResponse.php';
 			return OpenWeatherMapResponse::get($host, $uri, $headers);
 
@@ -53,7 +53,7 @@ class SaveResponse implements HTTPContract {
 		self::$data    = http_build_query($data);
 		self::$headers = $headers;
 
-		if ($host == SonnenertragLogger::SONNENERTRAG_HOST) {
+		if ($host == SonnenertragLogger::HOST) {
 			return 'true';
 
 		}

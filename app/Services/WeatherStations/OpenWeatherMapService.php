@@ -21,7 +21,7 @@ class OpenWeatherMapService implements WeatherStationContract {
 	 *
 	 * @const string
 	 */
-	const OPENWEATHERMAP_HOST = 'http://openweathermap.org';
+	const HOST = 'http://openweathermap.org';
 
 	/**
 	 * The URI to the weather API.
@@ -122,7 +122,7 @@ class OpenWeatherMapService implements WeatherStationContract {
 
 			$header = ["x-api-key:{$this->api_key}"];
 			$uri = self::WEATHER_URI.'?'.http_build_query(['q' => $this->location]);
-			$response = $this->http->get(self::OPENWEATHERMAP_HOST, $uri, $header);
+			$response = $this->http->get(self::HOST, $uri, $header);
 
 			// this returns null on an invalid response
 			$weather = json_decode($response);
