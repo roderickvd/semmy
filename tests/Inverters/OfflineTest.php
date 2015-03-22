@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\InverterServiceProvider;
+
 class OfflineTest extends TestCase {
 
     /**
@@ -20,8 +22,8 @@ class OfflineTest extends TestCase {
 	 */
 	public function testOffline()
 	{        
-		foreach (self::$SUPPORTED_INVERTERS as $inverter) {
-			$this->setInverter($inverter);
+		foreach (InverterServiceProvider::$DRIVERS as $key => $value) {
+			$this->setInverter($key);
 
 			$this->assertEquals(null, $this->inverter->ac_power());
 	        $this->assertEquals(null, $this->inverter->dc_power());

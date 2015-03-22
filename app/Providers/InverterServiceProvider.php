@@ -19,7 +19,7 @@ class InverterServiceProvider extends ServiceProvider {
 	 */
 
 	// Array constants are not supported before PHP 5.6.
-	protected static $DRIVERS = [
+	public static $DRIVERS = [
 		'StecaGrid' => 'stecagrid'
 	];
 

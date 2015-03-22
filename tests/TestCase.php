@@ -2,10 +2,6 @@
 
 class TestCase extends Illuminate\Foundation\Testing\TestCase {
 
-	public static $SUPPORTED_INVERTERS = [
-		'StecaGrid'
-	];
-
 	/**
 	 * The configured inverter.
 	 *
