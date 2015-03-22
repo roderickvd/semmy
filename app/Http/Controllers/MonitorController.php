@@ -67,7 +67,8 @@ class MonitorController extends Controller {
 		// Get the latest weather
 		$weather_station = App::make('App\Contracts\WeatherStation');
 		$temperature = $weather_station->temperature();
-		$weather_interval =	$weather_station->update_interval();
+		$weather_interval = $weather_station->update_interval();
+		$weather_driver = env('WEATHER_DRIVER');
 
 		return response()->view('monitor', compact(
 			'pv_name',
@@ -92,7 +93,8 @@ class MonitorController extends Controller {
 			'max_temperature',
 			'temperature',
 			'inverter_interval',
-			'weather_interval'
+			'weather_interval',
+			'weather_driver'
 		))->setTtl($inverter_interval);
 	}
 

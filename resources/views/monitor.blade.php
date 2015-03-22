@@ -58,13 +58,24 @@
 		</div>
 	</div>
 
-	<footer class="row">
-	<div class="small-10 columns">
-		<p>Semmy by <a href="https://www.vandomburg.net/">Roderick van Domburg</a> is licensed under the terms of the MIT License. <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Beautiful charts</span> are powered by <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.highcharts.com/" property="cc:attributionName" rel="cc:attributionURL">Highcharts</a>, which is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.</p>
-	</div>
-	<div class="small-2 columns">
-		<p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></p>
-	</div>
+	<footer>
+		<div class="row">
+			<div class="small-10 columns">
+				<p>Semmy by <a href="https://www.vandomburg.net/">Roderick van Domburg</a> is licensed under the terms of the MIT License. <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Beautiful charts</span> are powered by <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.highcharts.com/" property="cc:attributionName" rel="cc:attributionURL">Highcharts</a>, which is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons Attribution-NonCommercial 3.0 License</a>.</p>
+			</div>
+			<div class="small-2 columns">
+				<p><a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/"><img alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc/3.0/88x31.png" /></a></p>
+			</div>
+		</div>
+
+		@if ($weather_driver == 'weatherunderground')
+			@include('includes/weatherunderground')
+
+		@elseif ($weather_driver == 'openweathermap')
+			@include('includes/openweathermap')
+
+		@endif
+
 	</footer>
 
 	<script src="js/foundation/vendor/jquery.js"></script>
