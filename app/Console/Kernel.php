@@ -23,11 +23,17 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
-		$schedule->command('log:pvoutput')
-				 ->everyFiveMinutes();
+		if (env('SCHEDULE_PVOUTPUT') == 'true') {
+			$schedule->command('log:pvoutput')
+					 ->everyFiveMinutes();
 
-		$schedule->command('log:sonnenertrag')
-				 ->dailyAt('23:55');
+		}
+
+		if (env('SCHEDULE_SONNENERTRAG') == 'true') {
+			$schedule->command('log:sonnenertrag')
+					 ->dailyAt('23:55');
+
+		}
 	}
 
 }
