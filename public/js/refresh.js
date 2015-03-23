@@ -13,6 +13,11 @@ function addThousandsSeperator(nStr)
 
 $(function () {
 
+	var animation = {
+		duration: 1000,
+		easing: 'swing'
+	};
+
 	// Bring life to the dials
 	setInterval(function () {
 		$.getJSON('api/v1/measurements').done( function(data) {
@@ -38,7 +43,7 @@ $(function () {
 
 						// Explicitly check for null, because 0 evaluates as false
 						if (value != null) {
-							series.setData([value]);
+							series.setData([value], true, animation, true);
 						} else {
 							series.removePoint(0);
 						}
@@ -68,7 +73,7 @@ $(function () {
 
 					// Explicitly check for null, because 0 evaluates as false
 					if (value != null) {
-						series.setData([value]);
+						series.setData([value], true, animation, true);
 					} else {
 						series.removePoint(0);
 					}
