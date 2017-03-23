@@ -112,7 +112,7 @@ class Measurements {
 
 		// Initialize an empty array, so the app works even if the inverter if offline.
 		$this->measurements['generation'] = null;
-		foreach (self::$COLUMN_MAPPING as $key => $value) {
+		foreach (self::$COLUMN_MAPPING_V1 as $key => $value) {
 			$this->measurements[$key] = null;
 		}
 
