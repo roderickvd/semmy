@@ -17,11 +17,12 @@ class Measurements {
 	*/
 
 	/**
-	 * The URI to the measurements JavaScript.
+	 * The URI to the measurements JavaScript, depending on the firmware version.
 	 *
 	 * @const string
 	 */
-	const MEASUREMENTS_URI = '/gen.measurements.table.js';
+	const MEASUREMENTS_URI_V1 = '/gen.measurements.table.js';
+	const MEASUREMENTS_URI_V2 = '/measurements.xml';
 
 	/**
 	 * The URI to the yield JavaScript.
@@ -37,7 +38,7 @@ class Measurements {
 	 */
 
 	// Array constants are not supported before PHP 5.6.
-	protected static $COLUMN_MAPPING = [
+	protected static $COLUMN_MAPPING_V1 = [
 		'dc_power'	   =>  2,
 		'dc_voltage'   =>  5,
 		'dc_current'   =>  8,
@@ -45,6 +46,16 @@ class Measurements {
 		'ac_current'   => 14,
 		'ac_frequency' => 17,
 		'ac_power'	   => 20
+	];
+
+	protected static $COLUMN_MAPPING_V2 = [
+		'dc_power'	   => 'GridPower',
+		'dc_voltage'   => 'DC_Voltage',
+		'dc_current'   => 'DC_Current',
+		'ac_voltage'   => 'AC_Voltage',
+		'ac_current'   => 'AC_Current',
+		'ac_frequency' => 'AC_Frequency',
+		'ac_power'	   => 'AC_Power'
 	];
 
 	/**
@@ -146,15 +157,39 @@ class Measurements {
 	 */
 	protected function fetch_measurements()
 	{
-		$response = $this->get_resource(self::MEASUREMENTS_URI);
+		$response = $this->get_resource(self::MEASUREMENTS_URI_V1);
 		if ($response) {
 			$dom = new DOMDocument();
 			$dom->loadHTML($response);
 			$elements = $dom->getElementsByTagName('td');
 
-			foreach (self::$COLUMN_MAPPING as $key => $index) {
+			foreach (self::$COLUMN_MAPPING_V1 as $key => $index) {
 				$this->parse_measurement($key, $elements->item($index)->nodeValue);
 			}			 
+
+		} else {
+
+			$response = $this->get_resource(self::MEASUREMENTS_URI_V2);
+			if ($response) {
+				$measurements = [];
+				$index = [];
+
+				$parser = xml_parser_create();
+				xml_parse_into_struct($parser, $response, $measurements, $index);
+				xml_parser_free($parser);
+
+				foreach ($measurements as $measurement) {
+					if (@$type = $measurement["attributes"]["TYPE"]) {
+						foreach (self::$COLUMN_MAPPING_V2 as $key => $index) {
+							if ($type == $index) {
+								@$value = $measurement["attributes"]["VALUE"];
+								$this->parse_measurement($key, $value);
+								break;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 
