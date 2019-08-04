@@ -21,14 +21,14 @@ class OpenWeatherMapService implements WeatherStationContract {
 	 *
 	 * @const string
 	 */
-	const HOST = 'http://openweathermap.org';
+	const HOST = 'http://api.openweathermap.org';
 
 	/**
 	 * The URI to the weather API.
 	 *
 	 * @const string
 	 */
-	const WEATHER_URI = '/data/2.5/weather';
+	const WEATHER_URI = '/data/2.5/forecast';
 
 	/**
 	 * The minimum interval before refreshing the weather.
@@ -120,17 +120,15 @@ class OpenWeatherMapService implements WeatherStationContract {
 	{
 		if ($this->is_configured()) {
 
-			$header = ["x-api-key:{$this->api_key}"];
-			$uri = self::WEATHER_URI.'?'.http_build_query(['q' => $this->location]);
-			$response = $this->http->get(self::HOST, $uri, $header);
+			$uri = self::WEATHER_URI.'?'.http_build_query(['q' => $this->location, 'APPID' => $this->api_key]);
+			$response = $this->http->get(self::HOST, $uri);
 
 			// this returns null on an invalid response
 			$weather = json_decode($response);
 
 			$temperature = null;
-			if ($weather && property_exists($weather, 'main') && property_exists($weather->main, 'temp')) {
-				$temperature = $weather->main->temp - 273.15;  // Kelvin to Celcius
-
+			if ($weather && property_exists($weather, 'list') && isset($weather->list[0]) && property_exists($weather->list[0], 'main') && property_exists($weather->list[0]->main, 'temp')) {
+				$temperature = $weather->list[0]->main->temp - 273.15;  // Kelvin to Celcius
 			}
 
 			$this->temperature = $temperature;
