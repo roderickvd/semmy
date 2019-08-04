@@ -68,10 +68,7 @@
 			</div>
 		</div>
 
-		@if ($weather_driver == 'weatherunderground')
-			@include('includes/weatherunderground')
-
-		@elseif ($weather_driver == 'openweathermap')
+		@if ($weather_driver == 'openweathermap')
 			@include('includes/openweathermap')
 
 		@endif

@@ -28,8 +28,7 @@ class WeatherStationServiceProvider extends ServiceProvider {
 	protected static $DRIVERS = [
 		'Null'				 => 'null',
 		'KNMI'               => 'knmi',
-		'OpenWeatherMap'     => 'openweathermap',
-		'WeatherUnderground' => 'weatherunderground'
+		'OpenWeatherMap'     => 'openweathermap'
 	];
 
 	/**
