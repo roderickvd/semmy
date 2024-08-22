@@ -3,6 +3,9 @@ Semmy
 
 Personal Solar Energy Monitor
 
+> [!WARNING]
+> This project is no longer under development and archived.
+
 Supported inverters
 -------------------
 
